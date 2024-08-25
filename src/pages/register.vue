@@ -85,23 +85,23 @@ const windowurld = ref(`${window.location.origin}/`);
 
 onMounted(() => {
   userStore.loadengApi = false;
-}),
-  function register() {
-    userStore.loadengApi = true;
-    // console.log(registerData.value);
-    axios
-      .post('register', registerData.value)
-      .then(res => {
-        console.log(res);
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        userStore.loadengApi = false;
-        location.reload();
-      })
-      .catch(e => {
-        console.log(e.response);
-      });
-  };
+});
+function register() {
+  userStore.loadengApi = true;
+  // console.log(registerData.value);
+  axios
+    .post('register', registerData.value)
+    .then(res => {
+      console.log(res);
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      userStore.loadengApi = false;
+      location.reload();
+    })
+    .catch(e => {
+      console.log(e.response);
+    });
+}
 </script>
 <style>
 #register {
