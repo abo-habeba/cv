@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es5",
+    "module": "esnext",
+    "baseUrl": "./",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  }
+}
+// {
+//   "compilerOptions": {
+//     "allowJs": true,
+//     "target": "es5",
+//     "module": "esnext",
+//     "baseUrl": "./",
+//     "moduleResolution": "bundler",
+//     "paths": {
+//       "@/*": [
+//         "src/*"
+//       ]
+//     },
+//     "lib": [
+//       "esnext",
+//       "dom",
+//       "dom.iterable",
+//       "scripthost"
+//     ],
+//     "typeRoots": [
+//       "./node_modules/@types"
+//     ],
+//     "types": [
+//       "json5"
+//     ]
+//   },
+//   "include": [
+//     "src/**/*"
+//   ],
+//   "exclude": [
+//     "node_modules"
+//   ]
+// }
