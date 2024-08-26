@@ -99,6 +99,7 @@ function register() {
       location.reload();
     })
     .catch(e => {
+      userStore.loadengApi = false;
       console.log(e.response);
     });
 }

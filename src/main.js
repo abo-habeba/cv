@@ -10,6 +10,7 @@ import axios from 'axios';
 const BASE_URL = window.location.protocol === 'https:' ? 'https://cv-api.hwnix.com/api/' : 'http://127.0.0.1:8000/api/';
 axios.defaults.baseURL = BASE_URL;
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;
+axios.defaults.headers.common['Accept'] = 'application/json';
 
 import { createApp } from 'vue';
 const app = createApp(App);
