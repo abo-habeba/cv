@@ -45,4 +45,9 @@ onMounted(() => {
 .main-app {
   position: relative;
 }
+.v-messages__message {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 16px;
+}
 </style>

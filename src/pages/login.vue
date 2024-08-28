@@ -107,9 +107,10 @@ function login() {
     .catch(e => {
       loading.value = false;
       if (e.response.data) {
-        // console.log(e.response.data);
-        loading.value = true;
-        notifyError(e.response.data.message);
+        if (e.response.data.message === 'The provided credentials are incorrect.') {
+          notifyError('بيانات الدخول غير صحيحه');
+          return;
+        }
         return;
       }
       notifyError('هناك خطا ما حاول مره اخري');

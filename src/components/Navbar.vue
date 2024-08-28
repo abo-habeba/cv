@@ -68,8 +68,12 @@
       <div class="box-route">
         <v-slide-group show-arrows>
           <v-slide-group-item v-for="(routerList, i) in routerLists" :key="i">
-            <router-link :class="{ 'active-chip': route.path === routerList.path }" v-if="routerList.meta.show" :to="routerList.path"
-              ><v-chip color="primary" variant="outlined" class="my-1 mx-1"> {{ routerList.meta.title }}</v-chip></router-link
+            <router-link v-if="routerList.meta.show" :to="routerList.path"
+              ><v-chip color="primary" variant="outlined" class="my-1 mx-1">
+                <div :class="{ 'active-chip': route.path === routerList.path }">
+                  {{ routerList.meta.title }}
+                </div>
+              </v-chip></router-link
             >
           </v-slide-group-item>
         </v-slide-group>
@@ -137,6 +141,7 @@ function logout() {
 </script>
 <style>
 .active-chip {
+  width: 100%;
   border-bottom: blue 4px solid;
   border-radius: 6px;
 }
