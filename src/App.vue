@@ -50,4 +50,7 @@ onMounted(() => {
   font-weight: bold;
   padding-bottom: 16px;
 }
+.v-alert--density-default {
+  padding: 3px !important;
+}
 </style>

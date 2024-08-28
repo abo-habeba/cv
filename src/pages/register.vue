@@ -14,15 +14,20 @@
               v-model="registerData.username"
               :rules="usernameRules"
             ></v-text-field>
-            <v-alert v-if="usernameAlready === true" class="mb-3" type="error" variant="outlined"> الاسم مستخدم من قبل </v-alert>
-
+            <div v-if="errorForme.username">
+              <v-alert v-for="error in errorForme.username" :key="error" class="mb-3" type="error" variant="outlined">{{ error }}</v-alert>
+            </div>
             <v-text-field
               density="compact"
               placeholder="ادخل الايميل"
               prepend-inner-icon="mdi-email-outline"
               variant="outlined"
               v-model="registerData.email"
+              :rules="emailRules"
             ></v-text-field>
+            <div v-if="errorForme.email">
+              <v-alert v-for="error in errorForme.email" :key="error" class="mb-3" type="error" variant="outlined">{{ error }}</v-alert>
+            </div>
 
             <v-text-field
               :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -33,6 +38,7 @@
               variant="outlined"
               @click:append-inner="visible = !visible"
               v-model="registerData.password"
+              :rules="passwordRules"
             ></v-text-field>
             <v-text-field
               :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -53,6 +59,9 @@
               variant="outlined"
               v-model="registerData.phone"
             ></v-text-field>
+            <div v-if="errorForme.phone">
+              <v-alert v-for="error in errorForme.phone" :key="error" class="mb-3" type="error" variant="outlined">{{ error }}</v-alert>
+            </div>
 
             <v-btn @click="register" class="mb-8" color="blue" size="large" variant="tonal" block> انشاء حساب </v-btn>
 
@@ -75,6 +84,7 @@ const visible = ref(false);
 const registerData = ref({});
 const usernameAlready = ref(false);
 const windowurld = ref(`${window.location.origin}/`);
+const errorForme = ref({});
 const usernameRules = [
   v => !!v || 'يرجى إدخال اسم المستخدم',
   v => !v.includes(' ') || 'يجب ألا يحتوي اسم المستخدم على مسافات ',
@@ -82,6 +92,8 @@ const usernameRules = [
   v => !/[{}|\\^[\]`"<>#/?]/.test(v) || 'يجب ألا يحتوي اسم المستخدم على العلامات التالية: { } | \\ ^ [ ] ` " < > # / ؟',
   v => /^[a-zA-Z]+$/.test(v) || 'يجب أن يحتوي اسم المستخدم على أحرف انجليزية فقط',
 ];
+const emailRules = [v => !!v || 'يرجى إدخال الايميل'];
+const passwordRules = [v => !!v || 'يرجى إدخال كلمة السر'];
 // console.log(windowurld.value);
 const notifyError = message => {
   toast.error(message, {
@@ -106,20 +118,25 @@ function register() {
       location.reload();
     })
     .catch(e => {
+      errorForme.value = e.response.data.errors;
       userStore.loadengApi = false;
-      console.log(e.response.data.errors);
-      if (e.response.data.errors.username) {
-        if (e.response.data.errors.username[0] === 'The username has already been taken.') {
-          usernameAlready.value = true;
-          notifyError('اسم المستخدم غير متاح استخدامة');
-        }
-        return;
-      }else{
-        notifyError(e.response.data.message);
-      }
-      
-    });
+      console.log(e.response.data);
+      // if (e.response.data.errors.username) {
+      //   console.log('errors.username');
 
+      //   if (e.response.data.errors.username[0] === 'The username has already been taken.') {
+      //     console.log(".errors.username[0] === 'The user'");
+      //     usernameAlready.value = true;
+      //     notifyError('اسم المستخدم غير متاح استخدامة');
+      //   } else {
+      //     notifyError(e.response.data.message);
+      //   }
+      // } else {
+      //   console.log('else');
+
+      //   notifyError(e.response.data.message);
+      // }
+    });
 }
 </script>
 <style>
