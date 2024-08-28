@@ -114,8 +114,12 @@ function register() {
           notifyError('اسم المستخدم غير متاح استخدامة');
         }
         return;
+      }else{
+        notifyError(e.response.data.message);
       }
+      
     });
+
 }
 </script>
 <style>
