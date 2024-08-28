@@ -108,9 +108,11 @@ function register() {
     .catch(e => {
       userStore.loadengApi = false;
       console.log(e.response.data.errors);
-      if (e.response.data.errors.username[0] === 'The username has already been taken.') {
-        usernameAlready.value = true;
-        notifyError('اسم المستخدم غير متاح استخدامة');
+      if (e.response.data.errors.username) {
+        if (e.response.data.errors.username[0] === 'The username has already been taken.') {
+          usernameAlready.value = true;
+          notifyError('اسم المستخدم غير متاح استخدامة');
+        }
         return;
       }
     });
@@ -124,5 +126,4 @@ function register() {
   width: 100%;
   height: 90vh;
 }
-
 </style>
