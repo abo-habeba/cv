@@ -36,7 +36,6 @@ definePage({
   },
 });
 
-
 const openForm = () => {
   dialogItemForm.value.dialogForm();
 };
@@ -47,12 +46,12 @@ const openForm = () => {
 // onMounted(() => {});
 </script>
 
-<style >
-*{
+<style>
+* {
   text-align: center;
 }
 .v-list-item-subtitle {
   padding: 10px !important;
-  border-bottom: #8181e8 solid 2px !important;
+  /* border-bottom: #8181e8 solid 2px !important; */
 }
 </style>

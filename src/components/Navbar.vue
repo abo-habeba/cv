@@ -33,7 +33,7 @@
                 :href="`${locationOrigin()}/ar/${userStore.user.username}`"
                 target="_blank"
                 prepend-icon="mdi-web"
-                :subtitle="`${locationOrigin()}/ar/${userStore.user.username}`"
+                :subtitle="`${locationHostname()}/ar/${userStore.user.username}`"
                 title="النسخة العربية"
               >
               </v-list-item>
@@ -48,7 +48,7 @@
                 :href="`${locationOrigin()}/en/${userStore.user.username}`"
                 target="_blank"
                 prepend-icon="mdi-web"
-                :subtitle="`${locationOrigin()}/en/${userStore.user.username}`"
+                :subtitle="`${locationHostname()}/en/${userStore.user.username}`"
                 title="النسخة الانجليزية"
               >
               </v-list-item>
@@ -109,6 +109,9 @@ function copyLink(link) {
       console.error('حدث خطأ أثناء نسخ الرابط:', err);
     });
 }
+function locationHostname() {
+  return window.location.hostname;
+}
 function locationOrigin() {
   return window.location.origin;
 }
@@ -139,7 +142,7 @@ function logout() {
     });
 }
 </script>
-<style>
+<style lang="scss">
 .active-chip {
   width: 100%;
   border-bottom: blue 4px solid;
@@ -181,12 +184,26 @@ function logout() {
   align-content: center;
 }
 .box-link {
+  min-width: 250px;
   position: relative;
+  .v-list-item-subtitle {
+    display: block;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
 }
 .copy-link {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 7px;
   z-index: 99;
+  .v-btn--density-default {
+    width: 25px !important;
+    height: 25px !important;
+    .v-icon--size-default {
+      font-size: 12px;
+    }
+  }
 }
 </style>
