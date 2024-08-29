@@ -25,12 +25,12 @@
             </v-list-item>
             <div class="box-link">
               <div class="copy-link">
-                <v-btn icon @click="copyLink(`${locationOrigin()}/ar/${userStore.user.username}`)">
+                <v-btn icon @click="copyLink(`${locationHostname()}/ar/${userStore.user.username}`)">
                   <v-icon>mdi-content-copy</v-icon>
                 </v-btn>
               </div>
               <v-list-item
-                :href="`${locationOrigin()}/ar/${userStore.user.username}`"
+                :href="`${locationHostname()}/ar/${userStore.user.username}`"
                 target="_blank"
                 prepend-icon="mdi-web"
                 :subtitle="`${locationHostname()}/ar/${userStore.user.username}`"
@@ -40,12 +40,12 @@
             </div>
             <div class="box-link">
               <div class="copy-link">
-                <v-btn icon @click="copyLink(`${locationOrigin()}/ar/${userStore.user.username}`)">
+                <v-btn icon @click="copyLink(`${locationHostname()}/ar/${userStore.user.username}`)">
                   <v-icon>mdi-content-copy</v-icon>
                 </v-btn>
               </div>
               <v-list-item
-                :href="`${locationOrigin()}/en/${userStore.user.username}`"
+                :href="`${locationHostname()}/en/${userStore.user.username}`"
                 target="_blank"
                 prepend-icon="mdi-web"
                 :subtitle="`${locationHostname()}/en/${userStore.user.username}`"
@@ -112,9 +112,9 @@ function copyLink(link) {
 function locationHostname() {
   return window.location.hostname;
 }
-function locationOrigin() {
-  return window.location.origin;
-}
+// function locationOrigin() {
+//   return window.location.origin;
+// }
 onMounted(() => {});
 function toggleTheme() {
   if (switchd.value) {
