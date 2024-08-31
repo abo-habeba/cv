@@ -2,42 +2,42 @@
   <v-carousel
     class="hero-box"
     height="100vh"
+    style="background-color: black;"
     cycle
     :show-arrows="userStore.userAll.user.hero.length > 1 ? 'hover' : false"
     :hide-delimiter-background="userStore.userAll.user.hero.length <= 1"
     :hide-delimiters="userStore.userAll.user.hero.length <= 1"
   >
     <v-carousel-item v-for="(photo, i) in userStore.userAll.user.hero" :key="i">
-      <v-img :src="photo.path" height="100%" cover v-if="userStore.userAll.user.hero">
-        <div
-          :style="{
-            direction: lang === 'en' ? 'ltr' : 'rtl',
-          }"
-          class="hero-text d-flex flex-column fill-height justify-center align-center"
-        >
-          <h1>
-            {{
-              `${lang === 'en' ? 'Hello, I am' : ' مرحبا انا ,'}  ${userStore.userAll.user.first_name[lang] || ' '}  ${
-                userStore.userAll.user.last_name[lang] || ' '
-              } `
-            }}
-          </h1>
-          <p>{{ displayedposition }}</p>
-          <h5>{{ userStore.userAll.user.bio[lang] }}</h5>
-
-          <div class="cta-buttons">
-            <a href="#h-work" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
-            <a href="/cv.pdf" class="cta-secondary">{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a>
-          </div>
-          <div class="scroll-indicator">
-            <div class="chevron"></div>
-            <div class="chevron"></div>
-            <div class="chevron"></div>
-            <span class="scroll-text">{{ lang === 'en' ? 'Scroll Up' : 'مرر للاعلي' }}</span>
-          </div>
-        </div>
-      </v-img>
+      <v-img :src="photo.path" height="100%" cover v-if="userStore.userAll.user.hero"> </v-img>
     </v-carousel-item>
+    <div
+      :style="{
+        direction: lang === 'en' ? 'ltr' : 'rtl',
+      }"
+      class="hero-text d-flex flex-column fill-height justify-center align-center"
+    >
+      <h1>
+        {{
+          `${lang === 'en' ? 'Hello, I am' : ' مرحبا انا ,'}  ${userStore.userAll.user.first_name[lang] || ' '}  ${
+            userStore.userAll.user.last_name[lang] || ' '
+          } `
+        }}
+      </h1>
+      <p>{{ displayedposition }}</p>
+      <h5>{{ userStore.userAll.user.bio[lang] }}</h5>
+
+      <div class="cta-buttons">
+        <a href="#h-work" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
+        <a href="/cv.pdf" class="cta-secondary">{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a>
+      </div>
+      <div class="scroll-indicator">
+        <div class="chevron"></div>
+        <div class="chevron"></div>
+        <div class="chevron"></div>
+        <span class="scroll-text">{{ lang === 'en' ? 'Scroll Up' : 'مرر للاعلي' }}</span>
+      </div>
+    </div>
   </v-carousel>
 </template>
 <script setup>
