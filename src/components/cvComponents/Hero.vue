@@ -29,7 +29,7 @@
 
       <div class="cta-buttons">
         <a href="#h-work" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
-        <a href="/cv.pdf" class="cta-secondary">{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a>
+        <a href="#" class="cta-secondary">{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a>
       </div>
       <div class="scroll-indicator">
         <div class="chevron"></div>
