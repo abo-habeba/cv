@@ -62,8 +62,6 @@ const route = useRoute();
 const lang = route.params.lang;
 const userStore = useUserStore();
 onMounted(() => {
-  console.log(userStore.userAll.user.profile_image);
-  console.log(userStore.userAll.user.first_name);
   // userStore.fetchUser().then(() => {
   //   console.log(userStore.user.profile_image);
   // });

@@ -10,10 +10,10 @@
       </div>
       <div id="h-main">
         <div v-if="btnToggle" :class="{ mainOverlay: toggled }" @click="closedToggled"></div>
-        <!-- <section id="h-hero" class="h-hero">
+        <section id="h-hero" class="h-hero">
           <Hero />
         </section>
-        <section id="h-about" class="h-about">
+        <!-- <section id="h-about" class="h-about">
           <About />
         </section>
         <section id="h-services" class="h-services">
@@ -62,6 +62,34 @@ const getData = ref(false);
 // console.log(route.params.id);
 const asideWidth = ref('30vw');
 const isScroll = ref(true);
+
+onMounted(() => {
+  userStore.loadengApi = false;
+  window.addEventListener('scroll', setActiveNavItem);
+  // window.addEventListener('scroll', handleScroll);
+  const mediaQuery = window.matchMedia('(max-width: 768px)');
+  handleMediaChange(mediaQuery); // Initial check
+  mediaQuery.addEventListener('change', handleMediaChange);
+  axios
+    .get(`users-all/${route.params.id}`)
+    .then(res => {
+      userAllData.value = res.data.data;
+      userStore.userAll = res.data.data;
+      console.log('[id] userStore.userAll', userStore.userAll);
+
+      const link = document.querySelector("link[rel='icon']");
+      link.href = res.data.data.user.profile_image;
+      // console.log(userStore.userAll.user.profile_image);
+      getData.value = true;
+      userStore.loadengApi = false;
+      userStore.isLoader = false;
+    })
+    .catch(error => {
+      // console.log(error);
+      userStore.isLoader = false;
+      userStore.loadengApi = false;
+    });
+});
 
 function setActiveNavItem() {
   const navItems = document.querySelectorAll('#nav li');
@@ -112,50 +140,19 @@ function funToggled() {
 }
 
 function handleMediaChange(event) {
-  console.log('event.matches', event.matches);
   if (event.matches) {
-    console.log('handleMediaChange if', asideWidth.value, toggled.value);
     toggled.value = false;
     asideWidth.value = '0px';
     btnToggle.value = true;
     // toggled.value ? (isOverlay.value = true) : (isOverlay.value = false);
   } else {
-    console.log('handleMediaChange else', asideWidth.value, toggled.value);
-    asideWidth.value = '30vw';
+    asideWidth.value = '20vw';
     toggled.value = true;
     btnToggle.value = false;
     // isOverlay.value = false;
   }
 }
 
-onMounted(() => {
-  userStore.loadengApi = false;
-
-  window.addEventListener('scroll', setActiveNavItem);
-  // window.addEventListener('scroll', handleScroll);
-  const mediaQuery = window.matchMedia('(max-width: 768px)');
-  handleMediaChange(mediaQuery); // Initial check
-  mediaQuery.addEventListener('change', handleMediaChange);
-  axios
-    .get(`users-all/${route.params.id}`)
-    .then(res => {
-      userAllData.value = res.data.data;
-      const link = document.querySelector("link[rel='icon']");
-      link.href = res.data.data.user.profile_image;
-      console.log('link.href', res.data.data.user.profile_image);
-
-      userStore.userAll = res.data.data;
-      // console.log(userStore.userAll.user.profile_image);
-      getData.value = true;
-      userStore.loadengApi = false;
-      userStore.isLoader = false;
-    })
-    .catch(error => {
-      // console.log(error);
-      userStore.isLoader = false;
-      userStore.loadengApi = false;
-    });
-});
 // definePage({
 //   meta: {
 //     layout: pure,
@@ -169,6 +166,11 @@ meta:
 <style>
 * {
   text-decoration: none;
+}
+#h-page {
+  @media screen and (min-width: 768px) {
+    margin: 0px 20%;
+  }
 }
 .mainOverlay {
   background-color: #0000ff1c;
@@ -213,6 +215,7 @@ meta:
   height: 100vh;
   /* display: none; */
   /* cursor: pointer; */
+  z-index: 9000;
 }
 .btn-toggle {
   position: absolute;

@@ -2,7 +2,7 @@
   <div v-if="!toggleIconmMnu" @click="toggleIconmMnu = !toggleIconmMnu" class="toggleIconmMnu"></div>
   <v-toolbar density="comfortable" :elevation="8">
     <div class="navbar">
-      <v-snackbar v-model="snackbar" location="top center" color="primary" timeout="1000">
+      <v-snackbar v-model="snackbar" location="top center" color="primary" timeout="1500">
         {{ snackbarText }}
       </v-snackbar>
       <div class="box-menu">
@@ -30,7 +30,7 @@
                 </v-btn>
               </div>
               <v-list-item
-                :href="`${locationHostname()}/ar/${userStore.user.username}`"
+                :href="`${locationOrigin()}/ar/${userStore.user.username}`"
                 target="_blank"
                 prepend-icon="mdi-web"
                 :subtitle="`${locationHostname()}/ar/${userStore.user.username}`"
@@ -45,7 +45,7 @@
                 </v-btn>
               </div>
               <v-list-item
-                :href="`${locationHostname()}/en/${userStore.user.username}`"
+                :href="`${locationOrigin()}/en/${userStore.user.username}`"
                 target="_blank"
                 prepend-icon="mdi-web"
                 :subtitle="`${locationHostname()}/en/${userStore.user.username}`"
@@ -112,9 +112,9 @@ function copyLink(link) {
 function locationHostname() {
   return window.location.hostname;
 }
-// function locationOrigin() {
-//   return window.location.origin;
-// }
+function locationOrigin() {
+  return window.location.origin;
+}
 onMounted(() => {});
 function toggleTheme() {
   if (switchd.value) {

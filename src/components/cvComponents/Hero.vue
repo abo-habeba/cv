@@ -1,42 +1,27 @@
 <template>
-  <div class="flexslider js-fullheight">
-    <ul class="slides">
-      <li style="background-image: url(images/img_bg_1.jpg)">
-        <div class="overlay"></div>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6 col-md-offset-3 col-md-pull-3 col-sm-12 col-xs-12 js-fullheight slider-text">
-              <div class="slider-text-inner js-fullheight">
-                <div class="desc">
-                  <h1>Hi! <br />I'm Jackson</h1>
-                  <h2>100% html5 bootstrap templates Made by <a href="https://h.com/" target="_blank">h.com</a></h2>
-                  <p>
-                    <a class="btn btn-primary btn-learn">Download CV <i class="icon-download4"></i></a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+  <v-carousel
+    height="100vh"
+    cycle
+    :show-arrows="userStore.userAll.user.hero.length > 1 ? 'hover' : false"
+    :hide-delimiter-background="userStore.userAll.user.hero.length < 1"
+    :hide-delimiters="userStore.userAll.user.hero.length < 1"
+  >
+    <v-carousel-item v-for="(photo, i) in userStore.userAll.user.hero" :key="i">
+      <v-img :src="photo.path" height="100%" cover v-if="userStore.userAll.user.hero">
+        <div class="d-flex flex-column fill-height justify-center ">
+          <h1>hesham mohamed</h1>
+          <div class="text-h2">Slide {{ i + 1 }}</div>
         </div>
-      </li>
-      <li style="background-image: url(images/img_bg_2.jpg)">
-        <div class="overlay"></div>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6 col-md-offset-3 col-md-pull-3 col-sm-12 col-xs-12 js-fullheight slider-text">
-              <div class="slider-text-inner">
-                <div class="desc">
-                  <h1>I am <br />a Designer</h1>
-                  <h2>100% html5 bootstrap templates Made by <a href="https://h.com/" target="_blank">h.com</a></h2>
-                  <p>
-                    <a class="btn btn-primary btn-learn">View Portfolio <i class="icon-briefcase3"></i></a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
+      </v-img>
+    </v-carousel-item>
+  </v-carousel>
 </template>
+<script setup>
+import { useUserStore } from '@/stores/user';
+import { onMounted } from 'vue';
+const userStore = useUserStore();
+onMounted(() => {
+  console.log(typeof userStore.userAll.user.hero, userStore.userAll.user.hero);
+});
+</script>
+<style></style>

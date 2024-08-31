@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-col cols="auto">
-      <v-btn icon="mdi-square-edit-outline" color="success" size="small" to=""></v-btn>
+      <v-btn class="ma-1" color="success"> تعديل البيانات <v-icon icon="mdi-square-edit-outline" end></v-icon></v-btn>
     </v-col>
     <v-dialog class="text-center" v-model="dialogItemForm" max-width="900" persistent>
       <v-card class="pa-5">
@@ -16,7 +16,6 @@
             <v-col cols="12" md="6">
               <v-text-field v-model="user.first_name.en" label="First Name"></v-text-field>
             </v-col>
-
             <v-col cols="12" md="6">
               <v-text-field v-model="user.last_name.ar" label=" الاسم الاخير "></v-text-field>
             </v-col>
@@ -98,7 +97,6 @@ const notifyError = message => {
 
 function closeDialog() {
   dialogItemForm.value = false;
-  item.value = '';
 }
 
 const previewImage = () => {
@@ -150,6 +148,4 @@ defineExpose({
   dialogForm,
 });
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

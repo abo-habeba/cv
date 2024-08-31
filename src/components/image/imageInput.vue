@@ -21,7 +21,7 @@
   </v-col>
 </template>
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, watch } from 'vue';
 import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
 const emits = defineEmits(['saveCompressedImages']);
@@ -42,32 +42,69 @@ const generateImagePreviews = () => {
 
 // Function to compress images
 import imageCompression from 'browser-image-compression';
-const compressImages = async () => {
+const compressedImages = ref([]);
+const compressImages = (SizeMB = 1) => {
   userStore.loadengApi = true;
-  // Create an array to hold the compressed images
-  const compressedImages = [];
   // Define compression options
   const options = {
-    maxSizeMB: 1,
+    maxSizeMB: SizeMB,
     maxWidthOrHeight: 8000,
     useWebWorker: true,
   };
-  // Loop through the selected images and compress each one
-  await Promise.all(
-    images.value.map(async file => {
-      try {
-        const compressedFile = await imageCompression(file, options);
-        compressedImages.push(compressedFile);
-      } catch (err) {}
-    })
-  );
-  // When all images are compressed, send them to the server
-  if (compressedImages.length === images.value.length) {
-    emits('saveCompressedImages', compressedImages);
-  }
-
-  userStore.loadengApi = false;
+  // Return a new Promise
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Compress all images using Promise.all
+      await Promise.all(
+        images.value.map(async file => {
+          const compressedFile = await imageCompression(file, options);
+          compressedImages.value.push(compressedFile);
+        })
+      );
+      if (compressedImages.value.length === images.value.length) {
+        console.log('Compressed Images before emit:', compressedImages.value);
+        // emits('saveCompressedImages', compressedImages.value);
+        console.log('After emit call');
+      }
+      resolve(compressedImages.value);
+    } catch (error) {
+      reject(error);
+    } finally {
+      userStore.loadengApi = false;
+    }
+  });
 };
+
+// const compressImages = async () => {
+//   console.log(' start compressImages');
+//   userStore.loadengApi = true;
+//   // Create an array to hold the compressed images
+//   // Define compression options
+//   const options = {
+//     maxSizeMB: 1,
+//     maxWidthOrHeight: 8000,
+//     useWebWorker: true,
+//   };
+//   // Loop through the selected images and compress each one
+//   try {
+//     console.log('images', images.value, 'length  ' + images.value.length);
+//     images.value.map(async file => {
+//       const compressedFile = await imageCompression(file, options);
+//       compressedImages.value.push(compressedFile);
+//     });
+//     console.log('end map', compressedImages.value, 'length  ' + compressedImages.value.length);
+//     if (compressedImages.value.length === images.value.length) {
+//       console.log('Compressed Images before emit:', compressedImages.value);
+//       emits('saveCompressedImages', compressedImages.value);
+//       console.log('After emit call');
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+
+//   userStore.loadengApi = false;
+// };
+
 defineExpose({
   compressImages,
 });
