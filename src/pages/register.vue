@@ -5,65 +5,65 @@
         <v-col cols="12" sm="11" md="8" lg="6" xl="6" class="mx-auto">
           <v-card class="register-box mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
             <v-alert class="mb-3" type="warning" variant="outlined"> هذا الاسم يستخدم في رابط المتصفح </v-alert>
-            <v-text-field
-              density="compact"
-              label=" اسم المستخدم "
-              :prefix="windowurld"
-              prepend-inner-icon="mdi-web"
-              variant="outlined"
-              v-model="registerData.username"
-              :rules="usernameRules"
-            ></v-text-field>
-            <div v-if="errorForme.username">
-              <v-alert v-for="error in errorForme.username" :key="error" class="mb-3" type="error" variant="outlined">{{ error }}</v-alert>
-            </div>
-            <v-text-field
-              density="compact"
-              placeholder="ادخل الايميل"
-              prepend-inner-icon="mdi-email-outline"
-              variant="outlined"
-              v-model="registerData.email"
-              :rules="emailRules"
-            ></v-text-field>
-            <div v-if="errorForme.email">
-              <v-alert v-for="error in errorForme.email" :key="error" class="mb-3" type="error" variant="outlined">{{ error }}</v-alert>
-            </div>
+            <v-form fast-fail @submit.prevent>
+              <v-text-field
+                density="compact"
+                label=" اسم المستخدم "
+                :prefix="windowurld"
+                prepend-inner-icon="mdi-web"
+                variant="outlined"
+                v-model="registerData.username"
+                :rules="usernameRules"
+              ></v-text-field>
+              <div v-if="errorForme.username">
+                <v-alert v-for="error in errorForme.username" :key="error" class="mb-3" type="error" variant="outlined">{{ error }}</v-alert>
+              </div>
+              <v-text-field
+                density="compact"
+                placeholder="ادخل الايميل"
+                prepend-inner-icon="mdi-email-outline"
+                variant="outlined"
+                v-model="registerData.email"
+                :rules="emailRules"
+              ></v-text-field>
+              <div v-if="errorForme.email">
+                <v-alert v-for="error in errorForme.email" :key="error" class="mb-3" type="error" variant="outlined">{{ error }}</v-alert>
+              </div>
+              <v-text-field
+                :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                :type="visible ? 'text' : 'password'"
+                density="compact"
+                placeholder="ادخل كلمة المرور"
+                prepend-inner-icon="mdi-lock-outline"
+                variant="outlined"
+                @click:append-inner="visible = !visible"
+                v-model="registerData.password"
+                :rules="passwordRules"
+              ></v-text-field>
+              <v-text-field
+                :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                :type="visible ? 'text' : 'password'"
+                density="compact"
+                placeholder=" اعد كتابة كلمة المرور"
+                prepend-inner-icon="mdi-lock-outline"
+                variant="outlined"
+                @click:append-inner="visible = !visible"
+                :rules="[v => v === registerData.password || 'كلمة المرور غير متطابقتان']"
+              ></v-text-field>
 
-            <v-text-field
-              :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-              :type="visible ? 'text' : 'password'"
-              density="compact"
-              placeholder="ادخل كلمة المرور"
-              prepend-inner-icon="mdi-lock-outline"
-              variant="outlined"
-              @click:append-inner="visible = !visible"
-              v-model="registerData.password"
-              :rules="passwordRules"
-            ></v-text-field>
-            <v-text-field
-              :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-              :type="visible ? 'text' : 'password'"
-              density="compact"
-              placeholder=" اعد كتابة كلمة المرور"
-              prepend-inner-icon="mdi-lock-outline"
-              variant="outlined"
-              @click:append-inner="visible = !visible"
-              :rules="[v => v === registerData.password || 'كلمة المرور غير متطابقتان']"
-            ></v-text-field>
-
-            <v-text-field
-              density="compact"
-              label=" رقم الهاتف "
-              type="number"
-              prepend-inner-icon="mdi-phone-outline"
-              variant="outlined"
-              v-model="registerData.phone"
-            ></v-text-field>
-            <div v-if="errorForme.phone">
-              <v-alert v-for="error in errorForme.phone" :key="error" class="mb-3" type="error" variant="outlined">{{ error }}</v-alert>
-            </div>
-
-            <v-btn @click="register" class="mb-8" color="blue" size="large" variant="tonal" block> انشاء حساب </v-btn>
+              <v-text-field
+                density="compact"
+                label=" رقم الهاتف "
+                type="number"
+                prepend-inner-icon="mdi-phone-outline"
+                variant="outlined"
+                v-model="registerData.phone"
+              ></v-text-field>
+              <div v-if="errorForme.phone">
+                <v-alert v-for="error in errorForme.phone" :key="error" class="mb-3" type="error" variant="outlined">{{ error }}</v-alert>
+              </div>
+              <v-btn type="submit" @click="register" class="mb-8" color="blue" size="large" variant="tonal" block> انشاء حساب </v-btn>
+            </v-form>
 
             <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
               <a class="text-caption text-decoration-none text-blue" href="/login" rel="noopener noreferrer"> اذا كان لديك حساب ادخل من هنا</a>
@@ -92,6 +92,13 @@ const usernameRules = [
   v => !/[{}|\\^[\]`"<>#/?]/.test(v) || 'يجب ألا يحتوي اسم المستخدم على العلامات التالية: { } | \\ ^ [ ] ` " < > # / ؟',
   v => /^[a-zA-Z]+$/.test(v) || 'يجب أن يحتوي اسم المستخدم على أحرف انجليزية فقط',
 ];
+function validateRegister(v) {
+  if (!v.includes(' ') && v === v.toLowerCase() && !/[{}|\\^[\]`"<>#/?]/.test(v) && /^[a-zA-Z]+$/.test(v)) {
+    return false;
+  } else {
+    return true;
+  }
+}
 const emailRules = [v => !!v || 'يرجى إدخال الايميل'];
 const passwordRules = [v => !!v || 'يرجى إدخال كلمة السر'];
 // console.log(windowurld.value);
@@ -105,6 +112,15 @@ onMounted(() => {
   userStore.loadengApi = false;
 });
 function register() {
+  if (validateRegister(registerData.value.username)) {
+    const messageElement = document.querySelector('.v-messages__message');
+    const originalBackgroundColor = window.getComputedStyle(messageElement).backgroundColor;
+    messageElement.style.backgroundColor = '#fb564d';
+    setTimeout(() => {
+      messageElement.style.backgroundColor = originalBackgroundColor;
+    }, 500);
+    return;
+  }
   usernameAlready.value = false;
   userStore.loadengApi = true;
   // console.log(registerData.value);
