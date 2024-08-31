@@ -169,7 +169,7 @@ meta:
 }
 #h-page {
   @media screen and (min-width: 768px) {
-    margin: 0px 20%;
+    margin: 0px 10%;
   }
 }
 .mainOverlay {

@@ -52,7 +52,6 @@ const speed = 200; // سرعة الكتابة
 const displayedposition = ref('');
 function type() {
   let i = 0;
-
   function typeChar() {
     if (i < position.value.length) {
       displayedposition.value += position.value.charAt(i);
@@ -66,7 +65,6 @@ function type() {
       }, 1000); // الانتظار لمدة 1 ثانية قبل البدء من جديد
     }
   }
-
   typeChar();
 }
 
