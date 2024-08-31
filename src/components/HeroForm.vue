@@ -65,7 +65,7 @@ const imageInputRef = ref(null);
 const runCompressImages = () => {
   if (imageInputRef.value) {
     imageInputRef.value
-      .compressImages(3)
+      .compressImages(5)
       .then(data => {
         save(data);
       })
