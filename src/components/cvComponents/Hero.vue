@@ -48,7 +48,7 @@ const route = useRoute();
 const userStore = useUserStore();
 const lang = route.params.lang;
 const position = ref(userStore.userAll.user.position[lang]);
-const speed = 500; // سرعة الكتابة
+const speed = 200; // سرعة الكتابة
 const displayedposition = ref('');
 function type() {
   let i = 0;
