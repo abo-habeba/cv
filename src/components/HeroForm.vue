@@ -15,7 +15,8 @@
         </v-row>
         <p class="text-alert" v-if="!userStore.user.hero.length">لا توجد صور</p>
         <v-form>
-          <v-row>
+          <v-row class="my-10">
+            <h3>يمكنك تحميل  صوره او اكثر</h3>
             <imageInput ref="imageInputRef" @saveCompressedImages="save" />
           </v-row>
         </v-form>
