@@ -28,8 +28,8 @@
       <p class="bio">{{ userStore.userAll.user.bio[lang] }}</p>
 
       <div class="cta-buttons">
-        <a href="#h-work" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
-        <a href="#" class="cta-secondary">{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a>
+        <a href="#h-work" data-aos="fade-up-left" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
+        <a href="#" data-aos="fade-up-right" class="cta-secondary">{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a>
       </div>
       <div class="scroll-indicator">
         <div class="chevron"></div>
@@ -41,6 +41,7 @@
   </v-carousel>
 </template>
 <script setup>
+import AOS from 'aos';
 import { useUserStore } from '@/stores/user';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';

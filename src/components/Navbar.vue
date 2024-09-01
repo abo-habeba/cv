@@ -9,7 +9,7 @@
         <v-menu @click="toggleIconmMnu = !toggleIconmMnu">
           <template v-slot:activator="{ props }">
             <v-btn
-              style="z-index: 199"
+              style="z-index: 90"
               @click="toggleIconmMnu = !toggleIconmMnu"
               :icon="toggleIconmMnu ? 'mdi-menu' : 'mdi-close'"
               v-bind="props"

@@ -3,7 +3,7 @@
     <v-col cols="auto">
       <v-btn class="ma-1" color="info" @click="openDialogShowHero()"> تعديل صور الرئيسية <v-icon icon="mdi-image-outline" end></v-icon></v-btn>
     </v-col>
-    <v-dialog style="z-index: 9999" class="text-center" v-model="dialogItemFormHero" max-width="900" persistent>
+    <v-dialog style="z-index: 50" class="text-center" v-model="dialogItemFormHero" max-width="900" persistent>
       <v-card class="pa-5">
         <h2 class="ma-5">صور الرئيسية</h2>
         <v-row style="background-color: #ada7a0; text-align: center; overflow-x: auto" v-if="userStore.user.hero.length">
@@ -93,6 +93,6 @@ defineExpose({
   padding: 15px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 50;
 }
 </style>

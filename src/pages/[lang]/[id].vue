@@ -1,49 +1,53 @@
 <template>
-  <div style="height: 5000px;" id="h-page" v-if="getData">
-    <!-- <div v-if="userAuthId === userAllData.user.id">edete</div> -->
-    <div class="container-wrap">
-      <div class="box-toggle">
-        <span v-if="btnToggle" @click="funToggled" :class="toggled ? 'mdi mdi-close' : 'mdi mdi-menu'" class="btn-toggle"></span>
-        <aside id="h-aside" :style="{ width: asideWidth }">
-          <AsideApp />
-        </aside>
+  <div>
+    <div style="height: 5000px" id="h-page" v-if="getData">
+      <div class="container-wrap">
+        <div class="box-toggle">
+          <span v-if="btnToggle" @click="funToggled" :class="toggled ? 'mdi mdi-close' : 'mdi mdi-menu'" class="btn-toggle"></span>
+          <aside id="h-aside" :style="{ width: asideWidth }">
+            <AsideApp />
+          </aside>
+        </div>
+        <div id="h-main">
+          <div v-if="btnToggle" :class="{ mainOverlay: toggled }" @click="closedToggled"></div>
+          <section id="h-hero" class="h-hero section" ref="heroRef">
+            <Hero />
+          </section>
+          <section style="background-color: blue;" id="h-about" class="h-about section" ref="aboutRef">
+            <About />
+          </section>
+          <!-- <section id="h-services" class="h-services section" ref="servicesRef">
+            <Services />
+          </section>
+          <section id="h-skills" class="h-skills section" ref="skillsRef">
+            <Skills />
+          </section>
+          <section id="h-education" class="h-education section" ref="educationRef">
+            <Education />
+          </section>
+          <section id="h-experience" class="h-experience section" ref="experienceRef">
+            <Experience />
+          </section>
+          <section id="h-work" class="h-work section" ref="workRef">
+            <Work />
+          </section>
+          <section id="h-blog" class="h-blog section" ref="blogRef">
+            <Blog />
+          </section>
+          <section id="h-contact" class="h-contact section" ref="contactRef">
+            <Content />
+          </section> -->
+        </div>
       </div>
-      <div id="h-main">
-        <div v-if="btnToggle" :class="{ mainOverlay: toggled }" @click="closedToggled"></div>
-        <section id="h-hero" class="h-hero">
-          <Hero />
-        </section>
-        <!-- <section id="h-about" class="h-about">
-          <About />
-        </section>
-        <section id="h-services" class="h-services">
-          <Services />
-        </section>
-        <section id="h-skills" class="h-skills">
-          <Skills />
-        </section>
-        <section id="h-education" class="h-education">
-          <Education />
-        </section>
-        <section id="h-experience" class="h-experience">
-          <Experience />
-        </section>
-        <section id="h-work" class="h-work">
-          <Work />
-        </section>
-        <section id="h-blog" class="h-blog">
-          <Blog />
-        </section>
-        <section id="h-contact" class="h-contact">
-          <Content />
-        </section> -->
-      </div>
+      <ScrollTop />
     </div>
-    <ScrollTop/>
   </div>
 </template>
+
 <script setup>
 import axios from 'axios';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useRoute } from 'vue-router';
@@ -54,20 +58,55 @@ const btnToggle = ref(true);
 const userAuthId = localStorage.user ? JSON.parse(localStorage.user).id : false;
 const userAllData = ref([]);
 const getData = ref(false);
-// const isOverlay = ref(false);
-// const lang = route.params.lang;
-// const backgroundColor = ref('#ff0000');
-// const width = ref('400px');
-// const display = ref('none');
-// console.log(lang);
-// console.log(route.params.id);
 const asideWidth = ref('30vw');
 const isScroll = ref(true);
-
+// const isVisible = ref({
+  // about: false,
+  // services: false,
+  // skills: false,
+  // education: false,
+  // experience: false,
+  // work: false,
+  // blog: false,
+  // contact: false,
+// });
+const heroRef = ref(null);
+const aboutRef = ref(null);
+// const servicesRef = ref(null);
+// const skillsRef = ref(null);
+// const educationRef = ref(null);
+// const experienceRef = ref(null);
+// const workRef = ref(null);
+// const blogRef = ref(null);
+// const contactRef = ref(null);
 onMounted(() => {
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        const sectionId = entry.target.id;
+        if (sectionId !== 'h-hero') {
+          isVisible.value[sectionId.replace('h-', '')] = entry.isIntersecting;
+        }
+      });
+    },
+    {
+      threshold: 0.1, // القسم يعتبر مرئيًا عندما يظهر 10% منه
+    }
+  );
+
+  // if (aboutRef.value) observer.observe(aboutRef.value);
+
+  // observer.observe(servicesRef.value);
+  // observer.observe(skillsRef.value);
+  // observer.observe(educationRef.value);
+  // observer.observe(experienceRef.value);
+  // observer.observe(workRef.value);
+  // observer.observe(blogRef.value);
+  // observer.observe(contactRef.value);
+
+  //////////
   userStore.loadengApi = false;
   window.addEventListener('scroll', setActiveNavItem);
-  // window.addEventListener('scroll', handleScroll);
   const mediaQuery = window.matchMedia('(max-width: 768px)');
   handleMediaChange(mediaQuery); // Initial check
   mediaQuery.addEventListener('change', handleMediaChange);
@@ -165,6 +204,22 @@ meta:
   layout: pure
 </route>
 <style>
+.section {
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.h-hero {
+  opacity: 1;
+  transform: none;
+}
+
 * {
   text-decoration: none;
 }
@@ -178,7 +233,7 @@ meta:
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 9999;
+  z-index: 99;
 }
 #h-main-menu {
   width: 100%;
@@ -214,7 +269,7 @@ meta:
   top: 0;
   left: 0;
   height: 100vh;
-  z-index: 9000;
+  z-index: 100;
 }
 .btn-toggle {
   position: absolute;
