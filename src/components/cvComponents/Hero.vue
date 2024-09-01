@@ -2,14 +2,14 @@
   <v-carousel
     class="hero-box"
     height="100vh"
-    style="background-color: black;"
+    style="background-color: black"
     cycle
-    :show-arrows="userStore.userAll.user.hero.length > 1 ? 'hover' : false"
+    :show-arrows="false"
     :hide-delimiter-background="userStore.userAll.user.hero.length <= 1"
     :hide-delimiters="userStore.userAll.user.hero.length <= 1"
   >
     <v-carousel-item v-for="(photo, i) in userStore.userAll.user.hero" :key="i">
-      <v-img :src="photo.path" height="100%" cover v-if="userStore.userAll.user.hero"> </v-img>
+      <v-img style="background-attachment: fixed" :src="photo.path" height="100%" cover v-if="userStore.userAll.user.hero"> </v-img>
     </v-carousel-item>
     <div
       :style="{
@@ -25,7 +25,7 @@
         }}
       </h1>
       <p>{{ displayedposition }}</p>
-      <h5>{{ userStore.userAll.user.bio[lang] }}</h5>
+      <p class="bio">{{ userStore.userAll.user.bio[lang] }}</p>
 
       <div class="cta-buttons">
         <a href="#h-work" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
@@ -91,8 +91,9 @@ $transition-speed: 0.3s;
     h1 {
       font-size: 30px;
     }
-    h5 {
+    .bio {
       font-size: 20px;
+      letter-spacing: 1px;
     }
     p {
       font-size: 25px;
@@ -109,8 +110,8 @@ $transition-speed: 0.3s;
     gap: 1rem;
 
     a {
-      padding: 0.8rem 1.5rem;
-      border-radius: 50px;
+      padding: 0.8rem 15px;
+      border-radius: 20px;
       text-decoration: none;
       font-weight: 600;
       transition: all $transition-speed ease;
@@ -149,7 +150,7 @@ $scroll-text-color: rgba(255, 255, 255, 0.7);
 
 .scroll-indicator {
   position: absolute;
-  bottom: 30px;
+  bottom: 45px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -232,9 +233,9 @@ $scroll-text-color: rgba(255, 255, 255, 0.7);
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  .scroll-indicator {
-    bottom: 20px;
-  }
+  // .scroll-indicator {
+  //   bottom: 20px;
+  // }
 
   .chevron {
     width: $chevron-size * 0.71;

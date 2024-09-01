@@ -1,5 +1,5 @@
 <template>
-  <div id="h-page" v-if="getData">
+  <div style="height: 5000px;" id="h-page" v-if="getData">
     <!-- <div v-if="userAuthId === userAllData.user.id">edete</div> -->
     <div class="container-wrap">
       <div class="box-toggle">
@@ -39,6 +39,7 @@
         </section> -->
       </div>
     </div>
+    <ScrollTop/>
   </div>
 </template>
 <script setup>
@@ -209,12 +210,10 @@ meta:
 }
 
 .box-toggle {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
-  /* display: none; */
-  /* cursor: pointer; */
   z-index: 9000;
 }
 .btn-toggle {
@@ -224,7 +223,7 @@ meta:
   font-size: 60px;
   cursor: pointer;
   display: inline-block;
-  color: blue;
+  color: #3498db;
 }
 @media screen and (max-width: 768px) {
   #h-aside {
