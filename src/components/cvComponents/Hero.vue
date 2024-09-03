@@ -242,9 +242,9 @@ $scroll-text-color: rgba(255, 255, 255, 0.7);
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  // .scroll-indicator {
-  //   bottom: 20px;
-  // }
+  .scroll-indicator {
+    bottom: 10vh;
+  }
 
   .chevron {
     width: $chevron-size * 0.71;

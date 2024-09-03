@@ -13,7 +13,7 @@
           </aside>
         </div>
         <div id="h-main">
-          <div v-if="btnToggle" :class="{ mainOverlay: toggled }" @click="closedToggled"></div>
+          <div v-if="btnToggle" :class="{ mainOverlay: toggled }" @click="funToggled"></div>
           <section id="h-hero" class="h-hero section" ref="heroRef">
             <Hero />
           </section>
@@ -116,15 +116,15 @@ function setActiveNavItem() {
   });
 }
 
-function closedToggled() {
-  const mediaQuery = window.matchMedia('(max-width: 768px)');
-  console.log(mediaQuery.matches);
-  if (mediaQuery.matches) {
-    toggled.value = false;
-    asideWidth.value = '0px';
-    // isOverlay.value = false;
-  }
-}
+// function closedToggled() {
+//   const mediaQuery = window.matchMedia('(max-width: 768px)');
+//   console.log(mediaQuery.matches);
+//   if (mediaQuery.matches) {
+//     toggled.value = false;
+//     asideWidth.value = '0px';
+//     // isOverlay.value = false;
+//   }
+// }
 function funToggled() {
   const hAside = document.getElementById('h-aside');
   if (isVisible.value && toggled.value) {
