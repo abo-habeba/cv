@@ -11,12 +11,7 @@
     <v-carousel-item v-for="(photo, i) in userStore.userAll.user.hero" :key="i">
       <v-img style="background-attachment: fixed" :src="photo.path" height="100%" cover v-if="userStore.userAll.user.hero"> </v-img>
     </v-carousel-item>
-    <div
-      :style="{
-        direction: lang === 'en' ? 'ltr' : 'rtl',
-      }"
-      class="hero-text d-flex flex-column fill-height justify-center align-center"
-    >
+    <div class="hero-text d-flex flex-column fill-height justify-center align-center">
       <h1>
         {{
           `${lang === 'en' ? 'Hello, I am' : ' مرحبا انا ,'}  ${userStore.userAll.user.first_name[lang] || ' '}  ${
@@ -31,7 +26,7 @@
         <a href="#h-work" data-aos="fade-up-left" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
         <a href="#" data-aos="fade-up-right" class="cta-secondary">{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a>
       </div>
-      <div class="scroll-indicator">
+      <div v-show="showscrollIndicator" class="scroll-indicator">
         <div class="chevron"></div>
         <div class="chevron"></div>
         <div class="chevron"></div>
@@ -43,7 +38,7 @@
 <script setup>
 import AOS from 'aos';
 import { useUserStore } from '@/stores/user';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const userStore = useUserStore();
@@ -68,9 +63,22 @@ function type() {
   }
   typeChar();
 }
+const showscrollIndicator = ref(true);
 
+const handleScroll = () => {
+  const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  if (currentScrollTop > 100) {
+    showscrollIndicator.value = false;
+  } else {
+    showscrollIndicator.value = true;
+  }
+};
 onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
   type();
+});
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
 });
 </script>
 <style lang="scss">

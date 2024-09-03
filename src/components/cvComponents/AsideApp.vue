@@ -1,5 +1,5 @@
 <template>
-  <div class="aside-app">
+  <div class=" aside-app">
     <div class="text-center">
       <div class="author-img"><img :src="userStore.userAll.user.profile_image" /></div>
       <h1 id="h-logo">{{ userStore.userAll.user.first_name[lang] }}</h1>
