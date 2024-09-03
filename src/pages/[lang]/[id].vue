@@ -8,7 +8,7 @@
       <div class="container-wrap">
         <div class="box-toggle">
           <span v-if="btnToggle" @click="funToggled" :class="toggled ? 'mdi mdi-close' : 'mdi mdi-menu'" class="btn-toggle"></span>
-          <aside v-show="btnToggle" :class="['animate__animated', animationClassToggle]" id="h-aside" :style="{ width: asideWidth }">
+          <aside v-show="isVisible" :class="['animate__animated', animationClassToggle]" id="h-aside" :style="{ width: asideWidth }">
             <AsideApp />
           </aside>
         </div>
@@ -64,7 +64,8 @@ const userAuthId = localStorage.user ? JSON.parse(localStorage.user).id : false;
 const userAllData = ref([]);
 const getData = ref(false);
 const asideWidth = ref('30vw');
-const animationClassToggle = ref('animate__flipInY');
+const animationClassToggle = ref(null);
+const isVisible = ref(true);
 
 onMounted(() => {
   //////////
@@ -125,16 +126,23 @@ function closedToggled() {
   }
 }
 function funToggled() {
-  // const hAside = document.getElementById('h-aside');
-  // isOverlay.value = !isOverlay.value;
-  // asideWidth.value = toggled.value ? '40vw' : '0px';
-  animationClassToggle.value = toggled.value ? 'animate__flipInY' : 'animate__flipOutY';
-  toggled.value = !toggled.value;
+  const hAside = document.getElementById('h-aside');
+  if (isVisible.value && toggled.value) {
+    animationClassToggle.value = 'animate__flipOutY';
+    setTimeout(() => {
+      toggled.value = false;
+      isVisible.value = false;
+    }, 400);
+  } else {
+    animationClassToggle.value = 'animate__flipInY';
+    toggled.value = true;
+    isVisible.value = true;
+  }
 }
-
 function handleMediaChange(event) {
   if (event.matches) {
     toggled.value = false;
+    isVisible.value = false;
     // asideWidth.value = '0px';
     asideWidth.value = '40vw';
     btnToggle.value = true;
