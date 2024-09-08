@@ -1,13 +1,20 @@
 <template>
   <div>
-    <div class="animate__animated animate__wobble scroll-button" v-show="showButton" @click="scrollToTop">
+    <div
+      :style="lang === 'en' ? { right: '20px' } : { left: '20px' }"
+      class="animate__animated animate__wobble scroll-button"
+      v-show="showButton"
+      @click="scrollToTop"
+    >
       <span class="mdi mdi-arrow-up-bold-box-outline"></span>
     </div>
   </div>
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const lang = route.params.lang;
 const showButton = ref(false);
 let lastScrollTop = 0;
 
@@ -37,7 +44,6 @@ onUnmounted(() => {
 .scroll-button {
   position: fixed;
   bottom: 20px;
-  right: 20px;
   font-size: 40px;
   display: block;
   color: #007bff;

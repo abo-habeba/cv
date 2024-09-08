@@ -15,8 +15,10 @@
         <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.last_name.ar || 'N D'" title="الاسم الاخير (AR)"> </v-list-item>
         <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.address.en || 'N D'" title="Address (EN)"> </v-list-item>
         <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.address.ar || 'N D'" title="العنوان (AR)"> </v-list-item>
-        <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.bio.en || 'N D'" title="Bio (EN)"> </v-list-item>
-        <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.bio.ar || 'N D'" title="نبذه عنك (AR)"> </v-list-item>
+        <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.bio_en || 'N D'" title="Bio (EN)"> </v-list-item>
+        <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.bio_ar || 'N D'" title="نبذه عنك (AR)"> </v-list-item>
+        <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.about_en || 'N D'" title="About Me (EN)"> </v-list-item>
+        <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.about_ar || 'N D'" title=" عني (AR)"> </v-list-item>
         <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.position.en || 'N D'" title="Position (EN)"> </v-list-item>
         <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.position.ar || 'N D'" title="الوظيفة (AR)"> </v-list-item>
         <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.username || 'N D'" title="User Name"> </v-list-item>

@@ -22,6 +22,10 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
 .sticky-column {
   position: -webkit-sticky;
   position: sticky;
@@ -53,5 +57,39 @@ onMounted(() => {
 }
 .v-alert--density-default {
   padding: 3px !important;
+}
+
+.title-section {
+  text-align: center;
+  padding: 30px 0;
+  width: 100%;
+  margin: auto;
+
+  h2 {
+    font-size: 40px;
+    color: #333333;
+    padding: 10px;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  .top,
+  .center,
+  .bottom {
+    height: 1px;
+    background-color: #333333;
+    margin: auto;
+    position: relative;
+  }
+
+  .top,
+  .bottom {
+    width: 50px;
+    margin: 1px auto;
+  }
+
+  .center {
+    width: 150px;
+    margin: 4px auto;
+  }
 }
 </style>

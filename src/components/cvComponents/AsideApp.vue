@@ -12,7 +12,7 @@
             <a href="#h-hero">{{ lang == 'en' ? 'Home' : 'الرئيسية' }}</a>
           </li>
           <li>
-            <a href="#h-about">{{ lang == 'en' ? 'About' : 'من نحن' }}</a>
+            <a href="#h-about">{{ lang == 'en' ? 'About' : ' عني ' }}</a>
           </li>
           <li>
             <a href="#h-services">{{ lang == 'en' ? 'Services' : 'الخدمات' }}</a>

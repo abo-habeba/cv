@@ -37,14 +37,32 @@
             </v-col>
 
             <v-col cols="12" md="6">
-              <v-text-field v-model="user.bio.ar" label=" نبذه عنك "></v-text-field>
+              <v-textarea
+                dir="rtl"
+                style="direction: rtl; text-align: right; unicode-bidi: bidi-override"
+                v-model="user.bio_ar"
+                label=" نبذه عنك "
+              ></v-textarea>
             </v-col>
             <v-col cols="12" md="6">
-              <v-text-field v-model="user.bio.en" label=" Bio"></v-text-field>
+              <v-textarea v-model="user.bio_en" label=" Bio"></v-textarea>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-textarea
+                dir="rtl"
+                style="direction: rtl; text-align: right; unicode-bidi: bidi-override"
+                v-model="user.about_ar"
+                label="  عني "
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-textarea v-model="user.about_en" label=" About Me"></v-textarea>
             </v-col>
 
             <v-col cols="12" md="6">
               <v-text-field v-model="user.email" label=" Email"></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
               <v-text-field v-model="user.phone" label=" Phone"></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
@@ -55,6 +73,8 @@
                 prepend-icon="mdi-camera"
                 @change="previewImage"
               ></v-file-input>
+            </v-col>
+            <v-col cols="12" md="6">
               <v-img style="margin: auto" v-if="preview" :src="preview" max-width="200"></v-img>
             </v-col>
           </v-row>
@@ -119,7 +139,10 @@ function save() {
   formData.append('first_name', JSON.stringify(user.value.first_name));
   formData.append('last_name', JSON.stringify(user.value.last_name));
   formData.append('address', JSON.stringify(user.value.address));
-  formData.append('bio', JSON.stringify(user.value.bio));
+  formData.append('bio_ar', user.value.bio_ar);
+  formData.append('bio_en', user.value.bio_en);
+  formData.append('about_ar', user.value.about_ar);
+  formData.append('about_en', user.value.about_en);
   formData.append('position', JSON.stringify(user.value.position));
   formData.append('email', user.value.email);
   formData.append('phone', user.value.phone);

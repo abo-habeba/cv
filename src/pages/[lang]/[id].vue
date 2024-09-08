@@ -4,11 +4,22 @@
       direction: lang === 'en' ? 'ltr' : 'rtl',
     }"
   >
-    <div style="height: 5000px" id="h-page" v-if="getData">
+    <div id="h-page" v-if="getData">
       <div class="container-wrap">
-        <div class="box-toggle">
+        <div
+          class="box-toggle"
+          :style="{
+            [lang === 'en' ? 'left' : 'right']: '0',
+            width: boxToggleeWidth,
+          }"
+        >
           <span v-if="btnToggle" @click="funToggled" :class="toggled ? 'mdi mdi-close' : 'mdi mdi-menu'" class="btn-toggle"></span>
-          <aside v-show="isVisible" :class="['animate__animated', animationClassToggle]" id="h-aside" :style="{ width: asideWidth }">
+          <aside
+            v-show="isVisible"
+            :class="['animate__animated', animationClassToggle]"
+            id="h-aside"
+            :style="{ width: asideWidth, [lang === 'en' ? 'left' : 'right']: '0' }"
+          >
             <AsideApp />
           </aside>
         </div>
@@ -64,16 +75,18 @@ const userAuthId = localStorage.user ? JSON.parse(localStorage.user).id : false;
 const userAllData = ref([]);
 const getData = ref(false);
 const asideWidth = ref('30vw');
+const boxToggleeWidth = ref('30vw');
 const animationClassToggle = ref(null);
 const isVisible = ref(true);
+const mediaQuery = window.matchMedia('(max-width: 768px)');
 
 onMounted(() => {
   //////////
   userStore.loadengApi = false;
   window.addEventListener('scroll', setActiveNavItem);
-  const mediaQuery = window.matchMedia('(max-width: 768px)');
   handleMediaChange(mediaQuery); // Initial check
   mediaQuery.addEventListener('change', handleMediaChange);
+  mediaQuery.addEventListener('resize', handleMediaChange);
   axios
     .get(`users-all/${route.params.id}`)
     .then(res => {
@@ -126,7 +139,6 @@ function setActiveNavItem() {
 //   }
 // }
 function funToggled() {
-  const hAside = document.getElementById('h-aside');
   if (isVisible.value && toggled.value) {
     animationClassToggle.value = 'animate__flipOutY';
     setTimeout(() => {
@@ -140,15 +152,19 @@ function funToggled() {
   }
 }
 function handleMediaChange(event) {
+  console.log('run handleMediaChange');
+
   if (event.matches) {
+    console.log('event.matches');
     toggled.value = false;
     isVisible.value = false;
-    // asideWidth.value = '0px';
-    asideWidth.value = '40vw';
+    boxToggleeWidth.value = 'auto';
     btnToggle.value = true;
     // toggled.value ? (isOverlay.value = true) : (isOverlay.value = false);
   } else {
-    asideWidth.value = '20vw';
+    console.log('else event matches');
+    boxToggleeWidth.value = '20vw';
+    asideWidth.value = '100%';
     toggled.value = true;
     btnToggle.value = false;
     // isOverlay.value = false;
@@ -174,11 +190,14 @@ meta:
 * {
   text-decoration: none;
 }
-#h-page {
+#h-main {
+  flex-grow: 1;
+}
+/* #h-page {
   @media screen and (min-width: 768px) {
     margin: 0px 10%;
   }
-}
+} */
 .mainOverlay {
   background-color: #0000ff1c;
   position: absolute;
@@ -204,32 +223,36 @@ meta:
 
 .container-wrap {
   display: flex;
+  position: relative;
 }
-#h-aside {
+.box-toggle {
   position: sticky;
   top: 0;
-  left: 0;
+  height: 100vh;
+  z-index: 100;
+}
+.container-wrap {
+  @media screen and (min-width: 768px) {
+    margin: 0px 10%;
+  }
+}
+#h-aside {
+  position: absolute;
+  top: 0;
   height: 100vh;
   /* width: 300px; */
   background-color: #f0f0f0;
   transition: opacity 0.5s ease, width 1s ease;
 }
 
-.box-toggle {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  z-index: 100;
-}
 .btn-toggle {
   position: absolute;
   top: 0;
-  right: -60px;
   font-size: 60px;
   cursor: pointer;
   display: inline-block;
   color: #3498db;
+  z-index: 99;
 }
 @media screen and (max-width: 768px) {
   #h-aside {
@@ -239,5 +262,8 @@ meta:
   /* .box-toggle {
     display: block;
   } */
+}
+.h-about {
+  padding: 5%;
 }
 </style>

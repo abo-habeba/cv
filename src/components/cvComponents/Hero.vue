@@ -20,7 +20,7 @@
         }}
       </h1>
       <p>{{ displayedposition }}</p>
-      <p class="bio">{{ userStore.userAll.user.bio[lang] }}</p>
+      <pre class="bio">{{ lang === 'en' ? userStore.userAll.user.bio_en : userStore.userAll.user.bio_ar }}</pre>
 
       <div class="cta-buttons">
         <a href="#h-work" data-aos="fade-up-left" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
@@ -36,7 +36,6 @@
   </v-carousel>
 </template>
 <script setup>
-import AOS from 'aos';
 import { useUserStore } from '@/stores/user';
 import { onMounted, ref, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
@@ -49,16 +48,18 @@ const displayedposition = ref('');
 function type() {
   let i = 0;
   function typeChar() {
-    if (i < position.value.length) {
-      displayedposition.value += position.value.charAt(i);
-      i++;
-      setTimeout(typeChar, speed);
-    } else {
-      // الانتظار قليلاً قبل إعادة الكتابة
-      setTimeout(() => {
-        displayedposition.value = '';
-        type();
-      }, 1000); // الانتظار لمدة 1 ثانية قبل البدء من جديد
+    if (position.value) {
+      if (i < position.value.length) {
+        displayedposition.value += position.value.charAt(i);
+        i++;
+        setTimeout(typeChar, speed);
+      } else {
+        // الانتظار قليلاً قبل إعادة الكتابة
+        setTimeout(() => {
+          displayedposition.value = '';
+          type();
+        }, 1000); // الانتظار لمدة 1 ثانية قبل البدء من جديد
+      }
     }
   }
   typeChar();
