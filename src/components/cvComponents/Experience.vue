@@ -1,97 +1,42 @@
 <template>
-  <div class="h-narrow-content">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">
-        <span class="heading-meta">Experience</span>
-        <h2 class="h-heading animate-box">Work Experience</h2>
+  <div>
+    <v-card class="pa-4 my-4">
+      <div class="title-section">
+        <h2>{{ lang == 'en' ? 'Experiences' : ' الخبرات ' }}</h2>
+        <div class="top"></div>
+        <div class="center"></div>
+        <div class="bottom"></div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="timeline-centered">
-          <article class="timeline-entry animate-box" data-animate-effect="fadeInLeft">
-            <div class="timeline-entry-inner">
-              <div class="timeline-icon color-1">
-                <i class="icon-pen2"></i>
-              </div>
-
-              <div class="timeline-label">
-                <h2><a href="#">Full Stack Developer</a> <span>2017-2018</span></h2>
-                <p>
-                  Tolerably earnestly middleton extremely distrusts she boy now not. Add and offered prepare how cordial two promise. Greatly who
-                  affixed suppose but enquire compact prepare all put. Added forth chief trees but rooms think may.
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article class="timeline-entry animate-box" data-animate-effect="fadeInRight">
-            <div class="timeline-entry-inner">
-              <div class="timeline-icon color-2">
-                <i class="icon-pen2"></i>
-              </div>
-              <div class="timeline-label">
-                <h2><a href="#">Front End Developer at Google Company</a> <span>2017-2018</span></h2>
-                <p>
-                  Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line
-                  of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article class="timeline-entry animate-box" data-animate-effect="fadeInLeft">
-            <div class="timeline-entry-inner">
-              <div class="timeline-icon color-3">
-                <i class="icon-pen2"></i>
-              </div>
-              <div class="timeline-label">
-                <h2><a href="#">System Analyst</a> <span>2017-2018</span></h2>
-                <p>
-                  Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line
-                  of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article class="timeline-entry animate-box" data-animate-effect="fadeInTop">
-            <div class="timeline-entry-inner">
-              <div class="timeline-icon color-4">
-                <i class="icon-pen2"></i>
-              </div>
-              <div class="timeline-label">
-                <h2><a href="#">Creative Designer</a> <span>2017-2018</span></h2>
-                <p>
-                  Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line
-                  of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article class="timeline-entry animate-box" data-animate-effect="fadeInLeft">
-            <div class="timeline-entry-inner">
-              <div class="timeline-icon color-5">
-                <i class="icon-pen2"></i>
-              </div>
-              <div class="timeline-label">
-                <h2><a href="#">UI/UX Designer at Envato</a> <span>2017-2018</span></h2>
-                <p>
-                  Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line
-                  of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article class="timeline-entry begin animate-box" data-animate-effect="fadeInBottom">
-            <div class="timeline-entry-inner">
-              <div class="timeline-icon color-none"></div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
+      <v-timeline  side="end">
+        <v-timeline-item width="100%" size="large" v-for="item in userStore.userAll.experiences" :key="item.id">
+          <template v-if="item.photos[0]" v-slot:icon>
+            <v-avatar :image="item.photos[0].path"></v-avatar>
+          </template>
+          <v-card  class="elevation-0">
+            <v-chip color="primary" label>{{ lang == 'en' ? 'From' : ' من ' }} : {{ item.start_date }} </v-chip>
+            <v-card-title class="text-h5"> {{ item.title[lang] }}</v-card-title>
+            <v-card-subtitle> {{ item.company[lang] }}</v-card-subtitle>
+            <v-card-text> {{ item.description[lang] }}</v-card-text>
+            <v-card-subtitle v-if="Number(item.end_date[lang]) === 1"> {{ lang == 'en' ? 'Up to now' : ' الي الان ' }}</v-card-subtitle>
+            <v-card-subtitle v-else> {{ lang == 'en' ? 'To' : ' الي ' }} : {{ item.end_date[lang] }}</v-card-subtitle>
+          </v-card>
+          <hr class="my-4">
+        </v-timeline-item>
+      </v-timeline>
+    </v-card>
   </div>
 </template>
+
+<script setup>
+import { useUserStore } from '@/stores/user';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const userStore = useUserStore();
+const lang = route.params.lang;
+</script>
+<style>
+.v-timeline-item__opposite {
+  padding: 0px !important;
+  margin: 0px !important;
+}
+</style>

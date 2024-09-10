@@ -14,7 +14,8 @@ import { onMounted } from 'vue';
 // import { fetchItems } from '@/Service/apiService';
 const userStore = useUserStore();
 onMounted(() => {
-  if (localStorage.token) {
+  userStore.loadengApi = true;
+  if (!localStorage.token) {
     userStore.isLoader = false;
     userStore.loadengApi = false;
     userStore.popupError = false;

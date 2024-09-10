@@ -26,6 +26,13 @@
         <a href="#h-work" data-aos="fade-up-left" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
         <a href="#" data-aos="fade-up-right" class="cta-secondary">{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a>
       </div>
+      <div class="box-socials">
+        <div v-for="(social, i) in userStore.userAll.socials" :key="i">
+          <a :href="social.url" target="_blank">
+            <v-icon style="font-size: 40px;" :color="social.icon.color" :icon="social.icon.icon"></v-icon>
+          </a>
+        </div>
+      </div>
       <div v-show="showscrollIndicator" class="scroll-indicator">
         <div class="chevron"></div>
         <div class="chevron"></div>
@@ -43,7 +50,7 @@ const route = useRoute();
 const userStore = useUserStore();
 const lang = route.params.lang;
 const position = ref(userStore.userAll.user.position[lang]);
-const speed = 200; // سرعة الكتابة
+const speed = 200;
 const displayedposition = ref('');
 function type() {
   let i = 0;
@@ -58,7 +65,7 @@ function type() {
         setTimeout(() => {
           displayedposition.value = '';
           type();
-        }, 1000); // الانتظار لمدة 1 ثانية قبل البدء من جديد
+        }, 1000);
       }
     }
   }
@@ -102,7 +109,7 @@ $transition-speed: 0.3s;
       font-size: 30px;
     }
     .bio {
-      font-size: 20px;
+      // font-size: 20px;
       letter-spacing: 1px;
     }
     p {

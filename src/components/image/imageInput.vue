@@ -12,7 +12,7 @@
     <v-file-input
       v-model="images"
       chips
-      multiple
+      :multiple="props.isMultiple"
       label="الصور"
       accept="image/*"
       prepend-icon="mdi-camera"
@@ -21,12 +21,18 @@
   </v-col>
 </template>
 <script setup>
-import { ref, defineEmits, watch } from 'vue';
+import { ref, defineEmits } from 'vue';
 import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
 const emits = defineEmits(['saveCompressedImages']);
 const images = ref([]);
 const imagePreviews = ref([]);
+const props = defineProps({
+  isMultiple: {
+    type: Boolean,
+    default: false,
+  },
+});
 const generateImagePreviews = () => {
   imagePreviews.value = [];
   images.value.forEach(file => {
@@ -74,36 +80,6 @@ const compressImages = (SizeMB = 1) => {
     }
   });
 };
-
-// const compressImages = async () => {
-//   console.log(' start compressImages');
-//   userStore.loadengApi = true;
-//   // Create an array to hold the compressed images
-//   // Define compression options
-//   const options = {
-//     maxSizeMB: 1,
-//     maxWidthOrHeight: 8000,
-//     useWebWorker: true,
-//   };
-//   // Loop through the selected images and compress each one
-//   try {
-//     console.log('images', images.value, 'length  ' + images.value.length);
-//     images.value.map(async file => {
-//       const compressedFile = await imageCompression(file, options);
-//       compressedImages.value.push(compressedFile);
-//     });
-//     console.log('end map', compressedImages.value, 'length  ' + compressedImages.value.length);
-//     if (compressedImages.value.length === images.value.length) {
-//       console.log('Compressed Images before emit:', compressedImages.value);
-//       emits('saveCompressedImages', compressedImages.value);
-//       console.log('After emit call');
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-
-//   userStore.loadengApi = false;
-// };
 
 defineExpose({
   compressImages,

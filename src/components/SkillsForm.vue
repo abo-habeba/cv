@@ -17,10 +17,10 @@
               <v-text-field v-model="langName.en" label="name"></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
-              <v-text-field v-model="lanlDescription.ar" label="الوصف"></v-text-field>
+              <v-textarea v-model="lanlDescription.ar" label="الوصف"></v-textarea>
             </v-col>
             <v-col cols="12" md="6">
-              <v-text-field v-model="lanlDescription.en" label="description"></v-text-field>
+              <v-textarea v-model="lanlDescription.en" label="description"></v-textarea>
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field
@@ -30,7 +30,7 @@
                 :rules="[v => (v >= 1 && v <= 100) || 'يجب أن يكون الرقم بين 1 الي 100']"
               ></v-text-field>
             </v-col>
-            <imageInput ref="imageInputRef" @saveCompressedImages="save" />
+            <imageInput ref="imageInputRef" />
           </v-row>
         </v-form>
         <template v-slot:actions>
@@ -54,14 +54,6 @@ const langName = ref({});
 const lanlDescription = ref({});
 const emits = defineEmits(['runItems']);
 
-function validateLevel() {
-  if (item.value.level < 1) {
-    item.value.level = 1;
-  } else if (item.value.level > 100) {
-    item.value.level = 100;
-  }
-}
-
 function closeDialog() {
   langName.value = { ar: '', en: '' };
   lanlDescription.value = { ar: '', en: '' };
@@ -70,13 +62,17 @@ function closeDialog() {
   dialogItemForm.value = false;
   emits('runItems');
 }
-
 function save(compressedImages) {
   const formData = new FormData();
   formData.append('name', JSON.stringify(langName.value));
   formData.append('description', JSON.stringify(lanlDescription.value));
-  formData.append('level', item.value.level);
+  if (item.value.level) {
+    formData.append('level', item.value.level);
+  }
+  console.log('item.value.level', item.value.level || null);
   formData.append('user_id', userStore.user.id);
+  console.log('userStore.user.id', userStore.user.id);
+
   // Add compressed images to formData
   if (compressedImages.length) {
     compressedImages.forEach(file => {
@@ -100,9 +96,10 @@ const runCompressImages = () => {
     notifyError(`حقل الاسم مطلوب عربي او انجليزي`);
     return;
   }
-
   if (imageInputRef.value) {
-    imageInputRef.value.compressImages();
+    imageInputRef.value.compressImages().then(res => {
+      save(res);
+    });
   }
 };
 

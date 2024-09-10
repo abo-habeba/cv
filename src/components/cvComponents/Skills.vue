@@ -1,78 +1,64 @@
 <template>
   <div class="h-narrow-content">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">
-        <span class="heading-meta">My Specialty</span>
-        <h2 class="h-heading animate-box">My Skills</h2>
+    <v-card class="pa-4 my-4">
+      <div class="title-section">
+        <h2>{{ lang == 'en' ? 'Skills' : ' المهارات ' }}</h2>
+        <div class="top"></div>
+        <div class="center"></div>
+        <div class="bottom"></div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
-        <p>
-          The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little
-          Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way.
-        </p>
-      </div>
-      <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
-        <div class="progress-wrap">
-          <h3>Photoshop</h3>
-          <div class="progress">
-            <div class="progress-bar color-1" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
-              <span>75%</span>
-            </div>
+      <v-row>
+        <v-col v-for="(skill, index) in userStore.userAll.skills" :key="index" cols="6" md="3">
+          <div style="cursor: pointer" @click="funSelectedSkill(skill)" class="d-flex flex-column align-center text-center pa-3">
+            <v-avatar v-if="skill?.photos[0]" size="80" class="mx-auto mb-3">
+              <v-img :src="skill.photos[0]?.path" alt="Skill Image"></v-img>
+            </v-avatar>
+            <v-card-title class="text-h6">{{ skill.name[lang] }}</v-card-title>
+            <!-- <per>{{ skill.description[lang] }}</per> -->
+            <!-- <v-progress-linear height="15" v-if="skill?.level !== null" :model-value="skill.level" color="primary" class="mt-3">
+              <template v-slot:default>
+                <strong>{{ skill.level }}%</strong>
+              </template>
+            </v-progress-linear> -->
           </div>
-        </div>
-      </div>
-      <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
-        <div class="progress-wrap">
-          <h3>jQuery</h3>
-          <div class="progress">
-            <div class="progress-bar color-2" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-              <span>60%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
-        <div class="progress-wrap">
-          <h3>HTML5</h3>
-          <div class="progress">
-            <div class="progress-bar color-3" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
-              <span>85%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
-        <div class="progress-wrap">
-          <h3>CSS3</h3>
-          <div class="progress">
-            <div class="progress-bar color-4" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-              <span>90%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
-        <div class="progress-wrap">
-          <h3>WordPress</h3>
-          <div class="progress">
-            <div class="progress-bar color-5" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-              <span>70%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
-        <div class="progress-wrap">
-          <h3>SEO</h3>
-          <div class="progress">
-            <div class="progress-bar color-6" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-              <span>80%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-dialog v-model="dialogSkill" max-width="500px">
+      <v-card class="d-flex flex-column align-center text-center pa-3">
+        <v-card-title>{{ selectedSkill?.name[lang] }}</v-card-title>
+        <v-avatar v-if="selectedSkill.photos[0]" size="80" class="mx-auto mb-3">
+          <v-img :src="selectedSkill?.photos[0]?.path" alt="Skill Image"></v-img>
+        </v-avatar>
+        <pre>{{ selectedSkill?.description[lang] }}</pre>
+        <v-progress-circular
+          v-if="selectedSkill?.level !== null"
+          :model-value="selectedSkill.level"
+          :rotate="-90"
+          :size="100"
+          :width="15"
+          color="primary"
+        >
+          {{ selectedSkill.level }} %
+        </v-progress-circular>
+        <v-card-actions class="pa-4">
+          <v-btn color="red" text @click="dialogSkill = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
+<script setup>
+import { useUserStore } from '@/stores/user';
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const userStore = useUserStore();
+const lang = route.params.lang;
+const selectedSkill = ref(null);
+const dialogSkill = ref(false);
+function funSelectedSkill(skill) {
+  selectedSkill.value = skill;
+  dialogSkill.value = true;
+}
+</script>

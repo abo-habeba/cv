@@ -28,30 +28,32 @@
           <section id="h-hero" class="h-hero section" ref="heroRef">
             <Hero />
           </section>
-          <section id="h-about" class="h-about section" ref="aboutRef">
-            <About />
-          </section>
-          <!-- <section id="h-services" class="h-services section" ref="servicesRef">
+          <div class="pa-4">
+            <section id="h-about" class="h-about section" ref="aboutRef">
+              <About />
+            </section>
+            <section id="h-skills" class="h-skills section" ref="skillsRef">
+              <Skills />
+            </section>
+            <section id="h-academic" class="h-academic section" ref="academicRef">
+              <Academic />
+            </section>
+            <section id="h-experience" class="h-experience section" ref="experienceRef">
+              <Experience />
+            </section>
+            <!--  <section id="h-work" class="h-work section" ref="workRef">
+              <Work />
+            </section>
+            <section id="h-contact" class="h-contact section" ref="contactRef">
+              <Content />
+            </section>
+            <section id="h-services" class="h-services section" ref="servicesRef">
             <Services />
-          </section>
-          <section id="h-skills" class="h-skills section" ref="skillsRef">
-            <Skills />
-          </section>
-          <section id="h-education" class="h-education section" ref="educationRef">
-            <Education />
-          </section>
-          <section id="h-experience" class="h-experience section" ref="experienceRef">
-            <Experience />
-          </section>
-          <section id="h-work" class="h-work section" ref="workRef">
-            <Work />
           </section>
           <section id="h-blog" class="h-blog section" ref="blogRef">
             <Blog />
-          </section>
-          <section id="h-contact" class="h-contact section" ref="contactRef">
-            <Content />
           </section> -->
+          </div>
         </div>
       </div>
       <ScrollTop />
@@ -79,6 +81,7 @@ const boxToggleeWidth = ref('30vw');
 const animationClassToggle = ref(null);
 const isVisible = ref(true);
 const mediaQuery = window.matchMedia('(max-width: 768px)');
+userStore.loadengApi = false;
 
 onMounted(() => {
   //////////
@@ -128,16 +131,6 @@ function setActiveNavItem() {
     }
   });
 }
-
-// function closedToggled() {
-//   const mediaQuery = window.matchMedia('(max-width: 768px)');
-//   console.log(mediaQuery.matches);
-//   if (mediaQuery.matches) {
-//     toggled.value = false;
-//     asideWidth.value = '0px';
-//     // isOverlay.value = false;
-//   }
-// }
 function funToggled() {
   if (isVisible.value && toggled.value) {
     animationClassToggle.value = 'animate__flipOutY';
@@ -149,6 +142,7 @@ function funToggled() {
     animationClassToggle.value = 'animate__flipInY';
     toggled.value = true;
     isVisible.value = true;
+    asideWidth.value = '40vw';
   }
 }
 function handleMediaChange(event) {
@@ -170,12 +164,6 @@ function handleMediaChange(event) {
     // isOverlay.value = false;
   }
 }
-
-// definePage({
-//   meta: {
-//     layout: pure,
-//   },
-// });
 </script>
 <route lang="yaml">
 meta:
@@ -183,8 +171,14 @@ meta:
 </route>
 <style>
 .h-hero {
+  position: static;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   opacity: 1;
   transform: none;
+  height: 100vh;
 }
 
 * {
@@ -192,12 +186,10 @@ meta:
 }
 #h-main {
   flex-grow: 1;
+  width: auto;
+  flex: 1;
 }
-/* #h-page {
-  @media screen and (min-width: 768px) {
-    margin: 0px 10%;
-  }
-} */
+
 .mainOverlay {
   background-color: #0000ff1c;
   position: absolute;
@@ -215,12 +207,6 @@ meta:
 .aside-hidden {
   width: 0px;
 }
-#h-main {
-  width: auto;
-  /* position: relative; */
-  flex: 1;
-}
-
 .container-wrap {
   display: flex;
   position: relative;
@@ -259,11 +245,5 @@ meta:
     /* width: 0px; */
     overflow: hidden;
   }
-  /* .box-toggle {
-    display: block;
-  } */
-}
-.h-about {
-  padding: 5%;
 }
 </style>

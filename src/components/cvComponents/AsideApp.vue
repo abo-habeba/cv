@@ -14,9 +14,9 @@
           <li>
             <a href="#h-about">{{ lang == 'en' ? 'About' : ' عني ' }}</a>
           </li>
-          <li>
+          <!-- <li>
             <a href="#h-services">{{ lang == 'en' ? 'Services' : 'الخدمات' }}</a>
-          </li>
+          </li> -->
           <li>
             <a href="#h-skills">{{ lang == 'en' ? 'Skills' : 'المهارات' }}</a>
           </li>

@@ -46,7 +46,7 @@
             <v-col cols="12" md="6">
               <v-text-field v-model="description.en" label="description"></v-text-field>
             </v-col>
-            <imageInput ref="imageInputRef" @saveCompressedImages="save" />
+            <imageInput ref="imageInputRef" />
           </v-row>
         </v-form>
         <template v-slot:actions>
@@ -136,7 +136,9 @@ const runCompressImages = () => {
     return;
   }
   if (imageInputRef.value) {
-    imageInputRef.value.compressImages();
+    imageInputRef.value.compressImages().then(res => {
+      save(res);
+    });
   }
 };
 
