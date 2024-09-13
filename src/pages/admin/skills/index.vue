@@ -7,8 +7,9 @@
         <v-btn class="ma-1" @click="openDialogDeleted = false"> اغلاق </v-btn>
       </v-card>
     </v-dialog>
-    <ShowImages ref="isShowImage" @runItems="getItems" />
+    <ThemeSettings v-if="userStore.user" ref="dialogThemeForm" nameSection="skill" @click="openDialogThemeForm" />
     <SkillsForm ref="itemForm" @runItems="getItems" />
+    <ShowImages ref="isShowImage" @runItems="getItems" />
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h">
       <thead>
         <tr>
@@ -60,12 +61,22 @@ definePage({
     show: false,
   },
 });
+const dialogThemeForm = ref(null);
+function openDialogThemeForm() {
+  if (dialogThemeForm.value) {
+    dialogThemeForm.value.opendialogThemeForm();
+  } else {
+    console.error('opendialogThemeForm is not a function');
+  }
+}
 const isShowImage = ref(null);
 const showImage = photos => {
   isShowImage.value.opaenDialog(photos);
 };
 
 onMounted(() => {
+  console.log(userStore.user);
+
   getItems();
 });
 
@@ -80,7 +91,6 @@ function deleteItem(i) {
   openDialogDeleted.value = true;
   item.value = i;
 }
-
 function deleted() {
   userStore.loadengApi = true;
   deleteItems(`skills/delete`, { id: [item.value.id] }).then(() => {

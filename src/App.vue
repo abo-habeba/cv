@@ -15,14 +15,28 @@ import { onMounted } from 'vue';
 const userStore = useUserStore();
 onMounted(() => {
   userStore.loadengApi = true;
-  if (!localStorage.token) {
-    userStore.isLoader = false;
-    userStore.loadengApi = false;
-    userStore.popupError = false;
-  }
+  userStore.setAuthHeaderNew(localStorage.token).then(() => {
+    userStore.isAuth = true;
+    userStore
+      .fetchUser()
+      .then(() => {
+        userStore.isLoader = false;
+        userStore.loadengApi = false;
+        userStore.popupError = false;
+        console.log(userStore.user.theme);
+      })
+      .catch(() => {
+        if (!localStorage.token) {
+          userStore.isLoader = false;
+          userStore.loadengApi = false;
+          userStore.popupError = false;
+        }
+      });
+  });
 });
 </script>
 <style lang="scss">
+
 pre {
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -62,12 +76,12 @@ pre {
 
 .title-section {
   text-align: center;
-  padding: 30px 0;
+  // padding: 20px 0;
   width: 100%;
   margin: auto;
 
   h2 {
-    font-size: 40px;
+    font-size: 30px;
     color: #333333;
     padding: 10px;
     font-family: 'Source Sans Pro', sans-serif;

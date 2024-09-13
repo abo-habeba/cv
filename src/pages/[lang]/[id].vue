@@ -28,17 +28,41 @@
           <section id="h-hero" class="h-hero section" ref="heroRef">
             <Hero />
           </section>
-          <div class="pa-4">
-            <section id="h-about" class="h-about section" ref="aboutRef">
+          <div style="display: flex; flex-direction: column; justify-content: center" class="pa-4">
+            <section
+              class="h-about section"
+              :style="{ order: userStore.userAll.user.theme.about?.order - 2 }"
+              v-if="userStore.userAll.user.theme.about?.enabled"
+              id="h-about"
+              ref="aboutRef"
+            >
               <About />
             </section>
-            <section id="h-skills" class="h-skills section" ref="skillsRef">
+            <section
+              class="h-skills section"
+              :style="{ order: userStore.userAll.user.theme.skill?.order - 2 }"
+              v-if="userStore.userAll.user.theme.skill?.enabled"
+              id="h-skills"
+              ref="skillsRef"
+            >
               <Skills />
             </section>
-            <section id="h-academic" class="h-academic section" ref="academicRef">
+            <section
+              class="h-academic section"
+              :style="{ order: userStore.userAll.user.theme.academic?.order - 2 }"
+              v-if="userStore.userAll.user.theme.academic?.enabled"
+              id="h-academic"
+              ref="academicRef"
+            >
               <Academic />
             </section>
-            <section id="h-experience" class="h-experience section" ref="experienceRef">
+            <section
+              class="h-experience section"
+              :style="{ order: userStore.userAll.user.theme.experience?.order - 2 }"
+              v-if="userStore.userAll.user.theme.experience?.enabled"
+              id="h-experience"
+              ref="experienceRef"
+            >
               <Experience />
             </section>
             <!--  <section id="h-work" class="h-work section" ref="workRef">
@@ -226,7 +250,6 @@ meta:
   position: absolute;
   top: 0;
   height: 100vh;
-  /* width: 300px; */
   background-color: #f0f0f0;
   transition: opacity 0.5s ease, width 1s ease;
 }
@@ -242,7 +265,6 @@ meta:
 }
 @media screen and (max-width: 768px) {
   #h-aside {
-    /* width: 0px; */
     overflow: hidden;
   }
 }

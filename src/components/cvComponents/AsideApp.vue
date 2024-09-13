@@ -1,5 +1,5 @@
 <template>
-  <div class=" aside-app">
+  <div class="aside-app">
     <div class="text-center">
       <div class="author-img"><img :src="userStore.userAll.user.profile_image" /></div>
       <h1 id="h-logo">{{ userStore.userAll.user.first_name[lang] }}</h1>
@@ -7,23 +7,23 @@
     </div>
     <nav id="h-main-menu" role="navigation" class="navbar">
       <div id="navbar" class="collapse">
-        <ul id="nav">
-          <li class="active">
+        <ul style="display: flex; flex-direction: column; justify-content: center" id="nav">
+          <li style="order: -7" class="active">
             <a href="#h-hero">{{ lang == 'en' ? 'Home' : 'الرئيسية' }}</a>
           </li>
-          <li>
+          <li :style="{ order: userStore.userAll.user.theme.about?.order - 2 }" v-if="userStore.userAll.user.theme.about?.enabled">
             <a href="#h-about">{{ lang == 'en' ? 'About' : ' عني ' }}</a>
           </li>
           <!-- <li>
             <a href="#h-services">{{ lang == 'en' ? 'Services' : 'الخدمات' }}</a>
           </li> -->
-          <li>
+          <li :style="{ order: userStore.userAll.user.theme.skill?.order - 2 }" v-if="userStore.userAll.user.theme.skill?.enabled">
             <a href="#h-skills">{{ lang == 'en' ? 'Skills' : 'المهارات' }}</a>
           </li>
-          <li>
+          <li :style="{ order: userStore.userAll.user.theme.academic?.order - 2 }" v-if="userStore.userAll.user.theme.academic?.enabled">
             <a href="#h-education">{{ lang == 'en' ? 'Education' : 'التعليم' }}</a>
           </li>
-          <li>
+          <li :style="{ order: userStore.userAll.user.theme.experience?.order - 2 }" v-if="userStore.userAll.user.theme.experience?.enabled">
             <a href="#h-experience">{{ lang == 'en' ? 'Experience' : 'الخبرة' }}</a>
           </li>
           <li>
