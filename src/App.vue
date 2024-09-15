@@ -10,33 +10,32 @@
 import { useUserStore } from '@/stores/user';
 import { onMounted } from 'vue';
 // import '@/Service/apiService';
-
 // import { fetchItems } from '@/Service/apiService';
+
 const userStore = useUserStore();
+// userStore.setAuthHeaderNew(localStorage.token).then(() => {
+//   userStore.isAuth = true;
+//   userStore
+//     .fetchUser()
+//     .then(() => {
+//       userStore.isLoader = false;
+//       userStore.loadengApi = false;
+//       userStore.popupError = false;
+//       console.log(' userStore App', userStore.user);
+//     })
+//     .catch(() => {
+//       if (!localStorage.token) {
+//         userStore.isLoader = false;
+//         userStore.loadengApi = false;
+//         userStore.popupError = false;
+//       }
+//     });
+// });
 onMounted(() => {
-  userStore.loadengApi = true;
-  userStore.setAuthHeaderNew(localStorage.token).then(() => {
-    userStore.isAuth = true;
-    userStore
-      .fetchUser()
-      .then(() => {
-        userStore.isLoader = false;
-        userStore.loadengApi = false;
-        userStore.popupError = false;
-        console.log(userStore.user.theme);
-      })
-      .catch(() => {
-        if (!localStorage.token) {
-          userStore.isLoader = false;
-          userStore.loadengApi = false;
-          userStore.popupError = false;
-        }
-      });
-  });
+  // userStore.loadengApi = true;
 });
 </script>
 <style lang="scss">
-
 pre {
   white-space: pre-wrap;
   word-wrap: break-word;

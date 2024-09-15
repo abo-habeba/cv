@@ -16,4 +16,24 @@ import { createApp } from 'vue';
 const app = createApp(App);
 registerPlugins(app);
 
+import { useUserStore } from '@/stores/user';
+const userStore = useUserStore();
+userStore.setAuthHeaderNew(localStorage.token).then(() => {
+  userStore.isAuth = true;
+  userStore
+    .fetchUser()
+    .then(() => {
+      userStore.isLoader = false;
+      userStore.loadengApi = false;
+      userStore.popupError = false;
+      console.log(' userStore main js', userStore.user);
+    })
+    .catch(() => {
+      if (!localStorage.token) {
+        userStore.isLoader = false;
+        userStore.loadengApi = false;
+        userStore.popupError = false;
+      }
+    });
+});
 app.mount('#app');

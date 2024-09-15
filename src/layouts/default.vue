@@ -10,15 +10,15 @@
 <script setup>
 import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
-import { onMounted } from 'vue';
-onMounted(() => {
-  if (localStorage.token) {
-    userStore.isLoader = false;
-    userStore.loadengApi = false;
-  }
-  userStore.setAuthHeaderNew(localStorage.token).then(() => {
-    userStore.isAuth = true;
-    userStore.fetchUser();
-  });
-});
+// import { onMounted } from 'vue';
+// onMounted(() => {
+//   if (localStorage.token) {
+//     userStore.isLoader = false;
+//     userStore.loadengApi = false;
+//   }
+//   userStore.setAuthHeaderNew(localStorage.token).then(() => {
+//     userStore.isAuth = true;
+//     userStore.fetchUser();
+//   });
+// });
 </script>
