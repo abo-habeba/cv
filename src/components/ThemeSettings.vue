@@ -10,7 +10,17 @@
     </v-dialog>
     <v-dialog class="text-center" v-model="dialogColor" max-width="900" persistent>
       <v-card>
-        <p style="color: red" class="ma-1 pa-10">اختر لون</p>
+        <p class="ma-1 pt-5">اختر لون</p>
+        <div style="display: flex; flex-direction: column; justify-content: center; justify-items: center; align-items: center" class="mx-auto my-5">
+          <div style="display: flex; flex-direction: row" class="mx-auto">
+            <h4 style="width: 130px; height: 20px">قديم</h4>
+            <h4 style="width: 130px; height: 20px">جديد</h4>
+          </div>
+          <div style="display: flex; flex-direction: row" class="mx-auto">
+            <div :style="{ backgroundColor: oldDialogColorValue, width: '150px', height: '30px' }"></div>
+            <div :style="{ backgroundColor: dialogColorValue, width: '150px', height: '30px' }"></div>
+          </div>
+        </div>
         <v-color-picker class="ma-auto" v-model="dialogColorValue" show-swatches></v-color-picker>
         <v-btn class="ma-1 pa-2" @click="selectColorValue">موافق</v-btn>
         <v-btn class="ma-1 pa-2" @click="closeDialogColor">اغلاق</v-btn>
@@ -51,14 +61,16 @@
                   <v-text-field variant="underlined" v-model="newTheme.mainTitle.fontSize" label="حجم خط العنوان الرئيسي" type="number" append-icon="mdi-format-size"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <label>اختر لون نص العنوان الرئيسي</label>
-                  <v-color-picker v-show="false" class="ma-auto" v-model="newTheme.mainTitle.textColor" show-swatches></v-color-picker>
-                  <v-btn @click="opendialogColor('mainTitle', 'textColor')" color="primary"> اختر لون </v-btn>
+                  <v-btn @click="opendialogColor('mainTitle', 'textColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون نص العنوان الرئيسي</h3>
+                  </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <label>اختر لون خلفية العنوان الرئيسي</label>
-                  <v-btn @click="dialogresetAll = true" color="primary"> ارجاع جميع التنسيقات الي الاصل </v-btn>
-                  <v-color-picker class="ma-auto" v-model="newTheme.mainTitle.backgroundColor" show-swatches></v-color-picker>
+                  <v-btn @click="opendialogColor('mainTitle', 'backgroundColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون خلفية العنوان الرئيسي</h3>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-col>
@@ -79,12 +91,16 @@
                   <v-text-field variant="underlined" v-model="newTheme.subTitle.fontSize" label="حجم خط العنوان الفرعي" type="number" append-icon="mdi-format-size"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <label>اختر لون نص العنوان الفرعي</label>
-                  <v-color-picker class="ma-auto" v-model="newTheme.subTitle.textColor" show-swatches></v-color-picker>
+                  <v-btn @click="opendialogColor('subTitle', 'textColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون نص العنوان الفرعي</h3>
+                  </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <label>اختر لون خلفية العنوان الفرعي</label>
-                  <v-color-picker class="ma-auto" v-model="newTheme.subTitle.backgroundColor" show-swatches></v-color-picker>
+                  <v-btn @click="opendialogColor('subTitle', 'backgroundColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون خلفية العنوان الفرعي</h3>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-col>
@@ -105,12 +121,16 @@
                   <v-text-field variant="underlined" v-model="newTheme.paragraph.fontSize" label="حجم خط الفقرة" type="number" append-icon="mdi-format-size"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <label>اختر لون نص الفقرة</label>
-                  <v-color-picker class="ma-auto" v-model="newTheme.paragraph.textColor" show-swatches></v-color-picker>
+                  <v-btn @click="opendialogColor('paragraph', 'textColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون نص الفقرة</h3>
+                  </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <label>اختر لون خلفية الفقرة</label>
-                  <v-color-picker class="ma-auto" v-model="newTheme.paragraph.backgroundColor" show-swatches></v-color-picker>
+                  <v-btn @click="opendialogColor('paragraph', 'backgroundColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون خلفية الفقرة</h3>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-col>
@@ -131,12 +151,16 @@
                   <v-text-field variant="underlined" v-model="newTheme.button.fontSize" label="حجم خط الأزرار" type="number" append-icon="mdi-format-size"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <label>اختر لون نص الأزرار</label>
-                  <v-color-picker class="ma-auto" v-model="newTheme.button.textColor" show-swatches></v-color-picker>
+                  <v-btn @click="opendialogColor('button', 'textColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون نص الأزرار</h3>
+                  </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <label>اختر لون خلفية الأزرار</label>
-                  <v-color-picker class="ma-auto" v-model="newTheme.button.backgroundColor" show-swatches></v-color-picker>
+                  <v-btn @click="opendialogColor('button', 'backgroundColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون خلفية الأزرار</h3>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-col>
@@ -163,6 +187,7 @@ const dialogItemForm = ref(false);
 const dialogresetAll = ref(false);
 const dialogColor = ref(false);
 const dialogColorValue = ref(null);
+let oldDialogColorValue = null;
 const groupNameValue = ref(null);
 const colorValue = ref(null);
 const newTheme = ref({});
@@ -176,6 +201,7 @@ function opendialogColor(groupName, color) {
   groupNameValue.value = groupName;
   colorValue.value = color;
   dialogColor.value = true;
+  oldDialogColorValue = userStore.user.theme[props.detTheme.nameEn][groupNameValue.value][colorValue.value];
 }
 function closeDialogColor() {
   dialogColorValue.value = '';
