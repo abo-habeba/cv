@@ -4,8 +4,26 @@
   <div style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h"></div>
   <p class="text-alert" v-else>لا توجد اي بيانات</p>
   <div>
-    <v-text-field type="number" v-model="selectedContactTel" :label="selectedContactNam ? selectedContactNam : 'ادخل رقم'" readonly />
+    <v-text-field
+      append-icon="mdi-close"
+      prepend-icon="mdi-phone"
+      @click:append="pickContactcClear"
+      @click:prepend="pickContact"
+      type="number"
+      v-model="selectedContactTel"
+      :label="selectedContactNam ? selectedContactNam : 'ادخل رقم'"
+      readonly
+    />
     <v-btn v-if="isContact" @click="pickContact"> اختر جهة اتصال </v-btn>
+    <v-select
+      v-if="contactNumbers.length > 0"
+      v-model="selectedContactTel"
+      :items="contactNumbers"
+      item-text="number"
+      item-value="number"
+      :label="'اختر رقم الهاتف'"
+      @change="onNumberSelect"
+    />
   </div>
 </template>
 
@@ -44,17 +62,43 @@ onMounted(() => {
 
 const selectedContactTel = ref('');
 const selectedContactNam = ref('');
+const contactNumbers = ref([]);
 
 async function pickContact() {
   try {
     const contacts = await navigator.contacts.select(['name', 'tel'], { multiple: false });
+
     if (contacts.length > 0) {
-      selectedContactTel.value = contacts[0].tel[0];
       selectedContactNam.value = contacts[0].name[0];
+
+      // عرض أرقام الهاتف في contactNumbers
+      contactNumbers.value = contacts[0].tel
+        .map(tel => {
+          let cleanedNumber = tel.replace(/\D/g, '');
+          const index = cleanedNumber.indexOf('01');
+          if (index !== -1) {
+            return {
+              number: cleanedNumber.substring(index),
+              type: tel, // تخزين الرقم الأصلي لتوضيح نوع الرقم إذا لزم الأمر
+            };
+          }
+          return null;
+        })
+        .filter(num => num !== null); // إزالة القيم الفارغة
     }
   } catch (error) {
     console.error('حدث خطأ:', error);
   }
+}
+
+function pickContactcClear() {
+  selectedContactTel.value = '';
+  selectedContactNam.value = '';
+  contactNumbers.value = [];
+}
+// دالة للتعامل مع اختيار الرقم
+function onNumberSelect() {
+  // يمكن استخدامه إذا لزم الأمر
 }
 </script>
 

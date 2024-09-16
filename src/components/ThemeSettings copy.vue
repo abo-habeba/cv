@@ -48,7 +48,13 @@
               </div>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field variant="underlined" v-model="newTheme.MainTitle.fontSize" label="حجم خط العنوان الرئيسي" type="number" append-icon="mdi-format-size"></v-text-field>
+                  <v-text-field
+                    variant="underlined"
+                    v-model="newTheme.MainTitle.fontSize"
+                    label="حجم خط العنوان الرئيسي"
+                    type="number"
+                    append-icon="mdi-format-size"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <label>اختر لون نص العنوان الرئيسي</label>
@@ -78,7 +84,13 @@
               <v-btn @click="resetSubTitle" color="primary">إرجاع إلى الأصل</v-btn>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field variant="underlined" v-model="newTheme.SubTitleFontSize" label="حجم خط العنوان الفرعي" type="number" append-icon="mdi-format-size"></v-text-field>
+                  <v-text-field
+                    variant="underlined"
+                    v-model="newTheme.SubTitleFontSize"
+                    label="حجم خط العنوان الفرعي"
+                    type="number"
+                    append-icon="mdi-format-size"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <label>اختر لون نص العنوان الفرعي</label>
@@ -107,7 +119,13 @@
               <v-btn @click="resetParagraph" color="primary">إرجاع إلى الأصل</v-btn>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field variant="underlined" v-model="newTheme.ParagraphFontSize" label="حجم خط القطعة النصية" type="number" append-icon="mdi-format-size"></v-text-field>
+                  <v-text-field
+                    variant="underlined"
+                    v-model="newTheme.ParagraphFontSize"
+                    label="حجم خط القطعة النصية"
+                    type="number"
+                    append-icon="mdi-format-size"
+                  ></v-text-field>
                 </v-col>
                 <v-col>
                   <label>اختر لون نص القطعة النصية</label>
@@ -137,7 +155,13 @@
               <v-btn @click="resetButtons" color="primary">إرجاع إلى الأصل</v-btn>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field variant="underlined" v-model="newTheme.ButtonFontSize" label="حجم نص الأزرار" type="number" append-icon="mdi-format-size"></v-text-field>
+                  <v-text-field
+                    variant="underlined"
+                    v-model="newTheme.ButtonFontSize"
+                    label="حجم نص الأزرار"
+                    type="number"
+                    append-icon="mdi-format-size"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <label>اختر لون نص الأزرار</label>
@@ -171,8 +195,7 @@ const userStore = useUserStore();
 const dialogItemForm = ref(false);
 const dialogresetAll = ref(false);
 const newTheme = ref({});
-const defaultDetailsTheme = ref(
-  {
+const defaultDetailsTheme = ref({
   enabled: false,
   nameEn: '',
   nameAr: '',
@@ -200,8 +223,7 @@ const defaultDetailsTheme = ref(
     textColor: '',
     fontSize: '',
   },
-}
-);
+});
 const props = defineProps({
   nameSection: { type: String, default: null },
   detTheme: {
