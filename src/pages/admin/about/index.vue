@@ -90,10 +90,10 @@ async function pickContact() {
         console.log('index', index);
 
         if (index !== -1) {
-          cleanedNumber.substring(index);
-          return;
+          return cleanedNumber.substring(index);
+        } else {
+          return cleanedNumber;
         }
-        cleanedNumber;
       });
       // .filter(num => num !== null); // إزالة القيم الفارغة
     }
