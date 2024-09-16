@@ -25,6 +25,16 @@
       @change="onNumberSelect"
     />
   </div>
+
+  <v-dialog class="text-center" v-model="dialogNumberAll" max-width="900" persistent>
+    <p>{{ contactNumbers }}</p>
+    <v-card>
+      <div v-for="(contactNumber, index) in contactNumbers" :key="index" class="ma-1 pa-3">
+        <p>{{ contactNumber }} contactNumber</p>
+        <p>{{ contactNumber.number }} contactNumber.number</p>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup>
@@ -60,6 +70,7 @@ onMounted(() => {
 
 //////////
 
+const dialogNumberAll = ref(false);
 const selectedContactTel = ref('');
 const selectedContactNam = ref('');
 const contactNumbers = ref([]);
@@ -87,6 +98,7 @@ async function pickContact() {
         .filter(num => num !== null); // إزالة القيم الفارغة
     }
   } catch (error) {
+    alert('المتصفح لا يدعم فتح الاسماء');
     console.error('حدث خطأ:', error);
   }
 }
