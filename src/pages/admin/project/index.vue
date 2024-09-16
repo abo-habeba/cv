@@ -7,6 +7,7 @@
         <v-btn class="ma-1" @click="openDialogDeleted = false"> اغلاق </v-btn>
       </v-card>
     </v-dialog>
+    <ThemeSettings v-if="userStore.user" ref="dialogThemeForm" :detTheme="{ nameEn: 'about', nameAr: 'عني' }" @click="openDialogThemeForm" />
     <ShowImages ref="isShowImage" @runItems="getItems" />
     <ProjectForm ref="itemForm" @runItems="getItems" />
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h">
@@ -59,6 +60,15 @@ definePage({
     title: 'المشاريع',
   },
 });
+
+const dialogThemeForm = ref(null);
+function openDialogThemeForm() {
+  if (dialogThemeForm.value) {
+    dialogThemeForm.value.opendialogThemeForm();
+  } else {
+    console.error('opendialogThemeForm is not a function');
+  }
+}
 
 onMounted(() => {
   getItems();

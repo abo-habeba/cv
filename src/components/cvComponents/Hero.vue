@@ -1,14 +1,31 @@
 <template>
-  <v-carousel v-if="userStore.userAll.user" class="hero-box" height="100vh" style="background-color: black" cycle :show-arrows="false" :hide-delimiter-background="userStore.userAll.user.hero.length <= 1" :hide-delimiters="userStore.userAll.user.hero.length <= 1">
+  <v-carousel
+    v-if="userStore.userAll.user"
+    class="hero-box"
+    height="100vh"
+    style="background-color: black"
+    cycle
+    :show-arrows="false"
+    :hide-delimiter-background="userStore.userAll.user.hero.length <= 1"
+    :hide-delimiters="userStore.userAll.user.hero.length <= 1"
+  >
     <v-carousel-item v-for="(photo, i) in userStore.userAll.user.hero" :key="i">
       <v-img style="background-attachment: fixed" :src="photo.path" height="100%" cover v-if="userStore.userAll.user.hero"> </v-img>
     </v-carousel-item>
     <div class="hero-text d-flex flex-column fill-height justify-center align-center">
-      <h1 v-if="userStore.userAll.user.theme.about.mainTitle.enabled" :style="userStore.userAll.user.theme.about.mainTitle.style">
-        {{ `${lang === 'en' ? 'Hello, I am' : ' مرحبا انا ,'}  ${userStore.userAll.user.first_name[lang] || ' '}  ${userStore.userAll.user.last_name[lang] || ' '} ` }}
+      <h1 v-if="userStore.userAll.user.theme.hero.mainTitle.enabled" :style="userStore.userAll.user.theme.hero.mainTitle.style">
+        {{
+          `${lang === 'en' ? 'Hello, I am' : ' مرحبا انا ,'}  ${userStore.userAll.user.first_name[lang] || ' '}  ${
+            userStore.userAll.user.last_name[lang] || ' '
+          } `
+        }}
       </h1>
-      <p v-if="userStore.userAll.user.theme.about.subTitle.enabled" :style="userStore.userAll.user.theme.about.subTitle.style">{{ displayedposition }}</p>
-      <pre v-if="userStore.userAll.user.theme.about.paragraph.enabled" :style="userStore.userAll.user.theme.about.paragraph.style" class="bio">{{ lang === 'en' ? userStore.userAll.user.bio_en : userStore.userAll.user.bio_ar }}</pre>
+      <p v-if="userStore.userAll.user.theme.hero.subTitle.enabled" :style="userStore.userAll.user.theme.hero.subTitle.style">
+        {{ displayedposition }}
+      </p>
+      <pre v-if="userStore.userAll.user.theme.hero.paragraph.enabled" :style="userStore.userAll.user.theme.hero.paragraph.style" class="bio">{{
+        lang === 'en' ? userStore.userAll.user.bio_en : userStore.userAll.user.bio_ar
+      }}</pre>
 
       <div class="cta-buttons">
         <a href="#h-work" data-aos="fade-up-left" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
@@ -106,6 +123,18 @@ $transition-speed: 0.3s;
     }
     & > * {
       color: white;
+    }
+  }
+  .box-socials {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 5px;
+    align-content: center;
+    div {
+      margin: 3px;
     }
   }
   .cta-buttons {
