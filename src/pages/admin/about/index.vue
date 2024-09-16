@@ -26,7 +26,7 @@
     />
   </div>
 
-  <v-dialog class="text-center" v-model="dialogNumberAll" max-width="900" persistent>
+  <v-dialog v-if="contactNumbers.length > 0" class="text-center" v-model="dialogNumberAll" max-width="900" persistent>
     <p>{{ contactNumbers }}</p>
     <v-card>
       <div v-for="(contactNumber, index) in contactNumbers" :key="index" class="ma-1 pa-3">
@@ -76,6 +76,7 @@ const selectedContactNam = ref('');
 const contactNumbers = ref([]);
 
 async function pickContact() {
+  dialogNumberAll.value = true;
   try {
     const contacts = await navigator.contacts.select(['name', 'tel'], { multiple: false });
 
