@@ -30,8 +30,8 @@
     <p>{{ contactNumbers }}</p>
     <v-card>
       <div v-for="(contactNumber, index) in contactNumbers" :key="index" class="ma-1 pa-3">
-        <p>{{ contactNumber }} contactNumber</p>
-        <p>{{ contactNumber.number }} contactNumber.number</p>
+        <p @click="setNumber(contactNumber)">{{ contactNumber }} contactNumber</p>
+        <p>{{ contactNumber }} contactNumber.number</p>
       </div>
     </v-card>
   </v-dialog>
@@ -88,10 +88,8 @@ async function pickContact() {
           let cleanedNumber = tel.replace(/\D/g, '');
           const index = cleanedNumber.indexOf('01');
           if (index !== -1) {
-            return {
-              number: cleanedNumber.substring(index),
-              type: tel, // تخزين الرقم الأصلي لتوضيح نوع الرقم إذا لزم الأمر
-            };
+            cleanedNumber.substring(index);
+            return;
           }
           return null;
         })
@@ -101,6 +99,7 @@ async function pickContact() {
     alert('المتصفح لا يدعم فتح الاسماء');
     console.error('حدث خطأ:', error);
   }
+  dialogNumberAll.value = true;
 }
 
 function pickContactcClear() {
@@ -109,9 +108,11 @@ function pickContactcClear() {
   contactNumbers.value = [];
 }
 // دالة للتعامل مع اختيار الرقم
-function onNumberSelect() {
-  // يمكن استخدامه إذا لزم الأمر
+function setNumber(contactNumber) {
+  selectedContactTel.value = contactNumber;
+  dialogNumberAll.value = fals;
 }
+function onNumberSelect() {}
 </script>
 
 <style lang="scss"></style>
