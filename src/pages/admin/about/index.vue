@@ -112,7 +112,7 @@ function pickContactcClear() {
 // دالة للتعامل مع اختيار الرقم
 function setNumber(contactNumber) {
   selectedContactTel.value = contactNumber;
-  dialogNumberAll.value = fals;
+  dialogNumberAll.value = false;
 }
 function onNumberSelect() {}
 </script>
