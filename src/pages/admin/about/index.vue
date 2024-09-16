@@ -26,12 +26,12 @@
     />
   </div>
 
-  <v-dialog v-if="contactNumbers.length > 0" class="text-center" v-model="dialogNumberAll" max-width="900" persistent>
+  <v-dialog v-if="contactNumbers.length > 0" class="text-center" v-model="dialogNumberAll" max-width="900">
     <p>{{ contactNumbers }}</p>
+    <hr />
     <v-card>
       <div v-for="(contactNumber, index) in contactNumbers" :key="index" class="ma-1 pa-3">
         <p @click="setNumber(contactNumber)">{{ contactNumber }} contactNumber</p>
-        <p>{{ contactNumber }} contactNumber.number</p>
       </div>
     </v-card>
   </v-dialog>
@@ -82,18 +82,20 @@ async function pickContact() {
 
     if (contacts.length > 0) {
       selectedContactNam.value = contacts[0].name[0];
-
       // عرض أرقام الهاتف في contactNumbers
-      contactNumbers.value = contacts[0].tel
-        .map(tel => {
-          let cleanedNumber = tel.replace(/\D/g, '');
-          const index = cleanedNumber.indexOf('01');
-          if (index !== -1) {
-            cleanedNumber.substring(index);
-          }
-          null;
-        })
-        .filter(num => num !== null); // إزالة القيم الفارغة
+      contactNumbers.value = contacts[0].tel.map(tel => {
+        let cleanedNumber = tel.replace(/\D/g, '');
+        const index = cleanedNumber.indexOf('01');
+        console.log('cleanedNumber', cleanedNumber);
+        console.log('index', index);
+
+        if (index !== -1) {
+          cleanedNumber.substring(index);
+          return;
+        }
+        cleanedNumber;
+      });
+      // .filter(num => num !== null); // إزالة القيم الفارغة
     }
   } catch (error) {
     alert('المتصفح لا يدعم فتح الاسماء');
