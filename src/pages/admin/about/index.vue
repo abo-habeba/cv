@@ -40,11 +40,6 @@ onMounted(() => {});
 const selectedContact = ref('');
 
 async function pickContact() {
-  if (!window.contactPicker) {
-    alert('Contact Picker API غير مدعومة في هذا المتصفح.');
-    return;
-  }
-
   try {
     const contacts = await navigator.contacts.select(['name', 'tel'], { multiple: false });
     if (contacts.length > 0) {
