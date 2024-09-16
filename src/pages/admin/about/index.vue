@@ -89,9 +89,8 @@ async function pickContact() {
           const index = cleanedNumber.indexOf('01');
           if (index !== -1) {
             cleanedNumber.substring(index);
-            return;
           }
-          return null;
+          null;
         })
         .filter(num => num !== null); // إزالة القيم الفارغة
     }
