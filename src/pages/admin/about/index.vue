@@ -5,8 +5,9 @@
   <p class="text-alert" v-else>لا توجد اي بيانات</p>
   <div>
     <v-text-field
+      class="ma-4"
       append-icon="mdi-close"
-      prepend-icon="mdi-phone"
+      :prepend-icon="isContact ? 'mdi-phone' : ''"
       @click:append="pickContactcClear"
       @click:prepend="pickContact"
       type="number"
@@ -14,8 +15,8 @@
       :label="selectedContactNam ? selectedContactNam : 'ادخل رقم'"
       readonly
     />
-    <v-btn v-if="isContact" @click="pickContact"> اختر جهة اتصال </v-btn>
-    <v-select
+    <!-- <v-btn v-if="isContact" @click="pickContact"> اختر جهة اتصال </v-btn> -->
+    <!-- <v-select
       v-if="contactNumbers.length > 0"
       v-model="selectedContactTel"
       :items="contactNumbers"
@@ -23,15 +24,14 @@
       item-value="number"
       :label="'اختر رقم الهاتف'"
       @change="onNumberSelect"
-    />
+    /> -->
   </div>
 
   <v-dialog v-if="contactNumbers.length > 0" class="text-center" v-model="dialogNumberAll" max-width="900">
-    <p>{{ contactNumbers }}</p>
-    <hr />
     <v-card>
-      <div v-for="(contactNumber, index) in contactNumbers" :key="index" class="ma-1 pa-3">
-        <p @click="setNumber(contactNumber)">{{ contactNumber }} contactNumber</p>
+      <div v-for="(contactNumber, index) in contactNumbers" :key="index" class="ma-1 pa-1">
+        <p @click="setNumber(contactNumber)">{{ contactNumber }}</p>
+        <hr />
       </div>
     </v-card>
   </v-dialog>
