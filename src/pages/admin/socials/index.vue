@@ -7,6 +7,42 @@
         <v-btn class="ma-1" @click="openDialogDeleted = false"> اغلاق </v-btn>
       </v-card>
     </v-dialog>
+    <v-btn @click="dialogEnabledSocials = true" class="ma-2">
+      تخصيص ظهور مواقع التواصل<v-icon color="#00c853" size="35" icon="mdi-pencil-outline" end></v-icon>
+    </v-btn>
+    <v-dialog class="text-center" v-model="dialogEnabledSocials" max-width="900">
+      <v-card cols="12" class="elevation-10">
+        <h2 class="sticky-header pa-4">تفعيل مواقع التواصل في الاقسام</h2>
+        <v-col>
+          <v-switch
+            style="width: fit-content"
+            class="ma-auto"
+            color="info"
+            v-model="socialsTheme.hero.enabled"
+            label="تفعيل في الصفحة الرئيسية"
+          ></v-switch>
+          <hr />
+        </v-col>
+        <v-col>
+          <v-switch
+            style="width: fit-content"
+            class="ma-auto"
+            color="info"
+            v-model="socialsTheme.aside.enabled"
+            label="تفعيل في القائمة الجانبية"
+          ></v-switch>
+          <hr />
+        </v-col>
+        <v-col>
+          <v-switch style="width: fit-content" class="ma-auto" color="info" v-model="socialsTheme.about.enabled" label="تفعيل في صفحة عني"></v-switch>
+          <hr />
+        </v-col>
+        <div style="position: sticky; bottom: 0px; z-index: 100; width: 100%; max-width: 600px; margin: auto; border-radius: 7px">
+          <v-btn style="color: white; background-color: red; font-weight: bold" class="ma-4" @click="closeDialogSocial">اغلاق</v-btn>
+          <v-btn style="color: white; background-color: blue; font-weight: bold" class="ma-4" @click="save">موافق</v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
     <SocialForm ref="itemForm" @runItems="getItems" />
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h">
       <thead>
@@ -39,6 +75,7 @@
 </template>
 
 <script setup>
+import { saveItems } from '@/Service/apiService';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
@@ -58,8 +95,27 @@ const notifyError = message => {
 };
 const itemForm = ref(null);
 const openDialogDeleted = ref(false);
+const dialogEnabledSocials = ref(false);
+const socialsTheme = ref({
+  hero: { enabled: true },
+  aside: { enabled: true },
+  about: { enabled: true },
+});
 const items = ref([]);
 const item = ref('');
+function deepMerge(target, source) {
+  const output = { ...target };
+  for (const key in source) {
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      if (typeof source[key] === 'object' && source[key] !== null) {
+        output[key] = deepMerge(target[key] || {}, source[key]);
+      } else {
+        output[key] = source[key];
+      }
+    }
+  }
+  return output;
+}
 function deleteItem(i) {
   openDialogDeleted.value = true;
   item.value = i;
@@ -73,6 +129,22 @@ definePage({
 onMounted(() => {
   getItems();
 });
+
+watch(
+  () => userStore.user,
+  socialsThemeValue => {
+    if (socialsThemeValue.theme.socials) {
+      socialsTheme.value = deepMerge(socialsTheme.value, socialsThemeValue.theme.socials);
+    } else {
+      socialsTheme.value = {
+        hero: { enabled: true },
+        aside: { enabled: true },
+        about: { enabled: true },
+      };
+    }
+  },
+  { immediate: false, deep: false } // لا يتم التنفيذ مباشرة بعد التركيب فقط على أول تغيير
+);
 
 function getItems() {
   userStore.loadengApi = true;
@@ -88,6 +160,21 @@ function getItems() {
     });
 }
 
+function save() {
+  userStore.user.theme.socials = { ...socialsTheme.value };
+
+  // userStore.user.theme._method = 'put';
+  console.log('userStore.user.theme', userStore.user.theme);
+  saveItems('users-theme', { theme: userStore.user.theme, _method: 'put' }, userStore.user.id).then(res => {
+    // userStore.user = res.data;
+    console.log('res.data', res.data);
+
+    closeDialogSocial();
+  });
+}
+function closeDialogSocial() {
+  dialogEnabledSocials.value = false;
+}
 function deleted() {
   userStore.loadengApi = true;
   axios

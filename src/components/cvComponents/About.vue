@@ -20,6 +20,14 @@
       </div>
     </div>
     <div class="row">
+      <div style="width: 100%" v-if="userStore.userAll.user.theme.socials.about.enabled" class="box-socials">
+        <div v-for="(social, i) in userStore.userAll.socials" :key="i">
+          <!-- <p>{{ social.icon }}</p> -->
+          <a :href="social.url" target="_blank">
+            <v-icon :color="social.icon.color" :icon="social.icon.icon"></v-icon>
+          </a>
+        </div>
+      </div>
       <div class="ma-5">
         <a href="#contact">
           <v-btn color="primary"> {{ lang == 'en' ? 'Contact Me' : 'تواصل معي ' }} </v-btn>

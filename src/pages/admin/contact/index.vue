@@ -7,7 +7,7 @@
         <v-btn class="ma-1" @click="openDialogDeleted = false"> اغلاق </v-btn>
       </v-card>
     </v-dialog>
-    <ThemeSettings v-if="userStore.user" ref="dialogThemeForm" :detTheme="{ nameEn: 'about', nameAr: 'عني' }" @click="openDialogThemeForm" />
+    <ThemeSettings v-if="userStore.user" ref="dialogThemeForm" :detTheme="{ nameEn: 'contacts', nameAr: 'الرسائل' }" @click="openDialogThemeForm" />
     <!-- <ContactForm ref="itemForm" @runItems="getItems" /> -->
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h mt-10">
       <thead>

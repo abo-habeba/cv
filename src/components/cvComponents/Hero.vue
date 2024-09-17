@@ -13,25 +13,37 @@
       <v-img style="background-attachment: fixed" :src="photo.path" height="100%" cover v-if="userStore.userAll.user.hero"> </v-img>
     </v-carousel-item>
     <div class="hero-text d-flex flex-column fill-height justify-center align-center">
-      <h1 v-if="userStore.userAll.user.theme.hero.mainTitle.enabled" :style="userStore.userAll.user.theme.hero.mainTitle.style">
+      <h1 v-if="userStore.userAll.user.theme?.hero?.mainTitle.enabled" :style="userStore.userAll.user.theme?.hero?.mainTitle.style">
         {{
           `${lang === 'en' ? 'Hello, I am' : ' مرحبا انا ,'}  ${userStore.userAll.user.first_name[lang] || ' '}  ${
             userStore.userAll.user.last_name[lang] || ' '
           } `
         }}
       </h1>
-      <p v-if="userStore.userAll.user.theme.hero.subTitle.enabled" :style="userStore.userAll.user.theme.hero.subTitle.style">
+      <p v-if="userStore.userAll.user.theme?.hero.subTitle.enabled" :style="userStore.userAll.user.theme?.hero.subTitle.style">
         {{ displayedposition }}
       </p>
-      <pre v-if="userStore.userAll.user.theme.hero.paragraph.enabled" :style="userStore.userAll.user.theme.hero.paragraph.style" class="bio">{{
+      <pre v-if="userStore.userAll.user.theme?.hero.paragraph.enabled" :style="userStore.userAll.user.theme?.hero.paragraph.style" class="bio">{{
         lang === 'en' ? userStore.userAll.user.bio_en : userStore.userAll.user.bio_ar
       }}</pre>
 
       <div class="cta-buttons">
-        <a href="#h-work" data-aos="fade-up-left" class="cta-primary">{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a>
-        <a href="#" data-aos="fade-up-right" class="cta-secondary">{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a>
+        <a
+          v-if="userStore.userAll.user.theme?.hero.buttonWork?.enabled"
+          :style="userStore.userAll.user.theme?.hero.buttonWork.style"
+          href="#h-work"
+          class="cta-primary"
+          >{{ lang === 'en' ? 'View My Work' : ' مشاهدة أعمالي ' }}</a
+        >
+        <a
+          v-if="userStore.userAll.user.theme?.hero.buttonCv?.enabled"
+          :style="userStore.userAll.user.theme?.hero.buttonCv.style"
+          href="#"
+          class="cta-secondary"
+          >{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a
+        >
       </div>
-      <div class="box-socials">
+      <div v-if="userStore.userAll.user.theme?.socials.hero.enabled" class="box-socials">
         <div v-for="(social, i) in userStore.userAll.socials" :key="i">
           <a :href="social.url" target="_blank">
             <v-icon style="font-size: 40px" :color="social.icon.color" :icon="social.icon.icon"></v-icon>
@@ -123,18 +135,6 @@ $transition-speed: 0.3s;
     }
     & > * {
       color: white;
-    }
-  }
-  .box-socials {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 5px;
-    align-content: center;
-    div {
-      margin: 3px;
     }
   }
   .cta-buttons {

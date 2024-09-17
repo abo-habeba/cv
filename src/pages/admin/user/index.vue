@@ -2,16 +2,17 @@
   <v-container class="user-info" v-if="!userStore.loadengApi">
     <ThemeSettings
       v-if="userStore.user"
+      ref="dialogThemeFormHero"
+      :detTheme="{ nameEn: 'hero', nameAr: 'الرئيسية', cv: true, work: true }"
+      @click="openDialogThemeFormHero"
+    />
+    <ThemeSettings
+      v-if="userStore.user"
       ref="dialogThemeFormAbout"
       :detTheme="{ nameEn: 'about', nameAr: 'عني' }"
       @click="openDialogThemeFormAbout"
     />
-    <ThemeSettings
-      v-if="userStore.user"
-      ref="dialogThemeFormHero"
-      :detTheme="{ nameEn: 'hero', nameAr: 'الرئيسية' }"
-      @click="openDialogThemeFormHero"
-    />
+
     <UserForm ref="dialogItemForm" @click="openForm" />
     <HeroForm ref="dialogHeroForm" @click="openFormHero" />
     <v-card
@@ -55,16 +56,16 @@ definePage({
 
 const dialogThemeFormAbout = ref(null);
 function openDialogThemeFormAbout() {
-  if (openDialogThemeFormAbout.value) {
-    openDialogThemeFormAbout.value.opendialogThemeForm();
+  if (dialogThemeFormAbout.value) {
+    dialogThemeFormAbout.value.opendialogThemeForm();
   } else {
     console.error('opendialogThemeForm is not a function');
   }
 }
 const dialogThemeFormHero = ref(null);
 function openDialogThemeFormHero() {
-  if (openDialogThemeFormHero.value) {
-    openDialogThemeFormHero.value.opendialogThemeForm();
+  if (dialogThemeFormHero.value) {
+    dialogThemeFormHero.value.opendialogThemeForm();
   } else {
     console.error('opendialogThemeForm is not a function');
   }

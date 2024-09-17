@@ -8,7 +8,7 @@
     <nav id="h-main-menu" role="navigation" class="navbar">
       <div id="navbar" class="collapse">
         <ul style="display: flex; flex-direction: column; justify-content: center" id="nav">
-          <li style="order: -7" class="active">
+          <li class="active" :style="{ order: userStore.userAll.user.theme.hero?.order - 2 }" v-if="userStore.userAll.user.theme.hero?.enabled">
             <a href="#h-hero">{{ lang == 'en' ? 'Home' : 'الرئيسية' }}</a>
           </li>
           <li :style="{ order: userStore.userAll.user.theme.about?.order - 2 }" v-if="userStore.userAll.user.theme.about?.enabled">
@@ -39,7 +39,7 @@
       </div>
     </nav>
     <div class="h-footer">
-      <div class="box-socials">
+      <div v-if="userStore.userAll.user.theme.socials.aside.enabled" class="box-socials">
         <div v-for="(social, i) in userStore.userAll.socials" :key="i">
           <!-- <p>{{ social.icon }}</p> -->
           <a :href="social.url" target="_blank">
@@ -113,17 +113,7 @@ ul .active {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  .box-socials {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 5px;
-    div {
-      margin: 3px;
-    }
-  }
+
   .Copy-right {
     display: flex;
     flex-direction: column;

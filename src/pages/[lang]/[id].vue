@@ -25,7 +25,13 @@
         </div>
         <div id="h-main">
           <div v-if="btnToggle" :class="{ mainOverlay: toggled }" @click="funToggled"></div>
-          <section id="h-hero" class="h-hero section" ref="heroRef">
+          <section
+            id="h-hero"
+            class="h-hero section"
+            :style="{ order: userStore.userAll.user.theme.hero?.order - 2 }"
+            v-if="userStore.userAll.user.theme.hero?.enabled"
+            ref="heroRef"
+          >
             <Hero />
           </section>
           <div style="display: flex; flex-direction: column; justify-content: center" class="pa-4">
@@ -193,7 +199,7 @@ function handleMediaChange(event) {
 meta:
   layout: pure
 </route>
-<style>
+<style lang="scss">
 .h-hero {
   position: static;
   top: 0;
@@ -266,6 +272,17 @@ meta:
 @media screen and (max-width: 768px) {
   #h-aside {
     overflow: hidden;
+  }
+}
+.box-socials {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 5px;
+  div {
+    margin: 3px;
   }
 }
 </style>
