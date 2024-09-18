@@ -9,7 +9,7 @@
     <ThemeSettings
       v-if="userStore.user"
       ref="dialogThemeFormAbout"
-      :detTheme="{ nameEn: 'about', nameAr: 'عني' }"
+      :detTheme="{ nameEn: 'about', nameAr: 'عني', btn: true }"
       @click="openDialogThemeFormAbout"
     />
 

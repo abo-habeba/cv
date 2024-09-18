@@ -1,1 +1,0 @@
-import{H as e,I as t,M as s}from"./index-iyU_xq7t.js";const c=s("h1",{class:"text-center mt-10"},"لوحة التحكم",-1),o=[c],l={__name:"index",setup(a){return(n,_)=>(e(),t("div",null,o))}};export{l as default};

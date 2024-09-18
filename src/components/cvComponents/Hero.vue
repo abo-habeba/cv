@@ -156,6 +156,7 @@ $transition-speed: 0.3s;
         background-color: $primary-color;
         color: $text-color;
         border: 2px solid $primary-color;
+        display: inline-block;
 
         &:hover {
           background-color: transparent;
@@ -167,6 +168,7 @@ $transition-speed: 0.3s;
         background-color: transparent;
         color: $text-color;
         border: 2px solid $text-color;
+        display: inline-block;
 
         &:hover {
           background-color: $text-color;
