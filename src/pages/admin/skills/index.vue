@@ -7,7 +7,12 @@
         <v-btn class="ma-1" @click="openDialogDeleted = false"> اغلاق </v-btn>
       </v-card>
     </v-dialog>
-    <ThemeSettings v-if="userStore.user" ref="dialogThemeForm" :detTheme="{ nameEn: 'skills', nameAr: 'المهارات' }" @click="openDialogThemeForm" />
+    <ThemeSettings
+      v-if="userStore.user"
+      ref="dialogThemeForm"
+      :detTheme="{ nameEn: 'skills', nameAr: 'المهارات', h2: true, h4: true, imag: true, progress: true }"
+      @click="openDialogThemeForm"
+    />
     <SkillsForm ref="itemForm" @runItems="getItems" />
     <ShowImages ref="isShowImage" @runItems="getItems" />
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h">

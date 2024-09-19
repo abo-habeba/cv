@@ -2,18 +2,58 @@
   <div class="h-narrow-content">
     <v-card class="pa-4 my-4">
       <div class="title-section">
-        <h2>{{ lang == 'en' ? 'Skills' : ' المهارات ' }}</h2>
+        <h2 v-if="userStore.userAll.user.theme?.hero?.sectionTitle.enabled" :style="userStore.userAll.user.theme?.hero?.sectionTitle.style">
+          {{ lang == 'en' ? 'Skills' : ' المهارات ' }}
+        </h2>
         <div class="top"></div>
         <div class="center"></div>
         <div class="bottom"></div>
       </div>
       <v-row>
         <v-col v-for="(skill, index) in userStore.userAll.skills" :key="index" cols="6" md="3">
-          <div style="cursor: pointer" @click="funSelectedSkill(skill)" class="d-flex flex-column align-center text-center pa-3">
-            <v-avatar v-if="skill?.photos[0]" size="80" class="mx-auto mb-3">
-              <v-img :src="skill.photos[0]?.path" alt="Skill Image"></v-img>
-            </v-avatar>
-            <v-card-title class="text-h6">{{ skill.name[lang] }}</v-card-title>
+          <div style="cursor: pointer" class="d-flex flex-column align-center text-center pa-3">
+            <v-card-title
+              v-if="userStore.userAll.user.theme?.skills.mainTitle.enabled"
+              :style="userStore.userAll.user.theme?.skills.mainTitle.style"
+              class="text-h6"
+            >
+              {{ skill.name[lang] }}
+            </v-card-title>
+            <div
+              class="ma-3"
+              style="
+                position: relative;
+                min-width: 100px;
+                min-height: 100px;
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+              "
+            >
+              <v-avatar v-if="userStore.userAll.user.theme?.skills.imag.enabled" size="80" class="mx-auto mb-3">
+                <v-img style="opacity: 0.7" :src="skill.photos[0]?.path" alt="Skill Image"></v-img>
+              </v-avatar>
+              <v-progress-circular
+                v-if="userStore.userAll.user.theme?.skills.progress.enabled"
+                style="position: absolute; top: -6px; right: 1px; z-index: 5"
+                :model-value="skill.level"
+                :rotate="-90"
+                :size="100"
+                :width="15"
+                :color="userStore.userAll.user.theme?.skills.progress.backgroundColor"
+              >
+                {{ skill?.level }} %
+              </v-progress-circular>
+            </div>
+            <pre
+              class="pa-2"
+              v-if="userStore.userAll.user.theme?.skills.subTitle.enabled"
+              :style="userStore.userAll.user.theme?.skills.subTitle.style"
+              >{{ skill?.description[lang] }}</pre
+            >
             <!-- <per>{{ skill.description[lang] }}</per> -->
             <!-- <v-progress-linear height="15" v-if="skill?.level !== null" :model-value="skill.level" color="primary" class="mt-3">
               <template v-slot:default>

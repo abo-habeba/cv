@@ -11,6 +11,7 @@
     <v-dialog class="text-center" v-model="dialogColor" max-width="900">
       <v-card>
         <p class="ma-1 pt-5">اختر لون</p>
+
         <div style="display: flex; flex-direction: column; justify-content: center; justify-items: center; align-items: center" class="mx-auto my-5">
           <div style="display: flex; flex-direction: row" class="mx-auto">
             <h4 style="width: 130px; height: 20px">قديم</h4>
@@ -21,6 +22,20 @@
             <div :style="{ backgroundColor: dialogColorValue, width: '150px', height: '30px' }"></div>
           </div>
         </div>
+        <div
+          style="display: flex; flex-direction: column; align-items: center; justify-content: center; justify-items: center"
+          class="ma-2 box-linkt"
+        >
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; justify-items: center" class="mb-3">
+            <v-btn class="mx-4" icon @click="copyLink(dialogColorValue)">
+              <v-icon>mdi-content-copy</v-icon>
+            </v-btn>
+            <h4>{{ dialogColorValue }}</h4>
+          </div>
+          <div>
+            <v-text-field style="min-width: 250px" variant="outlined" v-model="dialogColorValue" label=" ادخل اللون يدوي  "></v-text-field>
+          </div>
+        </div>
         <v-color-picker class="ma-auto" v-model="dialogColorValue" show-swatches></v-color-picker>
         <v-btn class="ma-1 pa-2" @click="selectColorValue">موافق</v-btn>
         <v-btn class="ma-1 pa-2" @click="closeDialogColor">اغلاق</v-btn>
@@ -28,10 +43,10 @@
     </v-dialog>
     <v-dialog class="text-center" v-model="dialogItemForm" max-width="1200">
       <v-card class="pa-5">
-        <h2 class="ma-5">تنسيق قسم {{ detTheme.nameAr }}</h2>
         <v-form>
           <v-row>
-            <v-col cols="12" class="elevation-10">
+            <v-col cols="12" class="elevation-10 ma-2">
+              <h2 class="ma-5">تنسيق قسم {{ detTheme.nameAr }}</h2>
               <v-row>
                 <v-col cols="6">
                   <v-switch color="info" v-model="newTheme.enabled" label="تفعيل القسم"></v-switch>
@@ -45,8 +60,70 @@
               </v-col>
             </v-col>
 
+            <!-- imag Group -->
+            <v-col v-if="detTheme.imag" cols="12" class="group elevation-10">
+              <v-col cols="12">
+                <v-switch
+                  style="width: fit-content"
+                  class="ma-auto"
+                  color="info"
+                  v-model="newTheme.imag.enabled"
+                  label="تفعيل صورة  "
+                ></v-switch>
+              </v-col>
+            </v-col>
+            <!-- Section Title Group -->
+            <v-col v-if="detTheme.sectionTitle" cols="12" class="group elevation-10">
+              <h2>تنسيقات عناوين الاقسام</h2>
+              <h2 class="sticky-header" :style="sectionTitleStyle">معاينة عناوين الاقسام</h2>
+              <div style="display: flex">
+                <v-col cols="6">
+                  <v-btn class="mt-3" @click="resetSectionTitle" color="primary">إرجاع إلى الأصل</v-btn>
+                </v-col>
+              </div>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    variant="underlined"
+                    v-model="newTheme.sectionTitle.fontSize"
+                    label="حجم خط عناوين الاقسام"
+                    type="number"
+                    append-icon="mdi-format-size"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-btn @click="opendialogColor('sectionTitle', 'textColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون نص عناوين الاقسام</h3>
+                  </v-btn>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-btn @click="opendialogColor('sectionTitle', 'backgroundColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون خلفية عناوين الاقسام</h3>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+
             <!-- Main Title Group -->
-            <v-col cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.progress" cols="12" class="group elevation-10">
+              <h2 class="sticky-header">تنسيق شريط التقدم</h2>
+              <v-col cols="6">
+                <v-switch color="info" v-model="newTheme.progress.enabled" label="تفعيل شريط التقدم"></v-switch>
+              </v-col>
+              <v-row>
+                <v-col cols="12" sm="6">
+                  <v-btn @click="opendialogColor('progress', 'backgroundColor')" color="#B3E5FC">
+                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                    <h3>اختر لون شريط التقدم</h3>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+            <!-- Main Title Group -->
+            <v-col v-if="detTheme.h2" cols="12" class="group elevation-10">
+              <h2>تنسيقات العنوان الرئيسي</h2>
               <h2 class="sticky-header" :style="mainTitleStyle">معاينة العنوان الرئيسي</h2>
               <div style="display: flex">
                 <v-col cols="6">
@@ -82,7 +159,8 @@
             </v-col>
 
             <!-- Sub Title Group -->
-            <v-col cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.h4" cols="12" class="group elevation-10">
+              <h2>تنسيقات العنوان الفرعي</h2>
               <h4 class="sticky-header" :style="subTitleStyle">معاينة العنوان الفرعي</h4>
               <div style="display: flex">
                 <v-col cols="6">
@@ -118,7 +196,8 @@
             </v-col>
 
             <!-- Paragraph Group -->
-            <v-col cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.p" cols="12" class="group elevation-10">
+              <h2>تنسيق الفقرة النصية</h2>
               <p class="sticky-header" :style="paragraphStyle">معاينة الفقرة</p>
               <div style="display: flex">
                 <v-col cols="6">
@@ -155,7 +234,8 @@
 
             <!-- Button Group CV -->
             <v-col v-if="detTheme.cv" cols="12" class="group elevation-10">
-              <p class="sticky-header" :style="buttonStyleCv">معاينة زرار ال CV</p>
+              <h2>تنسيق زرار السيره الذاتية</h2>
+              <p class="sticky-header" :style="buttonStyleCv">معاينة زرار السيره الذاتية</p>
               <div style="display: flex">
                 <v-col cols="6">
                   <v-btn class="mt-3" @click="resetButtonsCv" color="primary">إرجاع إلى الأصل</v-btn>
@@ -214,6 +294,7 @@
             </v-col>
             <!-- Button Group Work -->
             <v-col v-if="detTheme.work" cols="12" class="group elevation-10">
+              <h2>تنسيق زر الاعمال</h2>
               <p class="sticky-header" :style="buttonStyleWork">معاينة زر الاعمال</p>
               <div style="display: flex">
                 <v-col cols="6">
@@ -273,13 +354,14 @@
             </v-col>
             <!-- Button Group -->
             <v-col v-if="detTheme.btn" cols="12" class="group elevation-10">
-              <p class="sticky-header" :style="buttonStyle">معاينة الأزرار</p>
+              <h2>تنسيق الزر</h2>
+              <p class="sticky-header" :style="buttonStyle">معاينة الزر</p>
               <div style="display: flex">
                 <v-col cols="6">
                   <v-btn class="mt-3" @click="resetButtons" color="primary">إرجاع إلى الأصل</v-btn>
                 </v-col>
                 <v-col cols="6">
-                  <v-switch color="info" v-model="newTheme.button.enabled" label="تفعيل الأزرار"></v-switch>
+                  <v-switch color="info" v-model="newTheme.button.enabled" label="تفعيل الزر"></v-switch>
                 </v-col>
               </div>
               <v-row>
@@ -287,7 +369,7 @@
                   <v-text-field
                     variant="underlined"
                     v-model="newTheme.button.fontSize"
-                    label="حجم خط الأزرار"
+                    label="حجم خط الزر"
                     type="number"
                     append-icon="mdi-format-size"
                   ></v-text-field>
@@ -295,13 +377,13 @@
                 <v-col cols="12" sm="6">
                   <v-btn @click="opendialogColor('button', 'textColor')" color="#B3E5FC">
                     <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون نص الأزرار</h3>
+                    <h3>اختر لون نص الزر</h3>
                   </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-btn @click="opendialogColor('button', 'backgroundColor')" color="#B3E5FC">
                     <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون خلفية الأزرار</h3>
+                    <h3>اختر لون خلفية الزر</h3>
                   </v-btn>
                 </v-col>
               </v-row>
@@ -322,7 +404,7 @@
           "
         >
           <v-btn style="color: white; background-color: red; font-weight: bold" class="ma-4" @click="closeDialog">اغلاق</v-btn>
-          <v-btn style="color: white; background-color: blue; font-weight: bold" class="ma-4" @click="save">موافق</v-btn>
+          <v-btn style="color: white; background-color: blue; font-weight: bold" class="ma-4" @click="save">حفظ</v-btn>
         </div>
       </v-card>
     </v-dialog>
@@ -343,10 +425,22 @@ const dialogColorValue = ref(null);
 let oldDialogColorValue = null;
 const groupNameValue = ref(null);
 const colorValue = ref(null);
-const newTheme = ref({
+const newTheme = ref({});
+const defaultThem = ref({
   enabled: false,
-  nameEn: '',
-  nameAr: '',
+  imag: {
+    enabled: true,
+  },
+  progress: {
+    enabled: true,
+    backgroundColor: '',
+  },
+  sectionTitle: {
+    enabled: true,
+    backgroundColor: '',
+    textColor: '',
+    fontSize: '',
+  },
   mainTitle: {
     enabled: true,
     backgroundColor: '',
@@ -393,6 +487,17 @@ const newTheme = ref({
     borderRadius: '',
   },
 });
+function copyLink(link) {
+  if (link != null || link != ' ' || link != '') {
+    notifySuccess('لا يوجد لون لنسخة');
+    return;
+  }
+  navigator.clipboard.writeText(link).then(() => {
+    notifySuccess('تم نسخ اللون إلى الحافظة');
+    snackbar.value = true;
+  });
+}
+
 function selectColorValue() {
   console.log(groupNameValue.value, colorValue.value, dialogColorValue.value); //mainTitle textColor #5E35B1
   newTheme.value[groupNameValue.value][colorValue.value] = dialogColorValue.value;
@@ -419,6 +524,7 @@ const props = defineProps({
     default: {},
   },
 });
+
 function deepMerge(target, source) {
   const output = { ...target };
   for (const key in source) {
@@ -432,6 +538,7 @@ function deepMerge(target, source) {
   }
   return output;
 }
+newTheme.value = defaultThem.value;
 // newTheme.value = deepMerge(detailsTheme.value, props.detTheme);
 onMounted(() => {
   if (userStore.user.theme) {
@@ -450,6 +557,11 @@ watch(
   { immediate: false, deep: false } // لا يتم التنفيذ مباشرة بعد التركيب فقط على أول تغيير
 );
 
+const sectionTitleStyle = computed(() => ({
+  backgroundColor: newTheme.value.sectionTitle?.backgroundColor,
+  color: newTheme.value.sectionTitle?.textColor,
+  fontSize: `${newTheme.value.sectionTitle?.fontSize}px`,
+}));
 const mainTitleStyle = computed(() => ({
   backgroundColor: newTheme.value.mainTitle?.backgroundColor,
   color: newTheme.value.mainTitle?.textColor,
@@ -473,7 +585,7 @@ const buttonStyle = computed(() => ({
   color: newTheme.value.button.textColor,
   fontSize: `${newTheme.value.button.fontSize}px`,
   borderColor: newTheme.value.button.borderColor,
-  width: `${newTheme.value.button.borderWidth}px`,
+  borderWidth: `${newTheme.value.button.borderWidth}px`,
   borderRadius: `${newTheme.value.button.borderRadius}px`,
 }));
 
@@ -482,7 +594,7 @@ const buttonStyleCv = computed(() => ({
   color: newTheme.value.buttonCv.textColor,
   fontSize: `${newTheme.value.buttonCv.fontSize}px`,
   borderColor: newTheme.value.buttonCv.borderColor,
-  width: `${newTheme.value.buttonCv.borderWidth}px`,
+  borderWidth: `${newTheme.value.buttonCv.borderWidth}px`,
   borderRadius: `${newTheme.value.buttonCv.borderRadius}px`,
 }));
 const buttonStyleWork = computed(() => ({
@@ -490,11 +602,14 @@ const buttonStyleWork = computed(() => ({
   color: newTheme.value.buttonWork.textColor,
   fontSize: `${newTheme.value.buttonWork.fontSize}px`,
   borderColor: newTheme.value.buttonWork.borderColor,
-  width: `${newTheme.value.buttonWork.borderWidth}px`,
+  borderWidth: `${newTheme.value.buttonWork.borderWidth}px`,
   borderRadius: `${newTheme.value.buttonWork.borderRadius}px`,
 }));
 
 const allStyle = computed(() => ({
+  sectionTitle: {
+    style: sectionTitleStyle.value,
+  },
   mainTitle: {
     style: mainTitleStyle.value,
   },
@@ -515,37 +630,47 @@ const allStyle = computed(() => ({
   },
 }));
 
+function runAPI(data) {
+  saveItems('users-theme', data, userStore.user.id).then(res => {
+    console.log('res.data', res.data.theme);
+    closeDialog();
+  });
+}
+
 function save() {
   console.log('allStyle', allStyle.value);
 
   const addStyleNewTheme = deepMerge(newTheme.value, allStyle.value);
   console.log('addStyleNewTheme', addStyleNewTheme);
-  userStore.user.theme[newTheme.value.nameEn] = { ...addStyleNewTheme };
+  userStore.user.theme[props.detTheme.nameEn] = { ...addStyleNewTheme };
 
   // userStore.user.theme._method = 'put';
   console.log('userStore.user.theme', userStore.user.theme);
-  saveItems('users-theme', { theme: userStore.user.theme, _method: 'put' }, userStore.user.id).then(res => {
-    // userStore.user = res.data;
-    console.log('res.data', res.data.theme);
-
-    closeDialog();
-  });
+  runAPI({ theme: userStore.user.theme, _method: 'put' });
 }
 
 function resetAll() {
-  resetMainTitle(false);
-  resetSubTitle(false);
-  resetParagraph(false);
-  resetButtons(false);
-  resetButtonsCv(false);
-  resetButtonsWork(false);
+  userStore.user.theme[props.detTheme.nameEn] = defaultThem.value;
+  runAPI({ theme: userStore.user.theme, _method: 'put' });
+  // resetMainTitle(false);
+  // resetSubTitle(false);
+  // resetParagraph(false);
+  // resetButtons(false);
+  // resetButtonsCv(false);
+  // resetButtonsWork(false);
   dialogresetAll.value = false;
-  save();
   notifySuccess('تم ارجاع التنسيقات بنجاح');
 }
 
+function resetSectionTitle(notifySucces = true) {
+  newTheme.value.mainTitle = defaultThem.value.mainTitle;
+  if (notifySucces) {
+    save();
+    notifySuccess('تم ارجاع التنسيقات بنجاح');
+  }
+}
 function resetMainTitle(notifySucces = true) {
-  newTheme.value.mainTitle = {};
+  newTheme.value.mainTitle = defaultThem.value.mainTitle;
   if (notifySucces) {
     save();
     notifySuccess('تم ارجاع التنسيقات بنجاح');
@@ -553,7 +678,7 @@ function resetMainTitle(notifySucces = true) {
 }
 
 function resetSubTitle(notifySucces = true) {
-  newTheme.value.subTitle = {};
+  newTheme.value.subTitle = defaultThem.value.subTitle;
   if (notifySucces) {
     save();
     notifySuccess('تم ارجاع التنسيقات بنجاح');
@@ -561,7 +686,7 @@ function resetSubTitle(notifySucces = true) {
 }
 
 function resetParagraph(notifySucces = true) {
-  newTheme.value.paragraph = {};
+  newTheme.value.paragraph = defaultThem.value.paragraph;
   if (notifySucces) {
     save();
     notifySuccess('تم ارجاع التنسيقات بنجاح');
@@ -569,21 +694,21 @@ function resetParagraph(notifySucces = true) {
 }
 
 function resetButtons(notifySucces = true) {
-  newTheme.value.button = {};
+  newTheme.value.button = defaultThem.value.button;
   if (notifySucces) {
     save();
     notifySuccess('تم ارجاع التنسيقات بنجاح');
   }
 }
 function resetButtonsCv(notifySucces = true) {
-  newTheme.value.buttonCv = {};
+  newTheme.value.buttonCv = defaultThem.value.buttonCv;
   if (notifySucces) {
     save();
     notifySuccess('تم ارجاع التنسيقات بنجاح');
   }
 }
 function resetButtonsWork(notifySucces = true) {
-  newTheme.value.buttonWork = {};
+  newTheme.value.buttonWork = defaultThem.value.buttonWork;
   if (notifySucces) {
     save();
     notifySuccess('تم ارجاع التنسيقات بنجاح');

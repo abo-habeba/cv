@@ -1,7 +1,7 @@
 <template>
   <div class="aside-app">
     <div class="text-center">
-      <div class="author-img"><img :src="userStore.userAll.user.profile_image" /></div>
+      <div class="author-img"><img v-if="userStore.userAll.user.theme.hero?.imag?.enabled" :src="userStore.userAll.user.profile_image" /></div>
       <h1 id="h-logo">{{ userStore.userAll.user.first_name[lang] }}</h1>
       <span class="position">{{ userStore.userAll.user.position[lang] }}</span>
     </div>
@@ -14,10 +14,10 @@
           <li :style="{ order: userStore.userAll.user.theme.about?.order - 2 }" v-if="userStore.userAll.user.theme.about?.enabled">
             <a href="#h-about">{{ lang == 'en' ? 'About' : ' عني ' }}</a>
           </li>
-          <!-- <li>
+          <li v-if="userStore.userAll.user.theme.services?.enabled" :style="{ order: userStore.userAll.user.theme.services?.order - 2 }">
             <a href="#h-services">{{ lang == 'en' ? 'Services' : 'الخدمات' }}</a>
-          </li> -->
-          <li :style="{ order: userStore.userAll.user.theme.skill?.order - 2 }" v-if="userStore.userAll.user.theme.skill?.enabled">
+          </li>
+          <li v-if="userStore.userAll.user.theme.skills?.enabled" :style="{ order: userStore.userAll.user.theme.skills?.order - 2 }">
             <a href="#h-skills">{{ lang == 'en' ? 'Skills' : 'المهارات' }}</a>
           </li>
           <li :style="{ order: userStore.userAll.user.theme.academic?.order - 2 }" v-if="userStore.userAll.user.theme.academic?.enabled">
@@ -26,25 +26,27 @@
           <li :style="{ order: userStore.userAll.user.theme.experience?.order - 2 }" v-if="userStore.userAll.user.theme.experience?.enabled">
             <a href="#h-experience">{{ lang == 'en' ? 'Experience' : 'الخبرة' }}</a>
           </li>
-          <li>
+          <li v-if="userStore.userAll.user.theme.work?.enabled" :style="{ order: userStore.userAll.user.theme.work?.order - 2 }">
             <a href="#h-work">{{ lang == 'en' ? 'Work' : 'الأعمال' }}</a>
           </li>
-          <li>
+          <li v-if="userStore.userAll.user.theme.blog?.enabled" :style="{ order: userStore.userAll.user.theme.blog?.order - 2 }">
             <a href="#h-blog">{{ lang == 'en' ? 'Blog' : 'مدونة' }}</a>
           </li>
-          <li>
+          <li v-if="userStore.userAll.user.theme.contact?.enabled" :style="{ order: userStore.userAll.user.theme.contact?.order - 2 }">
             <a href="#h-contact">{{ lang == 'en' ? 'Contact' : 'اتصل بنا' }}</a>
           </li>
         </ul>
       </div>
     </nav>
     <div class="h-footer">
-      <div v-if="userStore.userAll.user.theme.socials.aside.enabled" class="box-socials">
-        <div v-for="(social, i) in userStore.userAll.socials" :key="i">
-          <!-- <p>{{ social.icon }}</p> -->
-          <a :href="social.url" target="_blank">
-            <v-icon :color="social.icon.color" :icon="social.icon.icon"></v-icon>
-          </a>
+      <div v-if="userStore.userAll.user.theme.socials" class="box-socials">
+        <div v-if="userStore.userAll.user.theme.socials?.aside?.enabled" class="box-socials">
+          <div v-for="(social, i) in userStore.userAll.socials" :key="i">
+            <!-- <p>{{ social.icon }}</p> -->
+            <a :href="social.url" target="_blank">
+              <v-icon :color="social.icon.color" :icon="social.icon.icon"></v-icon>
+            </a>
+          </div>
         </div>
       </div>
       <div class="Copy-right">

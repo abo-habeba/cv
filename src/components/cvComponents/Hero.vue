@@ -43,7 +43,7 @@
           >{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a
         >
       </div>
-      <div v-if="userStore.userAll.user.theme?.socials.hero.enabled" class="box-socials">
+      <div v-if="userStore.userAll.user.theme.socials?.hero.enabled" class="box-socials">
         <div v-for="(social, i) in userStore.userAll.socials" :key="i">
           <a :href="social.url" target="_blank">
             <v-icon style="font-size: 40px" :color="social.icon.color" :icon="social.icon.icon"></v-icon>

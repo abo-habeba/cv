@@ -36,6 +36,9 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
+*{
+  border-radius: 7px;
+}
 pre {
   white-space: pre-wrap;
   word-wrap: break-word;

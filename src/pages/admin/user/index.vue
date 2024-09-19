@@ -3,13 +3,13 @@
     <ThemeSettings
       v-if="userStore.user"
       ref="dialogThemeFormHero"
-      :detTheme="{ nameEn: 'hero', nameAr: 'الرئيسية', cv: true, work: true }"
+      :detTheme="{ nameEn: 'hero', nameAr: 'الرئيسية', h2: true, h4: true, p: true, cv: true, work: true, sectionTitle: true, imag: true }"
       @click="openDialogThemeFormHero"
     />
     <ThemeSettings
       v-if="userStore.user"
       ref="dialogThemeFormAbout"
-      :detTheme="{ nameEn: 'about', nameAr: 'عني', btn: true }"
+      :detTheme="{ nameEn: 'about', nameAr: 'عني', h2: true, h4: true, p: true, btn: true }"
       @click="openDialogThemeFormAbout"
     />
 

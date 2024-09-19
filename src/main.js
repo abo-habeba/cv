@@ -26,7 +26,7 @@ userStore.setAuthHeaderNew(localStorage.token).then(() => {
       userStore.isLoader = false;
       userStore.loadengApi = false;
       userStore.popupError = false;
-      console.log(' userStore main js', JSON.parse(JSON.stringify(userStore.user.theme)));
+      console.log(' userStore main js', JSON.parse(JSON.stringify(userStore.user)));
     })
     .catch(() => {
       if (!localStorage.token) {

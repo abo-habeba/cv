@@ -46,8 +46,8 @@
             </section>
             <section
               class="h-skills section"
-              :style="{ order: userStore.userAll.user.theme.skill?.order - 2 }"
-              v-if="userStore.userAll.user.theme.skill?.enabled"
+              :style="{ order: userStore.userAll.user.theme.skills?.order - 2 }"
+              v-if="userStore.userAll.user.theme.skills?.enabled"
               id="h-skills"
               ref="skillsRef"
             >
@@ -126,6 +126,8 @@ onMounted(() => {
       userAllData.value = res.data.data;
       userStore.userAll = res.data.data;
       const link = document.querySelector("link[rel='icon']");
+      console.log(res.data.data.user.profile_image);
+
       link.href = res.data.data.user.profile_image;
       // console.log(userStore.userAll.user.profile_image);
       getData.value = true;
