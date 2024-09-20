@@ -27,7 +27,7 @@
           class="ma-2 box-linkt"
         >
           <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; justify-items: center" class="mb-3">
-            <v-btn class="mx-4" icon @click="copyLink(dialogColorValue)">
+            <v-btn class="mx-4" icon @click="copyColor(dialogColorValue)">
               <v-icon>mdi-content-copy</v-icon>
             </v-btn>
             <h4>{{ dialogColorValue }}</h4>
@@ -63,13 +63,7 @@
             <!-- imag Group -->
             <v-col v-if="detTheme.imag" cols="12" class="group elevation-10">
               <v-col cols="12">
-                <v-switch
-                  style="width: fit-content"
-                  class="ma-auto"
-                  color="info"
-                  v-model="newTheme.imag.enabled"
-                  label="تفعيل صورة  "
-                ></v-switch>
+                <v-switch style="width: fit-content" class="ma-auto" color="info" v-model="newTheme.imag.enabled" label="تفعيل صورة  "></v-switch>
               </v-col>
             </v-col>
             <!-- Section Title Group -->
@@ -487,13 +481,15 @@ const defaultThem = ref({
     borderRadius: '',
   },
 });
-function copyLink(link) {
-  if (link != null || link != ' ' || link != '') {
+function copyColor(color) {
+  console.log(color);
+
+  if (color === null || color === ' ' || color === '') {
     notifySuccess('لا يوجد لون لنسخة');
     return;
   }
-  navigator.clipboard.writeText(link).then(() => {
-    notifySuccess('تم نسخ اللون إلى الحافظة');
+  navigator.clipboard.writeText(color).then(() => {
+    notifySuccess(` الي الحافظة  ${color}  تم نسخ`);
     snackbar.value = true;
   });
 }
@@ -507,8 +503,9 @@ function opendialogColor(groupName, color) {
   // newTheme[groupName][color] = dialogColorValue.value;
   groupNameValue.value = groupName;
   colorValue.value = color;
-  dialogColor.value = true;
   oldDialogColorValue = userStore.user.theme[props.detTheme.nameEn][groupNameValue.value][colorValue.value];
+  dialogColorValue.value = userStore.user.theme[props.detTheme.nameEn][groupNameValue.value][colorValue.value];
+  dialogColor.value = true;
 }
 function closeDialogColor() {
   dialogColorValue.value = '';

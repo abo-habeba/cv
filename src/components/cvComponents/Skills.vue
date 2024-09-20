@@ -11,7 +11,7 @@
       </div>
       <v-row>
         <v-col v-for="(skill, index) in userStore.userAll.skills" :key="index" cols="6" md="3">
-          <div style="cursor: pointer" class="d-flex flex-column align-center text-center pa-3">
+          <div @click="funSelectedSkill(skill)" style="cursor: pointer" class="d-flex flex-column align-center text-center pa-3">
             <v-card-title
               v-if="userStore.userAll.user.theme?.skills.mainTitle.enabled"
               :style="userStore.userAll.user.theme?.skills.mainTitle.style"
@@ -23,64 +23,81 @@
               class="ma-3"
               style="
                 position: relative;
-                min-width: 100px;
-                min-height: 100px;
                 display: flex;
-                flex-direction: column;
-                align-content: center;
-                justify-content: center;
+                flex-flow: column wrap;
+                place-content: center;
                 align-items: center;
+                justify-content: center;
+                align-content: center;
                 flex-wrap: wrap;
+                flex-direction: column;
               "
             >
-              <v-avatar v-if="userStore.userAll.user.theme?.skills.imag.enabled" size="80" class="mx-auto mb-3">
-                <v-img style="opacity: 0.7" :src="skill.photos[0]?.path" alt="Skill Image"></v-img>
+              <v-avatar  v-if="userStore.userAll.user.theme?.skills.imag.enabled" size="100" >
+                <v-img
+                  :style="{ opacity: userStore.userAll.user.theme?.skills.progress.enabled ? 0.5 : 1 }"
+                  :src="skill.photos[0]?.path"
+                  alt="Skill Image"
+                ></v-img>
               </v-avatar>
               <v-progress-circular
                 v-if="userStore.userAll.user.theme?.skills.progress.enabled"
-                style="position: absolute; top: -6px; right: 1px; z-index: 5"
+                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
                 :model-value="skill.level"
                 :rotate="-90"
-                :size="100"
+                :size="130"
                 :width="15"
-                :color="userStore.userAll.user.theme?.skills.progress.backgroundColor"
+                :color="userStore.userAll.user.theme?.skills.progress.backgroundColor || '#20A427'"
               >
                 {{ skill?.level }} %
               </v-progress-circular>
             </div>
-            <pre
-              class="pa-2"
-              v-if="userStore.userAll.user.theme?.skills.subTitle.enabled"
-              :style="userStore.userAll.user.theme?.skills.subTitle.style"
-              >{{ skill?.description[lang] }}</pre
-            >
-            <!-- <per>{{ skill.description[lang] }}</per> -->
-            <!-- <v-progress-linear height="15" v-if="skill?.level !== null" :model-value="skill.level" color="primary" class="mt-3">
-              <template v-slot:default>
-                <strong>{{ skill.level }}%</strong>
-              </template>
-            </v-progress-linear> -->
           </div>
         </v-col>
       </v-row>
     </v-card>
+
+    <!-- Dialog -->
+    <!-- <per>{{ skill.description[lang] }}</per> -->
+    <!-- <v-progress-linear height="15" v-if="skill?.level !== null" :model-value="skill.level" color="primary" class="mt-3">
+              <template v-slot:default>
+                <strong>{{ skill.level }}%</strong>
+              </template>
+            </v-progress-linear> -->
+
     <v-dialog v-model="dialogSkill" max-width="500px">
       <v-card class="d-flex flex-column align-center text-center pa-3">
         <v-card-title>{{ selectedSkill?.name[lang] }}</v-card-title>
-        <v-avatar v-if="selectedSkill.photos[0]" size="80" class="mx-auto mb-3">
-          <v-img :src="selectedSkill?.photos[0]?.path" alt="Skill Image"></v-img>
-        </v-avatar>
-        <pre>{{ selectedSkill?.description[lang] }}</pre>
-        <v-progress-circular
-          v-if="selectedSkill?.level !== null"
-          :model-value="selectedSkill.level"
-          :rotate="-90"
-          :size="100"
-          :width="15"
-          color="primary"
+        <div
+          style="
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            flex-flow: wrap;
+            place-content: center;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
         >
-          {{ selectedSkill.level }} %
-        </v-progress-circular>
+          <v-avatar v-if="selectedSkill.photos[0]" size="80" class="my-4">
+            <v-img :src="selectedSkill?.photos[0]?.path" alt="Skill Image"></v-img>
+          </v-avatar>
+          <v-progress-linear
+            v-if="userStore.userAll.user.theme?.skills.subTitle.enabled"
+            class="mx-5"
+            width="100%"
+            height="20"
+            :model-value="selectedSkill.level"
+            :color="userStore.userAll.user.theme?.skills.progress.backgroundColor || '#20A427'"
+          >
+            {{ selectedSkill.level }} %
+          </v-progress-linear>
+        </div>
+        <pre class="pa-2" v-if="userStore.userAll.user.theme?.skills.subTitle.enabled" :style="userStore.userAll.user.theme?.skills.subTitle.style">{{
+          selectedSkill?.description[lang]
+        }}</pre>
         <v-card-actions class="pa-4">
           <v-btn color="red" text @click="dialogSkill = false">Close</v-btn>
         </v-card-actions>

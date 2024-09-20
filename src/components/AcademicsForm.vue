@@ -46,7 +46,7 @@
             <v-col cols="12" md="6">
               <v-text-field v-model="description.en" label="description"></v-text-field>
             </v-col>
-            <imageInput ref="imageInputRef" />
+            <imageInput ref="imageInputRef" :isMultiple="true" />
           </v-row>
         </v-form>
         <template v-slot:actions>
@@ -119,6 +119,7 @@ const addNew = (data = {}) => {
 const imageInputRef = ref(null);
 const runCompressImages = () => {
   // Validate required fields
+  console.log('runCompressImages');
   if (!institution.value.ar && !institution.value.en) {
     notifyError(`حقل المؤسسة التعليمية مطلوب عربي او انجليزي`);
     return;
@@ -135,6 +136,7 @@ const runCompressImages = () => {
     notifyError(`حقل تاريخ البدء مطلوب `);
     return;
   }
+
   if (imageInputRef.value) {
     imageInputRef.value.compressImages().then(res => {
       save(res);

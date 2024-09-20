@@ -33,7 +33,14 @@ router.getRoutes().forEach(route => {
       // console.log('name', route.name);
       // const Permissions = localStorage.user ? JSON.parse(localStorage.user).role : [];
       // Permissions.includes(capitalizedSegment.toLowerCase()) &&
-      if (route.name != 'user' && route.name != 'admin' && route.name != 'contact') {
+      if (
+        route.name != 'user' &&
+        route.name != 'admin' &&
+        route.name != 'contact' &&
+        route.name != 'project' &&
+        route.name != 'credentials' &&
+        route.name != 'language'
+      ) {
         route.meta.show = true;
       }
     }

@@ -2,18 +2,19 @@
   <div>
     <v-card class="pa-4 my-4">
       <div class="title-section">
-        <h2>{{ lang == 'en' ? 'Academic' : ' التعليم ' }}</h2>
+        <h2 v-if="userStore.userAll.user.theme?.hero?.sectionTitle.enabled" :style="userStore.userAll.user.theme?.hero?.sectionTitle.style">
+          {{ lang == 'en' ? 'Academic' : ' التعليم ' }}
+        </h2>
         <div class="top"></div>
         <div class="center"></div>
         <div class="bottom"></div>
       </div>
-      <v-expansion-panels>
+      <v-expansion-panels class="my-5">
         <v-expansion-panel v-for="item in userStore.userAll.academics" :key="item.id">
-          <v-expansion-panel-title>
+          <v-expansion-panel-title v-slot="{ expanded }">
             <v-row no-gutters>
               <v-col class="my-2 px-3d-flex justify-start" cols="12">{{ item.institution[lang] }}</v-col>
-              <v-col class="my-2 text--secondary" cols="12">
-                <!-- {{ lang === 'en' ? 'Field of study' : 'تخصص الدراسة' }} : -->
+              <v-col v-if="!expanded" class="my-2 text--secondary" cols="12">
                 {{ item.field_of_study[lang] }}
               </v-col>
             </v-row>
@@ -35,7 +36,7 @@
               </v-col>
               <v-col cols="12">
                 <v-img
-                  v-if="item.photos.length"
+                  v-if="userStore.userAll.user.theme?.academics?.imag.enabled"
                   min-width="100px"
                   max-width="150px"
                   :src="item.photos[0].path"

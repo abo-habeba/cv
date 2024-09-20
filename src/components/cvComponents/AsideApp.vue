@@ -20,10 +20,10 @@
           <li v-if="userStore.userAll.user.theme.skills?.enabled" :style="{ order: userStore.userAll.user.theme.skills?.order - 2 }">
             <a href="#h-skills">{{ lang == 'en' ? 'Skills' : 'المهارات' }}</a>
           </li>
-          <li :style="{ order: userStore.userAll.user.theme.academic?.order - 2 }" v-if="userStore.userAll.user.theme.academic?.enabled">
+          <li :style="{ order: userStore.userAll.user.theme.academics?.order - 2 }" v-if="userStore.userAll.user.theme.academics?.enabled">
             <a href="#h-education">{{ lang == 'en' ? 'Education' : 'التعليم' }}</a>
           </li>
-          <li :style="{ order: userStore.userAll.user.theme.experience?.order - 2 }" v-if="userStore.userAll.user.theme.experience?.enabled">
+          <li :style="{ order: userStore.userAll.user.theme.experiences?.order - 2 }" v-if="userStore.userAll.user.theme.experiences?.enabled">
             <a href="#h-experience">{{ lang == 'en' ? 'Experience' : 'الخبرة' }}</a>
           </li>
           <li v-if="userStore.userAll.user.theme.work?.enabled" :style="{ order: userStore.userAll.user.theme.work?.order - 2 }">

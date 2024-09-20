@@ -12,7 +12,7 @@
     <v-file-input
       v-model="images"
       chips
-      :multiple="props.isMultiple"
+      :multiple="isMultiple"
       label="الصور"
       accept="image/*"
       prepend-icon="mdi-camera"
@@ -21,7 +21,7 @@
   </v-col>
 </template>
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, defineProps } from 'vue';
 import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
 const emits = defineEmits(['saveCompressedImages']);

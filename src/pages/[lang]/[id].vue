@@ -55,8 +55,8 @@
             </section>
             <section
               class="h-academic section"
-              :style="{ order: userStore.userAll.user.theme.academic?.order - 2 }"
-              v-if="userStore.userAll.user.theme.academic?.enabled"
+              :style="{ order: userStore.userAll.user.theme.academics?.order - 2 }"
+              v-if="userStore.userAll.user.theme.academics?.enabled"
               id="h-academic"
               ref="academicRef"
             >
@@ -64,8 +64,8 @@
             </section>
             <section
               class="h-experience section"
-              :style="{ order: userStore.userAll.user.theme.experience?.order - 2 }"
-              v-if="userStore.userAll.user.theme.experience?.enabled"
+              :style="{ order: userStore.userAll.user.theme.experiences?.order - 2 }"
+              v-if="userStore.userAll.user.theme.experiences?.enabled"
               id="h-experience"
               ref="experienceRef"
             >
