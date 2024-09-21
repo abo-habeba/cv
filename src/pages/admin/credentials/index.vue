@@ -71,6 +71,7 @@ const item = ref('');
 definePage({
   meta: {
     title: 'الشهادات',
+    description: 'إدارة وتحرير بيانات الشهادات الأكاديمية والمهنية.',
   },
 });
 

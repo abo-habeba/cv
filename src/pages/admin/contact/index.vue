@@ -78,7 +78,7 @@ function deleteItem(i) {
 definePage({
   meta: {
     title: 'تواصل معنا',
-    show: false,
+    description: 'هنا ستجد الرسائل الواردة من زوار الموقع لمتابعتها والتواصل معهم .',
   },
 });
 

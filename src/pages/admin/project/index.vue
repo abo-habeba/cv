@@ -57,7 +57,8 @@ const item = ref('');
 
 definePage({
   meta: {
-    title: 'المشاريع',
+    title: 'الاعمال',
+    description: 'إدارة وتحرير بيانات الاعمال السابقة.',
   },
 });
 

@@ -123,6 +123,7 @@ function deleteItem(i) {
 definePage({
   meta: {
     title: 'منصات التواصل',
+    description: 'إدارة وتحرير بيانات روابط منصات التواصل الاجتماعي.',
   },
 });
 

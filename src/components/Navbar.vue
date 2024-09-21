@@ -68,7 +68,7 @@
       <div class="box-route">
         <v-slide-group show-arrows>
           <v-slide-group-item v-for="(routerList, i) in routerLists" :key="i">
-            <router-link v-if="routerList.meta.show && routerList.path != 'project'" :to="routerList.path"
+            <router-link v-if="routerList.meta.show" :to="routerList.path"
               ><v-chip color="primary" variant="outlined" class="my-1 mx-1">
                 <div :class="{ 'active-chip': route.path === routerList.path }">
                   {{ routerList.meta.title }}

@@ -421,7 +421,7 @@ const groupNameValue = ref(null);
 const colorValue = ref(null);
 const newTheme = ref({});
 const defaultThem = ref({
-  enabled: false,
+  enabled: true,
   imag: {
     enabled: true,
   },

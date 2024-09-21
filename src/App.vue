@@ -36,8 +36,9 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
-*{
+* {
   border-radius: 7px;
+  text-decoration: none;
 }
 pre {
   white-space: pre-wrap;

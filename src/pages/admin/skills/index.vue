@@ -63,7 +63,7 @@ const item = ref('');
 definePage({
   meta: {
     title: 'المهارات',
-    show: false,
+    description: 'إدارة وتحرير بيانات المهارات المكتسبة.',
   },
 });
 const dialogThemeForm = ref(null);

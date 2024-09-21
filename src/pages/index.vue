@@ -4,3 +4,7 @@
 <script setup>
 console.log('Home  index.vue');
 </script>
+<route lang="yaml">
+meta:
+  layout: pure
+</route>

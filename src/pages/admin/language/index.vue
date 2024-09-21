@@ -71,6 +71,7 @@ function deleteItem(i) {
 definePage({
   meta: {
     title: 'اللغات',
+    description: 'إدارة وتحرير بيانات اللغات المكتسبة.',
   },
 });
 

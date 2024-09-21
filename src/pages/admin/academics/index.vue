@@ -77,6 +77,7 @@ const isShowImage = ref(null);
 definePage({
   meta: {
     title: 'التعليم',
+    description: 'إدارة وتحرير بيانات التعليم الأكاديمي.',
   },
 });
 onMounted(() => {
