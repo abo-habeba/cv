@@ -1,14 +1,14 @@
 <template>
   <div v-if="userStore.user.theme">
     <v-btn class="ma-2"> تخصيص قسم {{ detTheme.nameAr }}<v-icon color="#00c853" size="35" icon="mdi-palette-outline" end></v-icon> </v-btn>
-    <v-dialog class="text-center" v-model="dialogresetAll" max-width="900">
+    <v-dialog class="text-center" :fullscreen="xs" v-model="dialogresetAll" max-width="900">
       <v-card>
         <p style="color: red" class="ma-1 pa-10">هل تريد حقا ارجاع كل التنسيقات الخاصه بالقسم الي الاصل</p>
         <v-btn class="ma-1 pa-2" @click="resetAll">موافق</v-btn>
         <v-btn class="ma-1 pa-2" @click="dialogresetAll = false">اغلاق</v-btn>
       </v-card>
     </v-dialog>
-    <v-dialog class="text-center" v-model="dialogColor" max-width="900">
+    <v-dialog class="text-center" :fullscreen="xs" v-model="dialogColor" max-width="900">
       <v-card>
         <p class="ma-1 pt-5">اختر لون</p>
 
@@ -41,7 +41,7 @@
         <v-btn class="ma-1 pa-2" @click="closeDialogColor">اغلاق</v-btn>
       </v-card>
     </v-dialog>
-    <v-dialog class="text-center" v-model="dialogItemForm" max-width="1200">
+    <v-dialog class="text-center" :fullscreen="xs" v-model="dialogItemForm" max-width="1200">
       <v-card class="pa-5">
         <v-form>
           <v-row>
@@ -406,6 +406,8 @@
 </template>
 
 <script setup>
+import { useDisplay } from 'vuetify';
+const { xs } = useDisplay();
 import { saveItems } from '@/Service/apiService';
 import { ref, defineProps, onMounted, computed } from 'vue';
 import { useUserStore } from '@/stores/user';

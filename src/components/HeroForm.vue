@@ -3,7 +3,7 @@
     <v-col cols="auto">
       <v-btn class="ma-1" color="info" @click="openDialogShowHero()"> تعديل صور الرئيسية <v-icon icon="mdi-image-outline" end></v-icon></v-btn>
     </v-col>
-    <v-dialog style="z-index: 50" class="text-center" v-model="dialogItemFormHero" max-width="900" persistent>
+    <v-dialog style="z-index: 50" class="text-center" v-model="dialogItemFormHero" max-width="900" :fullscreen="xs">
       <v-card class="pa-5">
         <h2 class="ma-5">صور الرئيسية</h2>
         <v-row style="background-color: #ada7a0; text-align: center; overflow-x: auto" v-if="userStore.user.hero.length">
@@ -29,6 +29,8 @@
   </div>
 </template>
 <script setup>
+import { useDisplay } from 'vuetify';
+const { xs } = useDisplay();
 import { saveItems, deleteItem } from '@/Service/apiService';
 import { ref, defineEmits, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';

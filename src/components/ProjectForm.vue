@@ -3,12 +3,11 @@
     <v-col cols="auto">
       <v-btn @click="addNew()" icon="mdi-plus" color="success" size="small" to=""></v-btn>
     </v-col>
-    <v-dialog class="text-center" v-model="dialogItemForm" max-width="900" persistent>
+    <v-dialog class="text-center" v-model="dialogItemForm" max-width="900" :fullscreen="xs">
       <v-card class="pa-5">
         <h2 class="ma-5">
           {{ item.id ? `تعديل ` : ` اضافة ` }}
         </h2>
-
         <v-form>
           <v-row>
             <v-col cols="12" md="6">
@@ -38,6 +37,8 @@
   </div>
 </template>
 <script setup>
+import { useDisplay } from 'vuetify';
+const { xs } = useDisplay();
 import { ref } from 'vue';
 import { notifyError } from '@/Service/notifyService';
 import { saveItems } from '@/Service/apiService';

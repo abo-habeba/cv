@@ -1,8 +1,17 @@
 <template>
-  <h1 style="text-align: center">Home</h1>
+  <v-dialog :fullscreen="mobile">
+    <v-text-field label="Label"></v-text-field>
+    <v-text-field label="Label"></v-text-field>
+    <v-text-field label="Label"></v-text-field>
+    <v-text-field label="Label"></v-text-field>
+    <v-text-field label="Label"></v-text-field>
+  </v-dialog>
 </template>
+
 <script setup>
-console.log('Home  index.vue');
+import { useDisplay } from 'vuetify';
+
+const { mobile } = useDisplay();
 </script>
 <route lang="yaml">
 meta:

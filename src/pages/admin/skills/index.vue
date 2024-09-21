@@ -7,6 +7,7 @@
         <v-btn class="ma-1" @click="openDialogDeleted = false"> اغلاق </v-btn>
       </v-card>
     </v-dialog>
+
     <ThemeSettings
       v-if="userStore.user"
       ref="dialogThemeForm"
@@ -14,6 +15,7 @@
       @click="openDialogThemeForm"
     />
     <SkillsForm ref="itemForm" @runItems="getItems" />
+
     <ShowImages ref="isShowImage" @runItems="getItems" />
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h">
       <thead>

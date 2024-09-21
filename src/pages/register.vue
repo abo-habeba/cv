@@ -2,8 +2,8 @@
   <div id="register">
     <v-container>
       <v-row>
-        <v-col cols="12" sm="11" md="8" lg="6" xl="6" class="mx-auto">
-          <v-card class="register-box mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+        <v-col cols="12" xs="12" sm="11" md="8" lg="6" xl="6" class="mx-auto">
+          <v-card class="register-box mx-auto pa-1 pb-8" max-width="448" rounded="sm">
             <v-alert class="mb-3" type="warning" variant="outlined"> هذا الاسم يستخدم في رابط المتصفح </v-alert>
             <v-form fast-fail @submit.prevent>
               <v-text-field
@@ -83,7 +83,7 @@ const userStore = useUserStore();
 const visible = ref(false);
 const registerData = ref({});
 const usernameAlready = ref(false);
-const windowurld = ref(`${window.location.origin}/`);
+const windowurld = ref(`${window.location.hostname}/`);
 const errorForme = ref({});
 const usernameRules = [
   v => !!v || 'يرجى إدخال اسم المستخدم',
@@ -100,7 +100,7 @@ function validateRegister(v) {
   }
 }
 const emailRules = [v => !!v || 'يرجى إدخال الايميل'];
-const passwordRules = [v => !!v || 'يرجى إدخال كلمة السر'];
+const passwordRules = [v => !!v || 'يرجى إدخال كلمة السر', v => v.length >= 8 || 'يجب أن تكون كلمة المرور مكونة من 8 أحرف على الأقل'];
 // console.log(windowurld.value);
 const notifyError = message => {
   toast.error(message, {
