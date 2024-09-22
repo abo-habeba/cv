@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-col cols="auto">
-      <v-btn @click="addNew()" icon="mdi-plus" color="success" size="small" to=""></v-btn>
-    </v-col>
+    <v-icon @click="addNew()" color="info" size="35" icon="mdi-plus-outline"></v-icon>
     <v-dialog :fullscreen="xs" class="text-center" v-model="dialogItemForm" max-width="900">
       <v-card class="pa-5">
         <h2 class="ma-5">

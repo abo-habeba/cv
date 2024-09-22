@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <Breadcrumbs />
     <v-dialog class="text-center" v-model="openDialogDeleted" max-width="400" persistent>
       <v-card class="pa-5">
         <h2 class="ma-5">هل تريد حذف العنصر بالفعل</h2>
@@ -7,9 +8,22 @@
         <v-btn class="ma-1" @click="openDialogDeleted = false"> اغلاق </v-btn>
       </v-card>
     </v-dialog>
-    <ThemeSettings v-if="userStore.user" ref="dialogThemeForm" :detTheme="{ nameEn: 'projects', nameAr: 'المشاريع' }" @click="openDialogThemeForm" />
+
+    <v-card max-width="500px" class="text-center my-5 mx-auto" :subtitle="route.meta.description" :title="route.meta.title">
+      <template v-slot:append>
+        <ThemeSettings
+          v-if="userStore.user"
+          ref="dialogThemeForm"
+          :detTheme="{ nameEn: 'projects', nameAr: 'المشاريع' }"
+          @click="openDialogThemeForm"
+        />
+      </template>
+      <template v-slot:prepend>
+        <ProjectForm ref="itemForm" @runItems="getItems" />
+      </template>
+    </v-card>
+
     <ShowImages ref="isShowImage" @runItems="getItems" />
-    <ProjectForm ref="itemForm" @runItems="getItems" />
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h">
       <thead>
         <tr>
@@ -35,7 +49,7 @@
           <td class="sticky-column">
             <v-btn @click="showImage(item.photos)" icon="mdi-image-edit-outline" color="info" size="small"></v-btn>
             <v-btn @click="deleteItem(item)" class="mx-3" icon="mdi-delete" color="red" size="small"></v-btn>
-            <v-btn @click="editItem(item)" icon="mdi-pencil" color="info" size="small"></v-btn>
+            <v-btn @click="editItem(item)" icon="mdi-square-edit-outline" color="info" size="small"></v-btn>
           </td>
         </tr>
       </tbody>
@@ -45,12 +59,12 @@
 </template>
 
 <script setup>
-import axios from 'axios';
+import { useRoute } from 'vue-router';
+const route = useRoute();
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { deleteItems, fetchItems } from '@/Service/apiService';
 const userStore = useUserStore();
-const itemForm = ref(null);
 const openDialogDeleted = ref(false);
 const items = ref([]);
 const item = ref('');
@@ -100,6 +114,7 @@ function deleted() {
     openDialogDeleted.value = false;
   });
 }
+const itemForm = ref(null);
 
 const editItem = item => {
   itemForm.value?.addNew(item);

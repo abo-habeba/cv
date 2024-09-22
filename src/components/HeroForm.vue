@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-col cols="auto">
-      <v-btn class="ma-1" color="info" @click="openDialogShowHero()"> تعديل صور الرئيسية <v-icon icon="mdi-image-outline" end></v-icon></v-btn>
-    </v-col>
+    <v-icon @click="addNew()" color="info" size="35" icon="mdi-image-multiple-outline"></v-icon>
     <v-dialog style="z-index: 50" class="text-center" v-model="dialogItemFormHero" max-width="900" :fullscreen="xs">
       <v-card class="pa-5">
         <h2 class="ma-5">صور الرئيسية</h2>
@@ -16,7 +14,7 @@
         <p class="text-alert" v-if="!userStore.user.hero.length">لا توجد صور</p>
         <v-form>
           <v-row class="my-10">
-            <h3>يمكنك تحميل  صوره او اكثر</h3>
+            <h3>يمكنك تحميل صوره او اكثر</h3>
             <imageInput ref="imageInputRef" @saveCompressedImages="save" />
           </v-row>
         </v-form>

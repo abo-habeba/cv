@@ -37,7 +37,7 @@ router.getRoutes().forEach(route => {
         route.name != 'user' &&
         route.name != 'admin' &&
         route.name != 'contact' &&
-        route.name != 'project' &&
+        // route.name != 'project' &&
         route.name != 'credentials' &&
         route.name != 'language'
       ) {
@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
     if (to.params) {
       if (token) {
         if (to.path === '/login' || to.path === '/register') {
-          next({ path: '/' });
+          next({ path: 'admin/' });
         } else {
           next();
         }

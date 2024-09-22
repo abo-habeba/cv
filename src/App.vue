@@ -36,6 +36,9 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
+.v-card-subtitle {
+  white-space: normal !important;
+}
 * {
   border-radius: 7px;
   text-decoration: none;
@@ -47,7 +50,7 @@ pre {
 .sticky-column {
   position: -webkit-sticky;
   position: sticky;
-  background-color: white;
+  background-color: #ffffff94;
   left: 0;
   z-index: 10;
 }

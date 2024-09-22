@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <Breadcrumbs />
     <v-dialog class="text-center" v-model="openDialogDeleted" max-width="400" persistent>
       <v-card class="pa-5">
         <h2 class="ma-5">هل تريد حذف العنصر بالفعل</h2>
@@ -31,7 +32,7 @@
           <td>{{ item.created_at }}</td>
           <td class="sticky-column">
             <v-btn @click="deleteItem(item)" class="mx-3" icon="mdi-delete" color="red" size="small"></v-btn>
-            <v-btn @click="editItem(item)" icon="mdi-pencil" color="info" size="small"></v-btn>
+            <v-btn @click="editItem(item)" icon="mdi-square-edit-outline" color="info" size="small"></v-btn>
           </td>
         </tr>
       </tbody>

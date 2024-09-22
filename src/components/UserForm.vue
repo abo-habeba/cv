@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-col cols="auto">
-      <v-btn class="ma-1" color="success"> تعديل البيانات <v-icon icon="mdi-square-edit-outline" end></v-icon></v-btn>
-    </v-col>
+    <v-icon icon="mdi-square-edit-outline" color="info" size="35"></v-icon>
     <v-dialog class="text-center" v-model="dialogItemForm" max-width="900" persistent>
       <v-card class="pa-5">
         <h2 class="ma-5">

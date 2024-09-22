@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <Breadcrumbs />
     <v-dialog class="text-center" v-model="openDialogDeleted" max-width="400" persistent>
       <v-card class="pa-5">
         <h2 class="ma-5">هل تريد حذف العنصر بالفعل</h2>
@@ -8,13 +9,19 @@
       </v-card>
     </v-dialog>
 
-    <ThemeSettings
-      v-if="userStore.user"
-      ref="dialogThemeForm"
-      :detTheme="{ nameEn: 'skills', nameAr: 'المهارات', h2: true, h4: true, imag: true, progress: true }"
-      @click="openDialogThemeForm"
-    />
-    <SkillsForm ref="itemForm" @runItems="getItems" />
+    <v-card max-width="500px" class="text-center my-5 mx-auto" :subtitle="route.meta.description" :title="route.meta.title">
+      <template v-slot:append>
+        <ThemeSettings
+          v-if="userStore.user"
+          ref="dialogThemeForm"
+          :detTheme="{ nameEn: 'skills', nameAr: 'المهارات', h2: true, h4: true, imag: true, progress: true }"
+          @click="openDialogThemeForm"
+        />
+      </template>
+      <template v-slot:prepend>
+        <SkillsForm ref="itemForm" @runItems="getItems" />
+      </template>
+    </v-card>
 
     <ShowImages ref="isShowImage" @runItems="getItems" />
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h">
@@ -42,7 +49,7 @@
           <td class="sticky-column">
             <v-btn @click="showImage(item.photos)" icon="mdi-image-edit-outline" color="info" size="small"></v-btn>
             <v-btn @click="deleteItem(item)" class="mx-3" icon="mdi-delete" color="red" size="small"></v-btn>
-            <v-btn @click="editItem(item)" icon="mdi-pencil" color="info" size="small"></v-btn>
+            <v-btn @click="editItem(item)" icon="mdi-square-edit-outline" color="info" size="small"></v-btn>
           </td>
         </tr>
       </tbody>
@@ -52,6 +59,8 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router';
+const route = useRoute();
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { deleteItems, fetchItems } from '@/Service/apiService';

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-col cols="auto">
-      <v-btn @click="addNew()" icon="mdi-plus" color="success" size="small" to=""></v-btn>
-    </v-col>
+    <v-icon @click="addNew()" color="info" size="35" icon="mdi-plus-outline"></v-icon>
     <v-dialog class="text-center" v-model="dialogItemForm" max-width="900" :fullscreen="xs">
       <v-card class="pa-5">
         <h2 class="ma-5">
@@ -25,7 +23,7 @@
             <v-col cols="12" md="6">
               <v-text-field v-model="item.url" label="URL"></v-text-field>
             </v-col>
-            <imageInput ref="imageInputRef" @saveCompressedImages="save" />
+            <imageInput ref="imageInputRef" :isMultiple="true" />
           </v-row>
         </v-form>
         <template v-slot:actions>
@@ -61,6 +59,7 @@ function ensureHttps(url) {
   if (!url.startsWith('https://')) {
     return 'https://' + url;
   }
+
   return url;
 }
 
@@ -95,7 +94,10 @@ const runCompressImages = () => {
   }
 
   if (imageInputRef.value) {
-    imageInputRef.value.compressImages();
+    imageInputRef.value.compressImages().then(res => {
+      console.log(res);
+      save(res);
+    });
   }
 };
 const addNew = (data = {}) => {

@@ -1,20 +1,46 @@
 <template>
   <v-container class="user-info" v-if="!userStore.loadengApi">
-    <ThemeSettings
-      v-if="userStore.user"
-      ref="dialogThemeFormHero"
-      :detTheme="{ nameEn: 'hero', nameAr: 'الرئيسية', h2: true, h4: true, p: true, cv: true, work: true, sectionTitle: true, imag: true }"
-      @click="openDialogThemeFormHero"
-    />
-    <ThemeSettings
+    <Breadcrumbs />
+    <v-row>
+      <v-col cols="12">
+        <v-card max-width="500px" class="text-center mx-auto" subtitle="تعديل تنسيقات قسم الرئيسية " title="الرئيسية">
+          <template v-slot:append>
+            <ThemeSettings
+              v-if="userStore.user"
+              ref="dialogThemeFormHero"
+              :detTheme="{ nameEn: 'hero', nameAr: 'الرئيسية', h2: true, h4: true, p: true, cv: true, work: true, sectionTitle: true, imag: true }"
+              @click="openDialogThemeFormHero"
+            />
+          </template>
+          <template v-slot:prepend>
+            <HeroForm ref="dialogHeroForm" @click="openFormHero" />
+          </template>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card max-width="500px" class="text-center mx-auto" subtitle="تعديل قسم البيانات الشخصية " title="البيانات الشخصية">
+          <template v-slot:append>
+            <ThemeSettings
+              v-if="userStore.user"
+              ref="dialogThemeFormAbout"
+              :detTheme="{ nameEn: 'about', nameAr: 'عني', h2: true, h4: true, p: true, btn: true }"
+              @click="openDialogThemeFormAbout"
+            />
+          </template>
+          <template v-slot:prepend>
+            <UserForm ref="dialogItemForm" @click="openForm" />
+          </template>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <!-- <ThemeSettings
       v-if="userStore.user"
       ref="dialogThemeFormAbout"
       :detTheme="{ nameEn: 'about', nameAr: 'عني', h2: true, h4: true, p: true, btn: true }"
       @click="openDialogThemeFormAbout"
-    />
+    /> -->
 
-    <UserForm ref="dialogItemForm" @click="openForm" />
-    <HeroForm ref="dialogHeroForm" @click="openFormHero" />
     <v-card
       :title="(userStore.user.first_name.en || 'N D') + ' - ' + (userStore.user.first_name.ar || 'N D')"
       :subtitle="userStore.user.email || 'N D'"
@@ -41,7 +67,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useUserStore } from '@/stores/user';
 import HeroForm from '@/components/HeroForm.vue';
 const dialogItemForm = ref(null);

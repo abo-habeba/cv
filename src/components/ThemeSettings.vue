@@ -1,6 +1,6 @@
 <template>
   <div v-if="userStore.user.theme">
-    <v-btn class="ma-2"> تخصيص قسم {{ detTheme.nameAr }}<v-icon color="#00c853" size="35" icon="mdi-palette-outline" end></v-icon> </v-btn>
+    <v-icon color="info" size="35" icon="mdi-palette-outline"></v-icon>
     <v-dialog class="text-center" :fullscreen="xs" v-model="dialogresetAll" max-width="900">
       <v-card>
         <p style="color: red" class="ma-1 pa-10">هل تريد حقا ارجاع كل التنسيقات الخاصه بالقسم الي الاصل</p>

@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <Breadcrumbs />
     <v-dialog class="text-center" v-model="openDialogDeleted" max-width="400" persistent>
       <v-card class="pa-5">
         <h2 class="ma-5">هل تريد حذف العنصر بالفعل</h2>
@@ -7,9 +8,15 @@
         <v-btn class="ma-1" @click="openDialogDeleted = false"> اغلاق </v-btn>
       </v-card>
     </v-dialog>
-    <v-btn @click="dialogEnabledSocials = true" class="ma-2">
-      تخصيص ظهور مواقع التواصل<v-icon color="#00c853" size="35" icon="mdi-pencil-outline" end></v-icon>
-    </v-btn>
+    <v-card max-width="500px" class="text-center my-5 mx-auto" :subtitle="route.meta.description" :title="route.meta.title">
+      <template v-slot:append>
+        <v-icon @click="dialogEnabledSocials = true" color="info" size="35" icon="mdi-pencil-outline"></v-icon>
+      </template>
+      <template v-slot:prepend>
+        <SocialForm ref="itemForm" @runItems="getItems" />
+      </template>
+    </v-card>
+
     <v-dialog class="text-center" v-model="dialogEnabledSocials" max-width="900">
       <v-card cols="12" class="elevation-10">
         <h2 class="sticky-header pa-4">تفعيل مواقع التواصل في الاقسام</h2>
@@ -43,7 +50,6 @@
         </div>
       </v-card>
     </v-dialog>
-    <SocialForm ref="itemForm" @runItems="getItems" />
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h">
       <thead>
         <tr>
@@ -64,7 +70,7 @@
           <td>{{ item.created_at }}</td>
           <td class="sticky-column">
             <v-btn @click="deleteItem(item)" class="mx-3" icon="mdi-delete" color="red" size="small"></v-btn>
-            <v-btn @click="editItem(item)" icon="mdi-pencil" color="info" size="small"></v-btn>
+            <v-btn @click="editItem(item)" icon="mdi-square-edit-outline" color="info" size="small"></v-btn>
           </td>
         </tr>
       </tbody>
@@ -75,6 +81,8 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router';
+const route = useRoute();
 import { saveItems } from '@/Service/apiService';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';

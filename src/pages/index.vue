@@ -1,17 +1,15 @@
 <template>
-  <v-dialog :fullscreen="mobile">
-    <v-text-field label="Label"></v-text-field>
-    <v-text-field label="Label"></v-text-field>
-    <v-text-field label="Label"></v-text-field>
-    <v-text-field label="Label"></v-text-field>
-    <v-text-field label="Label"></v-text-field>
-  </v-dialog>
+  <h1>الصفحة الرئيسية تحت الانشاء</h1>
 </template>
 
 <script setup>
 import { useDisplay } from 'vuetify';
-
 const { mobile } = useDisplay();
+definePage({
+  meta: {
+    title: ' الرئيسية ',
+  },
+});
 </script>
 <route lang="yaml">
 meta:
