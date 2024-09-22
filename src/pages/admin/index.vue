@@ -42,14 +42,18 @@ definePage({
     title: ' لوحة تحكم ',
   },
 });
-import { ref, onMounted } from 'vue';
+
+import { onMounted, ref } from 'vue';
 import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
 import { useRouter } from 'vue-router';
 const router = useRouter();
-console.log(JSON.stringify(router.getRoutes()));
-console.log(JSON.parse(JSON.stringify(router.getRoutes())));
 const routerLists = ref(router.getRoutes().filter(route => route.meta && route.meta.show));
+
+onMounted(() => {
+
+});
+
 </script>
 <style>
 .card-size {

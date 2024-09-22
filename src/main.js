@@ -15,11 +15,10 @@ axios.defaults.headers.common['Accept'] = 'application/json';
 import { createApp } from 'vue';
 const app = createApp(App);
 registerPlugins(app);
-
+app.mount('#app');
 import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
 userStore.setAuthHeaderNew(localStorage.token).then(() => {
-  userStore.isAuth = true;
   userStore
     .fetchUser()
     .then(() => {
@@ -36,4 +35,3 @@ userStore.setAuthHeaderNew(localStorage.token).then(() => {
       }
     });
 });
-app.mount('#app');

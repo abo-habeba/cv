@@ -11,6 +11,67 @@ export const useUserStore = defineStore('user', {
     popupError: false,
     loadengApi: false,
     errorMessag: null,
+    defaultThem: {
+      enabled: true,
+      imag: {
+        enabled: true,
+      },
+      progress: {
+        enabled: true,
+        backgroundColor: '',
+      },
+      sectionTitle: {
+        enabled: true,
+        backgroundColor: '',
+        textColor: '',
+        fontSize: '',
+      },
+      mainTitle: {
+        enabled: true,
+        backgroundColor: '',
+        textColor: '',
+        fontSize: '',
+      },
+      subTitle: {
+        enabled: true,
+        backgroundColor: '',
+        textColor: '',
+        fontSize: '',
+      },
+      paragraph: {
+        enabled: true,
+        backgroundColor: '',
+        textColor: '',
+        fontSize: '',
+      },
+      button: {
+        enabled: true,
+        backgroundColor: '',
+        textColor: '',
+        fontSize: '',
+        borderColor: '',
+        borderWidth: '',
+        borderRadius: '',
+      },
+      buttonCv: {
+        enabled: true,
+        backgroundColor: '',
+        textColor: '',
+        fontSize: '',
+        borderColor: '',
+        borderWidth: '',
+        borderRadius: '',
+      },
+      buttonWork: {
+        enabled: true,
+        backgroundColor: '',
+        textColor: '',
+        fontSize: '',
+        borderColor: '',
+        borderWidth: '',
+        borderRadius: '',
+      },
+    },
     // role: null,
   }),
 
@@ -26,6 +87,21 @@ export const useUserStore = defineStore('user', {
             .then(res => {
               axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
               this.user = res.data.data;
+              console.log('this.user', this.user);
+              if (!this.user.theme.hero) {
+                this.user.theme = {
+                  hero: this.defaultThem,
+                  about: this.defaultThem,
+                  skills: this.defaultThem,
+                  academics: this.defaultThem,
+                  experiences: this.defaultThem,
+                  // work: this.defaultThem,
+                  // services: this.defaultThem,
+                  // blog: this.defaultThem,
+                  // contact: this.defaultThem,
+                };
+                axios.post(`users-theme/${userId}`, { theme: this.user.theme, _method: 'put' });
+              }
               this.isLoader = false;
               this.isAuth = true;
               this.loadengApi = false;

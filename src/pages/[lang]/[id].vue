@@ -71,18 +71,42 @@
             >
               <Experience />
             </section>
-            <!--  <section id="h-work" class="h-work section" ref="workRef">
+            <section
+              :style="{ order: userStore.userAll.user.theme.work?.order - 2 }"
+              v-if="userStore.userAll.user.theme.work?.enabled"
+              id="h-work"
+              class="h-work section"
+              ref="workRef"
+            >
               <Work />
             </section>
-            <section id="h-contact" class="h-contact section" ref="contactRef">
+            <section
+              :style="{ order: userStore.userAll.user.theme.services?.order - 2 }"
+              v-if="userStore.userAll.user.theme.services?.enabled"
+              id="h-services"
+              class="h-services section"
+              ref="servicesRef"
+            >
+              <Services />
+            </section>
+            <section
+              :style="{ order: userStore.userAll.user.theme.blog?.order - 2 }"
+              v-if="userStore.userAll.user.theme.blog?.enabled"
+              id="h-blog"
+              class="h-blog section"
+              ref="blogRef"
+            >
+              <Blog />
+            </section>
+            <section
+              :style="{ order: userStore.userAll.user.theme.contact?.order - 2 }"
+              v-if="userStore.userAll.user.theme.contact?.enabled"
+              id="h-contact"
+              class="h-contact section"
+              ref="contactRef"
+            >
               <Content />
             </section>
-            <section id="h-services" class="h-services section" ref="servicesRef">
-            <Services />
-          </section>
-          <section id="h-blog" class="h-blog section" ref="blogRef">
-            <Blog />
-          </section> -->
           </div>
         </div>
       </div>

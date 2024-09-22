@@ -484,8 +484,6 @@ const defaultThem = ref({
   },
 });
 function copyColor(color) {
-  console.log(color);
-
   if (color === null || color === ' ' || color === '') {
     notifySuccess('لا يوجد لون لنسخة');
     return;
@@ -642,21 +640,12 @@ function save() {
   const addStyleNewTheme = deepMerge(newTheme.value, allStyle.value);
   console.log('addStyleNewTheme', addStyleNewTheme);
   userStore.user.theme[props.detTheme.nameEn] = { ...addStyleNewTheme };
-
-  // userStore.user.theme._method = 'put';
-  console.log('userStore.user.theme', userStore.user.theme);
   runAPI({ theme: userStore.user.theme, _method: 'put' });
 }
 
 function resetAll() {
   userStore.user.theme[props.detTheme.nameEn] = defaultThem.value;
   runAPI({ theme: userStore.user.theme, _method: 'put' });
-  // resetMainTitle(false);
-  // resetSubTitle(false);
-  // resetParagraph(false);
-  // resetButtons(false);
-  // resetButtonsCv(false);
-  // resetButtonsWork(false);
   dialogresetAll.value = false;
   notifySuccess('تم ارجاع التنسيقات بنجاح');
 }

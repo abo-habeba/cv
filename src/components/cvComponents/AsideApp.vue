@@ -29,6 +29,9 @@
           <li v-if="userStore.userAll.user.theme.work?.enabled" :style="{ order: userStore.userAll.user.theme.work?.order - 2 }">
             <a href="#h-work">{{ lang == 'en' ? 'Work' : 'الأعمال' }}</a>
           </li>
+          <li v-if="userStore.userAll.user.theme.services?.enabled" :style="{ order: userStore.userAll.user.theme.services?.order - 2 }">
+            <a href="#h-services">{{ lang == 'en' ? 'Services' : 'الخدمات' }}</a>
+          </li>
           <li v-if="userStore.userAll.user.theme.blog?.enabled" :style="{ order: userStore.userAll.user.theme.blog?.order - 2 }">
             <a href="#h-blog">{{ lang == 'en' ? 'Blog' : 'مدونة' }}</a>
           </li>
