@@ -12,7 +12,7 @@
 
     <v-row justify="center">
       <v-col cols="12">
-        <router-link to="user">
+        <router-link to="admin/user">
           <v-card class="elevation-10 text-center card-size">
             <div class="card-content">
               <v-card-title color="primary" variant="outlined" class="my-1 mx-1">البيانات الشخصية</v-card-title>
