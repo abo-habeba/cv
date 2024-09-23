@@ -4,6 +4,34 @@
       direction: lang === 'en' ? 'ltr' : 'rtl',
     }"
   >
+    <v-dialog v-model="dialogHelp">
+      <v-card class="elevation-10 text-center card-size">
+        <div class="card-content">
+          <v-card-title justify="center" color="primary" variant="outlined" class="my-1 mx-1">
+            <span class="mdi mdi-lifebuoy"></span> تلميح
+          </v-card-title>
+          <v-card-text class="mb-4">
+            هنا ستري البيانات التي ستقوم بإضافتها من لوحة التحكم <br />
+            عن طريق الضغط على زر <v-icon color="info" size="35" icon="mdi-plus-outline"></v-icon> داخل كل قسم.
+            <br />
+            باستخدام هذا الزر
+            <v-icon color="info" size="35" icon="mdi-palette-outline"></v-icon>، يمكنك التحكم في ترتيب الأقسام، وكذلك إظهارها أو إخفاءها حسب رغبتك.
+            <br />
+            بالإضافة إلى ذلك، يمكنك تخصيص أحجام وألوان النصوص والأزرار بسهولة.
+          </v-card-text>
+          <v-checkbox-btn
+            style="width: fit-content"
+            class="text-center ma-auto"
+            color="info"
+            v-model="checkboxHent"
+            label=" لا تظهر التلميح مره اخري  "
+          ></v-checkbox-btn>
+          <cord-subtitle color="info"> هذه الرساله لا تظهر عند مشاركة السيره الزاتية الخاصه بك مع الاخرين </cord-subtitle>
+          <v-divider class="my-3"></v-divider>
+          <v-btn class="my-3" text="شكرا" @click="closeDialog"></v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
     <div id="h-page" v-if="getData">
       <div class="container-wrap">
         <div
@@ -134,9 +162,16 @@ const asideWidth = ref('30vw');
 const boxToggleeWidth = ref('30vw');
 const animationClassToggle = ref(null);
 const isVisible = ref(true);
+const dialogHelp = ref(false);
+const checkboxHent = ref(false);
 const mediaQuery = window.matchMedia('(max-width: 768px)');
 userStore.loadengApi = false;
-
+function closeDialog() {
+  if (checkboxHent.value) {
+    localStorage.hentHero = checkboxHent.value;
+  }
+  dialogHelp.value = false;
+}
 onMounted(() => {
   //////////
   userStore.loadengApi = false;
@@ -157,6 +192,7 @@ onMounted(() => {
       getData.value = true;
       userStore.loadengApi = false;
       userStore.isLoader = false;
+      dialogHelp.value = userAuthId === res.data.data.user.id && !localStorage.hentHero;
     })
     .catch(error => {
       // console.log(error);

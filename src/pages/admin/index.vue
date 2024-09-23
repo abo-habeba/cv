@@ -1,15 +1,42 @@
 <template>
   <v-container>
-    <Breadcrumbs />
-    <h1 v-if="userStore.user" class="text-center ma-3">مرحبا {{ userStore.user.first_name.ar }}</h1>
-    <v-alert type="info" class="ma-4 pa-5 h1 font-weight-bold text-center" color="#81D4FA">
-      عند دخولك إلى أي قسم، يمكنك بسهولة التحكم في تنسيقه، وتفعيل أو إلغاء تفعيله، فضلاً عن تعديل تفاصيل كل جزء داخله.
-      <br />
-      <br />
-      بعد الانتهاء من ملء البيانات، يمكنك رؤية سيرتك الذاتية من خلال الضغط على زر القائمة في أعلى يسار الشاشة، حيث ستظهر لديك رابطين: واحدة باللغة
-      العربية وأخرى باللغة الإنجليزية، مما يتيح لك مشاركتهما بسهولة مع الآخرين.
-    </v-alert>
+    <v-dialog v-model="dialogHelp">
+      <v-card class="elevation-10 text-center card-size">
+        <div class="card-content">
+          <v-card-title justify="center" color="primary" variant="outlined" class="my-1 mx-1">
+            <span class="mdi mdi-lifebuoy"></span> تلميح
+          </v-card-title>
+          <v-card-text class="mb-4">
+            ابدا باضافة بياناتك <br />
+            عن طريق الضغط على زر
+            <v-icon color="info" size="35" icon="mdi-plus-outline"></v-icon>
+            داخل كل قسم.
+            <br />
 
+            <br />
+            باستخدام هذا الزر
+            <v-icon color="info" size="35" icon="mdi-palette-outline"></v-icon>
+            ، يمكنك التحكم في ترتيب الأقسام، وكذلك إظهارها أو إخفاءها حسب رغبتك.
+            <br />
+            بالإضافة إلى ذلك، يمكنك تخصيص أحجام وألوان النصوص والأزرار بسهولة.
+          </v-card-text>
+          <v-checkbox-btn
+            style="width: fit-content"
+            class="text-center ma-auto"
+            color="info"
+            v-model="checkboxHent"
+            label=" لا تظهر التلميح مره اخري  "
+          ></v-checkbox-btn>
+          <v-divider class="my-3"></v-divider>
+          <v-btn class="my-3" text="شكرا" @click="closeDialog"></v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
+    <Breadcrumbs />
+    <v-row justify="end">
+      <h5 class="mx-2" style="cursor: pointer" @click="dialogHelp = true"><v-icon size="20" class="mdi mdi-lifebuoy"></v-icon> تلميح</h5>
+    </v-row>
+    <h1 v-if="userStore.user" class="text-center text-h4 ma-3">مرحبا {{ userStore.user.first_name.ar }}</h1>
     <v-row justify="center">
       <v-col cols="12">
         <router-link to="admin/user">
@@ -49,11 +76,19 @@ const userStore = useUserStore();
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const routerLists = ref(router.getRoutes().filter(route => route.meta && route.meta.show));
+const dialogHelp = ref(false);
+const checkboxHent = ref(false);
+
+function closeDialog() {
+  if (checkboxHent.value) {
+    localStorage.hentHome = checkboxHent.value;
+  }
+  dialogHelp.value = false;
+}
 
 onMounted(() => {
-
+  dialogHelp.value = !localStorage.hentHome;
 });
-
 </script>
 <style>
 .card-size {

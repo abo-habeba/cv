@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-icon icon="mdi-square-edit-outline" color="info" size="35"></v-icon>
+    <v-icon icon="mdi-square-edit-outline" color="info" size=""></v-icon>
     <v-dialog class="text-center" v-model="dialogItemForm" max-width="900" persistent>
       <v-card class="pa-5">
         <h2 class="ma-5">
@@ -15,10 +15,10 @@
               <v-text-field v-model="user.first_name.en" label="First Name"></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
-              <v-text-field v-model="user.last_name.ar" label=" الاسم الاخير "></v-text-field>
+              <v-text-field v-model="user.last_name.ar" label=" اسمك بالكامل  "></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
-              <v-text-field v-model="user.last_name.en" label=" Last Name"></v-text-field>
+              <v-text-field v-model="user.last_name.en" label=" Full Name"></v-text-field>
             </v-col>
 
             <v-col cols="12" md="6">

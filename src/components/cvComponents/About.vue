@@ -18,11 +18,7 @@
           {{ lang == 'en' ? 'Who Am I ?' : ' من انا ؟ ' }}
         </h2>
         <p v-if="userStore.userAll.user.theme?.about.subTitle.enabled" :style="userStore.userAll.user.theme.about.subTitle.style">
-          <strong>{{
-            `${lang === 'en' ? 'Hello, I am' : ' مرحبا انا ,'}  ${userStore.userAll.user.first_name[lang] || ' '}  ${
-              userStore.userAll.user.last_name[lang] || ' '
-            } `
-          }}</strong>
+          <strong>{{ `${lang === 'en' ? 'Hello, I am' : ' مرحبا انا ,'} ${userStore.userAll.user.last_name[lang] || ' '} ` }}</strong>
         </p>
         <pre v-if="userStore.userAll.user.theme?.about.paragraph.enabled" :style="userStore.userAll.user.theme.about.paragraph.style">{{
           lang === 'en' ? userStore.userAll.user.about_en : userStore.userAll.user.about_ar
