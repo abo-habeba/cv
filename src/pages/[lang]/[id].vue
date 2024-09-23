@@ -5,7 +5,7 @@
     }"
   >
     <v-dialog v-model="dialogHelp">
-      <v-card class="elevation-10 text-center card-size">
+      <v-card class="elevation-5 text-center card-size">
         <div class="card-content">
           <v-card-title justify="center" color="primary" variant="outlined" class="my-1 mx-1">
             <span class="mdi mdi-lifebuoy"></span> تلميح

@@ -87,6 +87,7 @@ const isShowImage = ref(null);
 definePage({
   meta: {
     title: 'التعليم',
+    icon: 'mdi-school-outline',
     description: 'إدارة وتحرير بيانات التعليم الأكاديمي.',
   },
 });

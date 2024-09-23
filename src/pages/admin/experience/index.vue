@@ -100,6 +100,7 @@ const item = ref('');
 definePage({
   meta: {
     title: 'الخبرات',
+    icon: 'mdi-certificate-outline',
     description: 'إدارة وتحرير بيانات الخبرات العملية.',
   },
 });

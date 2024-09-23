@@ -72,6 +72,7 @@ const item = ref('');
 definePage({
   meta: {
     title: 'الاعمال',
+    icon: 'mdi-hammer-screwdriver',
     description: 'إدارة وتحرير بيانات الاعمال السابقة.',
   },
 });

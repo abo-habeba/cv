@@ -45,7 +45,7 @@
       <v-card class="pa-5">
         <v-form>
           <v-row>
-            <v-col cols="12" class="elevation-10 ma-2">
+            <v-col cols="12" class="elevation-5 ma-2">
               <h2 class="ma-5">تنسيق قسم {{ detTheme.nameAr }}</h2>
               <v-row>
                 <v-col cols="6">
@@ -61,13 +61,13 @@
             </v-col>
 
             <!-- imag Group -->
-            <v-col v-if="detTheme.imag" cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.imag" cols="12" class="group elevation-5">
               <v-col cols="12">
                 <v-switch style="width: fit-content" class="ma-auto" color="info" v-model="newTheme.imag.enabled" label="تفعيل صورة  "></v-switch>
               </v-col>
             </v-col>
             <!-- Section Title Group -->
-            <v-col v-if="detTheme.sectionTitle" cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.sectionTitle" cols="12" class="group elevation-5">
               <h2>تنسيقات عناوين الاقسام</h2>
               <h2 class="sticky-header" :style="sectionTitleStyle">معاينة عناوين الاقسام</h2>
               <div style="display: flex">
@@ -101,7 +101,7 @@
             </v-col>
 
             <!-- Main Title Group -->
-            <v-col v-if="detTheme.progress" cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.progress" cols="12" class="group elevation-5">
               <h2 class="sticky-header">تنسيق شريط التقدم</h2>
               <v-col cols="6">
                 <v-switch color="info" v-model="newTheme.progress.enabled" label="تفعيل شريط التقدم"></v-switch>
@@ -116,7 +116,7 @@
               </v-row>
             </v-col>
             <!-- Main Title Group -->
-            <v-col v-if="detTheme.h2" cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.h2" cols="12" class="group elevation-5">
               <h2>تنسيقات العنوان الرئيسي</h2>
               <h2 class="sticky-header" :style="mainTitleStyle">معاينة العنوان الرئيسي</h2>
               <div style="display: flex">
@@ -153,7 +153,7 @@
             </v-col>
 
             <!-- Sub Title Group -->
-            <v-col v-if="detTheme.h4" cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.h4" cols="12" class="group elevation-5">
               <h2>تنسيقات العنوان الفرعي</h2>
               <h4 class="sticky-header" :style="subTitleStyle">معاينة العنوان الفرعي</h4>
               <div style="display: flex">
@@ -190,7 +190,7 @@
             </v-col>
 
             <!-- Paragraph Group -->
-            <v-col v-if="detTheme.p" cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.p" cols="12" class="group elevation-5">
               <h2>تنسيق الفقرة النصية</h2>
               <p class="sticky-header" :style="paragraphStyle">معاينة الفقرة</p>
               <div style="display: flex">
@@ -227,7 +227,7 @@
             </v-col>
 
             <!-- Button Group CV -->
-            <v-col v-if="detTheme.cv" cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.cv" cols="12" class="group elevation-5">
               <h2>تنسيق زرار السيره الذاتية</h2>
               <p class="sticky-header" :style="buttonStyleCv">معاينة زرار السيره الذاتية</p>
               <div style="display: flex">
@@ -287,7 +287,7 @@
               </v-row>
             </v-col>
             <!-- Button Group Work -->
-            <v-col v-if="detTheme.work" cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.work" cols="12" class="group elevation-5">
               <h2>تنسيق زر الاعمال</h2>
               <p class="sticky-header" :style="buttonStyleWork">معاينة زر الاعمال</p>
               <div style="display: flex">
@@ -347,7 +347,7 @@
               </v-row>
             </v-col>
             <!-- Button Group -->
-            <v-col v-if="detTheme.btn" cols="12" class="group elevation-10">
+            <v-col v-if="detTheme.btn" cols="12" class="group elevation-5">
               <h2>تنسيق الزر</h2>
               <p class="sticky-header" :style="buttonStyle">معاينة الزر</p>
               <div style="display: flex">

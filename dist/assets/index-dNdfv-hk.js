@@ -1,0 +1,1 @@
+import{b as e}from"./route-block-B_A1xBdJ.js";import{H as o,Q as t,R as a}from"./index-ChxtWFXL.js";const n={__name:"index",setup(r){return o(),(s,c)=>(t(),a("h1",null,"الصفحة الرئيسية تحت الانشاء"))}};typeof e=="function"&&e(n);export{n as default};

@@ -74,6 +74,7 @@ const item = ref('');
 definePage({
   meta: {
     title: 'المهارات',
+    icon: 'mdi-lightbulb-on-20',
     description: 'إدارة وتحرير بيانات المهارات المكتسبة.',
   },
 });

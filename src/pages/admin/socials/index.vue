@@ -18,7 +18,7 @@
     </v-card>
 
     <v-dialog class="text-center" v-model="dialogEnabledSocials" max-width="900">
-      <v-card cols="12" class="elevation-10">
+      <v-card cols="12" class="elevation-5">
         <h2 class="sticky-header pa-4">تفعيل مواقع التواصل في الاقسام</h2>
         <v-col>
           <v-switch
@@ -131,6 +131,7 @@ function deleteItem(i) {
 definePage({
   meta: {
     title: 'منصات التواصل',
+    icon: 'mdi-account-group-outline',
     description: 'إدارة وتحرير بيانات روابط منصات التواصل الاجتماعي.',
   },
 });

@@ -46,7 +46,7 @@
       </tbody>
     </v-table>
 
-    <p class="text-alert mt-10" v-else>لا توجد اي بيانات</p>
+    <p class="text-alert mt-10" v-else>لا توجد اي رسائل</p>
   </v-container>
 </template>
 
@@ -79,6 +79,7 @@ function deleteItem(i) {
 definePage({
   meta: {
     title: 'تواصل معنا',
+    icon: 'mdi-message-reply-text-outline',
     description: 'هنا ستجد الرسائل الواردة من زوار الموقع لمتابعتها والتواصل معهم .',
   },
 });
