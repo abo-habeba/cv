@@ -18,60 +18,63 @@
   </v-app-bar>
   <v-navigation-drawer v-model="drawer" location="right" temporary>
     <v-list style="text-align: right">
-      <v-list-item
-        class="elevation-2 my-1"
-        to="/admin/user"
-        :append-avatar="userStore.user.profile_image"
-        :subtitle="userStore.user.email"
-        :title="userStore.user.username"
-      >
-      </v-list-item>
-      <div class="box-link">
-        <div class="copy-link">
-          <v-btn icon @click="copyLink(`${locationHostname()}/ar/${userStore.user.username}`)">
-            <v-icon>mdi-content-copy</v-icon>
-          </v-btn>
+      <v-list-group justify="center">
+        <template v-slot:activator="{ props }">
+          <v-list-item density="compact" class="elevation-2 my-1" v-bind="props" :append-avatar="userStore.user.profile_image">
+            <router-link to="/admin/user">
+              <v-list-item-title>{{ userStore.user.username }}</v-list-item-title>
+              <v-list-item-subtitle>{{ userStore.user.email }}</v-list-item-subtitle>
+            </router-link>
+          </v-list-item>
+        </template>
+        <div class="box-link">
+          <div class="copy-link">
+            <v-btn icon @click="copyLink(`${locationHostname()}/ar/${userStore.user.username}`)">
+              <v-icon>mdi-content-copy</v-icon>
+            </v-btn>
+          </div>
+          <v-list-item
+            density="compact"
+            class="elevation-2 my-1"
+            :href="`${locationOrigin()}/ar/${userStore.user.username}`"
+            target="_blank"
+            append-icon="mdi-web"
+            :subtitle="`${locationHostname()}/ar/${userStore.user.username}`"
+            title="النسخة العربية"
+          >
+          </v-list-item>
         </div>
-        <v-list-item
-          class="elevation-2 my-1"
-          :href="`${locationOrigin()}/ar/${userStore.user.username}`"
-          target="_blank"
-          append-icon="mdi-web"
-          :subtitle="`${locationHostname()}/ar/${userStore.user.username}`"
-          title="النسخة العربية"
-        >
-        </v-list-item>
-      </div>
-      <div class="box-link">
-        <div class="copy-link">
-          <v-btn icon @click="copyLink(`${locationHostname()}/ar/${userStore.user.username}`)">
-            <v-icon>mdi-content-copy</v-icon>
-          </v-btn>
+        <div class="box-link">
+          <div class="copy-link">
+            <v-btn icon @click="copyLink(`${locationHostname()}/ar/${userStore.user.username}`)">
+              <v-icon>mdi-content-copy</v-icon>
+            </v-btn>
+          </div>
+          <v-list-item
+            density="compact"
+            class="elevation-2 my-1"
+            :href="`${locationOrigin()}/en/${userStore.user.username}`"
+            target="_blank"
+            append-icon="mdi-web"
+            :subtitle="`${locationHostname()}/en/${userStore.user.username}`"
+            title="النسخة الانجليزية"
+          >
+          </v-list-item>
         </div>
-        <v-list-item
-          class="elevation-2 my-1"
-          :href="`${locationOrigin()}/en/${userStore.user.username}`"
-          target="_blank"
-          append-icon="mdi-web"
-          :subtitle="`${locationHostname()}/en/${userStore.user.username}`"
-          title="النسخة الانجليزية"
-        >
-        </v-list-item>
-      </div>
+      </v-list-group>
 
       <v-list-item
+        density="compact"
         cols="6"
         v-for="routerList in routerLists"
         :key="routerList"
         class="elevation-2 my-1"
         :to="routerList.path"
         :append-icon="routerList.meta.icon"
-        :subtitle="routerList.meta.description"
         :title="routerList.meta.title"
       >
       </v-list-item>
-
-      <v-list-item class="elevation-2 my-1" @click="logout" append-icon="mdi-logout" title="خروج"> </v-list-item>
+      <v-list-item density="compact" class="elevation-2 my-1" @click="logout" append-icon="mdi-logout" title="خروج"> </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
