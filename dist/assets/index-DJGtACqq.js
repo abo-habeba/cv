@@ -1,0 +1,1 @@
+import{b as e}from"./route-block-B_A1xBdJ.js";import{R as o,Q as t}from"./index-B_INyi6s.js";const n={style:{"text-align":"center"}},c={__name:"index",setup(r){return console.log("[index lang].vue"),(s,a)=>(t(),o("h1",n,"Home"))}};typeof e=="function"&&e(c);export{c as default};

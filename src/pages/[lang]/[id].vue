@@ -4,6 +4,11 @@
       direction: lang === 'en' ? 'ltr' : 'rtl',
     }"
   >
+    <v-dialog max-width="600" v-model="dialogNoteUser" persistent>
+      <v-card class="my-10">
+        <v-card-title class="text-center my-10">{{ route.params.id }} لا يوجد سيره زاتية لهاذا المستخدم </v-card-title>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="dialogHelp">
       <v-card class="elevation-5 text-center card-size">
         <div class="card-content">
@@ -26,7 +31,7 @@
             v-model="checkboxHent"
             label=" لا تظهر التلميح مره اخري  "
           ></v-checkbox-btn>
-          <cord-subtitle color="info"> هذه الرساله لا تظهر عند مشاركة السيره الزاتية الخاصه بك مع الاخرين </cord-subtitle>
+          <v-card-subtitle color="info"> هذه الرساله لا تظهر عند مشاركة السيره الزاتية الخاصه بك مع الاخرين </v-card-subtitle>
           <v-divider class="my-3"></v-divider>
           <v-btn class="my-3" text="شكرا" @click="closeDialog"></v-btn>
         </div>
@@ -164,6 +169,7 @@ const animationClassToggle = ref(null);
 const isVisible = ref(true);
 const dialogHelp = ref(false);
 const checkboxHent = ref(false);
+const dialogNoteUser = ref(false);
 const mediaQuery = window.matchMedia('(max-width: 768px)');
 userStore.loadengApi = false;
 function closeDialog() {
@@ -196,6 +202,7 @@ onMounted(() => {
     })
     .catch(error => {
       // console.log(error);
+      dialogNoteUser.value = true;
       userStore.isLoader = false;
       userStore.loadengApi = false;
     });

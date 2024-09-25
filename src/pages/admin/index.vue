@@ -7,12 +7,12 @@
             <span class="mdi mdi-lifebuoy"></span> تلميح
           </v-card-title>
           <v-card-text class="mb-4">
-            ابدا باضافة بياناتك <br />
+            ابدا باضافة بياناتك 
+            <br />
             عن طريق الضغط على زر
             <v-icon color="info" size="35" icon="mdi-plus-outline"></v-icon>
             داخل كل قسم.
             <br />
-
             <br />
             باستخدام هذا الزر
             <v-icon color="info" size="35" icon="mdi-palette-outline"></v-icon>
