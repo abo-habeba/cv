@@ -82,7 +82,7 @@ pre {
 
 .title-section {
   text-align: center;
-  // padding: 20px 0;
+  margin-bottom: 20px !important;
   width: 100%;
   margin: auto;
 

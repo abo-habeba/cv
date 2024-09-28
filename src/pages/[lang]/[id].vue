@@ -132,8 +132,8 @@
               <Blog />
             </section>
             <section
-              :style="{ order: userStore.userAll.user.theme.contact?.order - 2 }"
-              v-if="userStore.userAll.user.theme.contact?.enabled"
+              :style="{ order: userStore.userAll.user.theme.contacts?.order - 2 }"
+              v-if="userStore.userAll.user.theme.contacts?.enabled"
               id="h-contact"
               class="h-contact section"
               ref="contactRef"
@@ -150,14 +150,16 @@
 
 <script setup>
 import axios from 'axios';
+import { useDisplay } from 'vuetify';
+const { xs } = useDisplay();
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useRoute } from 'vue-router';
-const userStore = useUserStore();
 const route = useRoute();
 const lang = route.params.lang;
+const userStore = useUserStore();
 const toggled = ref(true);
 const btnToggle = ref(true);
 const userAuthId = localStorage.user ? JSON.parse(localStorage.user).id : false;
@@ -179,17 +181,19 @@ function closeDialog() {
   dialogHelp.value = false;
 }
 onMounted(() => {
-  //////////
   userStore.loadengApi = false;
   window.addEventListener('scroll', setActiveNavItem);
   handleMediaChange(mediaQuery); // Initial check
-  mediaQuery.addEventListener('change', handleMediaChange);
-  mediaQuery.addEventListener('resize', handleMediaChange);
+  // mediaQuery.addEventListener('change', handleMediaChange);
+  // mediaQuery.addEventListener('resize', handleMediaChange);
+
   axios
     .get(`users-all/${route.params.id}`)
     .then(res => {
       userAllData.value = res.data.data;
       userStore.userAll = res.data.data;
+      console.log('userStore.userAll', userStore.userAll);
+
       const link = document.querySelector("link[rel='icon']");
       console.log(res.data.data.user.profile_image);
 
@@ -217,8 +221,12 @@ function setActiveNavItem() {
     const sectionTop = section.offsetTop;
     const sectionHeight = section.offsetHeight;
     const scrollPos = window.pageYOffset;
+    const windowHeight = window.innerHeight;
 
-    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+    // تحديد الحد الأدنى للتمرير المطلوب لتفعيل القسم
+    const activateThreshold = sectionTop - windowHeight * 0.5;
+
+    if (scrollPos >= activateThreshold && scrollPos < sectionTop + sectionHeight) {
       currentSection = section.id.slice(2);
     }
   });
@@ -230,6 +238,7 @@ function setActiveNavItem() {
     }
   });
 }
+
 function funToggled() {
   if (isVisible.value && toggled.value) {
     animationClassToggle.value = 'animate__flipOutY';
@@ -244,25 +253,30 @@ function funToggled() {
     asideWidth.value = '40vw';
   }
 }
-function handleMediaChange(event) {
-  console.log('run handleMediaChange');
-
-  if (event.matches) {
-    console.log('event.matches');
+function handleMediaChange() {
+  if (xs.value) {
+    // شاشة صغيرة (موبايل)
+    console.log('Screen size: Small');
     toggled.value = false;
     isVisible.value = false;
     boxToggleeWidth.value = 'auto';
     btnToggle.value = true;
-    // toggled.value ? (isOverlay.value = true) : (isOverlay.value = false);
   } else {
-    console.log('else event matches');
+    // شاشة كبيرة (تابلت أو ديسكتوب)
+    console.log('Screen size: Large');
     boxToggleeWidth.value = '20vw';
     asideWidth.value = '100%';
     toggled.value = true;
     btnToggle.value = false;
-    // isOverlay.value = false;
+    isVisible.value = true;
   }
 }
+watch(
+  () => xs.value,
+  () => handleMediaChange()
+);
+
+handleMediaChange();
 </script>
 <route lang="yaml">
 meta:

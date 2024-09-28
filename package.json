@@ -19,6 +19,7 @@
     "compressorjs": "^1.2.1",
     "core-js": "^3.34.0",
     "jquery": "^3.7.1",
+    "masonry-simple": "^3.2.1",
     "vue": "^3.4.0",
     "vue3-toastify": "^0.2.2",
     "vuetify": "^3.5.0"

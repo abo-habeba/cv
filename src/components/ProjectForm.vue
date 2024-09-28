@@ -87,13 +87,17 @@ function save(compressedImages) {
 
 const imageInputRef = ref(null);
 const runCompressImages = () => {
+  console.log(userStore.loadengApi);
+  userStore.loadengApi = true;
   // Validate required fields
   if (!title.value.ar && !title.value.en) {
     notifyError(`حقل العنوان مطلوب عربي او انجليزي`);
     return;
   }
+  console.log(userStore.loadengApi);
 
   if (imageInputRef.value) {
+    console.log(userStore.loadengApi);
     imageInputRef.value.compressImages().then(res => {
       console.log(res);
       save(res);

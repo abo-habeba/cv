@@ -26,7 +26,7 @@ const userStore = useUserStore();
   align-items: center;
   width: 100%;
   height: 100vh;
-  z-index: 100;
+  z-index: 9999;
   background-color: #c7c7d934;
 }
 

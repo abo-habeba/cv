@@ -33,7 +33,7 @@
                 flex-direction: column;
               "
             >
-              <v-avatar  v-if="userStore.userAll.user.theme?.skills.imag.enabled" size="100" >
+              <v-avatar  v-if="userStore.userAll.user.theme?.skills.imag.enabled" size="98" >
                 <v-img
                   :style="{ opacity: userStore.userAll.user.theme?.skills.progress.enabled ? 0.5 : 1 }"
                   :src="skill.photos[0]?.path"
@@ -56,15 +56,6 @@
         </v-col>
       </v-row>
     </v-card>
-
-    <!-- Dialog -->
-    <!-- <per>{{ skill.description[lang] }}</per> -->
-    <!-- <v-progress-linear height="15" v-if="skill?.level !== null" :model-value="skill.level" color="primary" class="mt-3">
-              <template v-slot:default>
-                <strong>{{ skill.level }}%</strong>
-              </template>
-            </v-progress-linear> -->
-
     <v-dialog v-model="dialogSkill" max-width="500px">
       <v-card class="d-flex flex-column align-center text-center pa-3">
         <v-card-title>{{ selectedSkill?.name[lang] }}</v-card-title>

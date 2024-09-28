@@ -66,6 +66,7 @@ const socials = [
   { name: 'Linked In', icon: 'mdi-linkedin', color: '#0077B5', namear: 'لينكيد ان' }, // Blue
   { name: 'YouTube', icon: 'mdi-youtube', color: '#FF0000', namear: 'يوتيوب' }, // Red
   { name: 'Web Site', icon: 'mdi-web', color: '#000000', namear: 'موقع شخصي' }, // Black
+  { name: 'GitHub', icon: 'mdi-github', color: '#333333', namear: 'جيت هب' }, // Dark grey
 ];
 
 function changeNameEN(social) {
