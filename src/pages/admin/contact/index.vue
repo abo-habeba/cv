@@ -8,7 +8,18 @@
         <v-btn class="ma-1" @click="openDialogDeleted = false"> اغلاق </v-btn>
       </v-card>
     </v-dialog>
-    <ThemeSettings v-if="userStore.user" ref="dialogThemeForm" :detTheme="{ nameEn: 'contacts', nameAr: 'الرسائل' }" @click="openDialogThemeForm" />
+    <v-col col="12">
+      <ThemeSettings v-if="userStore.user" ref="dialogThemeForm" :detTheme="{ nameEn: 'contacts', nameAr: 'الرسائل' }" @click="openDialogThemeForm" />
+    </v-col>
+    <v-col col="12">
+      <v-btn @click="markAllAsUnread" :disabled="itemsUnread.length <= 0" :color="itemsUnread.length > 0 ? 'primary' : 'grey'">
+        تعين الكل ك مقروء
+      </v-btn>
+    </v-col>
+    <v-col>
+      <v-btn class="ma-1" @click="showAll" :color="!showUnread ? 'grey' : 'primary'"> عرض الكل </v-btn>
+      <v-btn class="ma-1" @click="showUnreadItems" :color="!showUnread ? 'primary' : 'grey'"> عرض الغير مقروء </v-btn>
+    </v-col>
     <!-- <ContactForm ref="itemForm" @runItems="getItems" /> -->
     <v-table style="white-space: nowrap" dir="rtl" v-if="items.length > 0" class="h mt-10">
       <thead>
@@ -27,7 +38,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in items" :key="item.id">
+        <tr v-for="(item, index) in items" :key="item.id" :style="{ color: item.read === '0' ? '#2196F3' : '' }">
           <td>{{ index + 1 }}</td>
           <td>{{ item.name.ar }}</td>
           <td>{{ item.name.en }}</td>
@@ -40,13 +51,13 @@
           <td>{{ item.created_at }}</td>
           <td>
             <v-btn @click="deleteItem(item)" class="ml-3" icon="mdi-delete" color="red" size="small"></v-btn>
-            <v-btn @click="editItem(item)" icon="mdi-square-edit-outline" color="info" size="small"></v-btn>
           </td>
         </tr>
       </tbody>
     </v-table>
 
-    <p class="text-alert mt-10" v-else>لا توجد اي رسائل</p>
+    <p class="text-alert mt-10" v-if="!showUnread && items.length < 0">لا توجد اي رسائل</p>
+    <p class="text-alert mt-10" v-if="showUnread && items.length <= 0">لا توجد أي رسائل غير مقروءة</p>
   </v-container>
 </template>
 
@@ -68,10 +79,15 @@ const notifyError = message => {
     position: toast.POSITION.TOP_LEFT,
   });
 };
-const itemForm = ref(null);
+// const itemForm = ref(null);
 const openDialogDeleted = ref(false);
 const items = ref([]);
+const itemsAll = ref([]);
+const itemsUnread = computed(() => {
+  return itemsAll.value.filter(contact => contact.read === '0');
+});
 const item = ref('');
+const showUnread = ref(true);
 function deleteItem(i) {
   openDialogDeleted.value = true;
   item.value = i;
@@ -88,14 +104,40 @@ onMounted(() => {
   getItems();
 });
 
+function showAll() {
+  showUnread.value = false;
+  items.value = itemsAll.value;
+}
+
+function showUnreadItems() {
+  showUnread.value = true;
+  console.log(itemsUnread.value);
+
+  items.value = itemsUnread.value;
+}
+
 function getItems() {
   userStore.loadengApi = true;
   axios
     .get(`contacts`, items.value)
     .then(res => {
       items.value = res.data.data;
+      itemsAll.value = res.data.data;
+      showUnreadItems();
       userStore.loadengApi = false;
       item.value = '';
+    })
+    .catch(() => {
+      notifyError('هناك خطا ما حاول مره اخري');
+    });
+}
+function markAllAsUnread() {
+  userStore.loadengApi = true;
+  axios
+    .get(`contacts-mark-all-read`)
+    .then(() => {
+      userStore.user.unread_contacts_count = 0;
+      getItems();
     })
     .catch(() => {
       notifyError('هناك خطا ما حاول مره اخري');
@@ -123,9 +165,9 @@ function deleted() {
       notifyError(error.response.data.message);
     });
 }
-const editItem = item => {
-  itemForm.value?.addNew(item);
-};
+// const editItem = item => {
+//   itemForm.value?.addNew(item);
+// };
 </script>
 
 <style lang="scss">

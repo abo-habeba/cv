@@ -95,10 +95,10 @@ export const useUserStore = defineStore('user', {
                   skills: this.defaultThem,
                   academics: this.defaultThem,
                   experiences: this.defaultThem,
-                  // work: this.defaultThem,
+                  work: this.defaultThem,
                   // services: this.defaultThem,
                   // blog: this.defaultThem,
-                  // contact: this.defaultThem,
+                  contact: this.defaultThem,
                 };
                 axios.post(`users-theme/${userId}`, { theme: this.user.theme, _method: 'put' });
               }

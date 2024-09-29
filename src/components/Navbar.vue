@@ -9,7 +9,11 @@
     </router-link>
     <div class="ms-6 mt-7">
       <router-link to="/admin/contact">
-        <v-icon color="#f0f000" icon="mdi-message-reply-text-outline" size="20"></v-icon>
+        <v-badge v-if="userStore.user.unread_contacts_count > 0" :content="userStore.user.unread_contacts_count" color="red" overlap>
+          <v-icon large>mdi-bell</v-icon>
+        </v-badge>
+        <v-icon v-else large>mdi-bell</v-icon>
+        <!-- <v-icon color="#f0f000" icon="mdi-message-reply-text-outline" size="20"></v-icon> -->
       </router-link>
     </div>
     <v-spacer></v-spacer>

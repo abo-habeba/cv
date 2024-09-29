@@ -40,12 +40,68 @@
 
       <v-col cols="12" md="6">
         <V-card class="w-100 h-100 pa-3">
-          <v-form>
-            <v-text-field label="Name" required></v-text-field>
-            <v-text-field label="Email" required type="email"></v-text-field>
-            <v-text-field label="Subject" required></v-text-field>
-            <v-textarea label="Message" rows="7" required></v-textarea>
-            <v-btn color="primary">Send Message</v-btn>
+          <v-form ref="form" v-model="valid">
+            <!-- Name Input with Skeleton Loader -->
+            <v-skeleton-loader height="56px" width="100%" :loading="loading" type="text">
+              <v-responsive>
+                <v-text-field v-model="name[lang]" :label="lang === 'en' ? 'Name' : 'الاسم'" required :rules="nameRules"></v-text-field>
+              </v-responsive>
+            </v-skeleton-loader>
+
+            <!-- Phone Input with Skeleton Loader -->
+            <v-skeleton-loader :loading="loading" type="text" height="56px" width="100%">
+              <v-responsive>
+                <v-text-field
+                  v-model="item.phone"
+                  :label="lang === 'en' ? 'Phone' : 'رقم الهاتف'"
+                  required
+                  type="number"
+                  :rules="phoneRules"
+                ></v-text-field>
+              </v-responsive>
+            </v-skeleton-loader>
+
+            <!-- Email Input with Skeleton Loader -->
+            <v-skeleton-loader :loading="loading" type="text" height="56px" width="100%">
+              <v-responsive>
+                <v-text-field
+                  v-model="item.email"
+                  :label="lang === 'en' ? 'Email' : 'الايميل'"
+                  required
+                  type="email"
+                  :rules="emailRules"
+                ></v-text-field>
+              </v-responsive>
+            </v-skeleton-loader>
+
+            <!-- Subject Input with Skeleton Loader -->
+            <v-skeleton-loader :loading="loading" type="text" height="56px" width="100%">
+              <v-responsive>
+                <v-text-field v-model="subject[lang]" :label="lang === 'en' ? 'Subject' : 'الموضوع'" required :rules="subjectRules"></v-text-field>
+              </v-responsive>
+            </v-skeleton-loader>
+
+            <!-- Message Textarea with Skeleton Loader -->
+            <v-skeleton-loader :loading="loading" type="text" height="112px" width="100%">
+              <v-responsive>
+                <v-textarea
+                  v-model="message[lang]"
+                  :label="lang === 'en' ? 'Message' : 'الرسالة'"
+                  rows="7"
+                  required
+                  :rules="messageRules"
+                ></v-textarea>
+              </v-responsive>
+            </v-skeleton-loader>
+
+            <!-- Send Button with Skeleton Loader -->
+            <v-skeleton-loader :loading="loading" type="button" height="56px" width="100%">
+              <v-responsive>
+                <v-btn @click="sendItems" color="primary" :disabled="!valid || loading">
+                  {{ lang === 'en' ? 'Send Message' : 'ارسال رسالة' }}
+                </v-btn>
+              </v-responsive>
+            </v-skeleton-loader>
           </v-form>
         </V-card>
       </v-col>
@@ -54,12 +110,57 @@
 </template>
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 import { useRoute } from 'vue-router';
+const loading = ref(false);
 // import { useDisplay } from 'vuetify';
-import { useUserStore } from '@/stores/user';
 // const { xs } = useDisplay();
+import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
-// تحديد اللغة من المسار
 const route = useRoute();
 const lang = route.params.lang;
+const item = ref({});
+const name = ref({});
+const subject = ref({});
+const message = ref({});
+const valid = ref(false);
+// قواعد التحقق لكل حقل
+const nameRules = [v => !!v || (lang.value === 'en' ? 'Name is required' : 'الاسم مطلوب')];
+
+const phoneRules = [
+  v => !!v || (lang.value === 'en' ? 'Phone is required' : 'رقم الهاتف مطلوب'),
+  v => (v && v.length === 11) || (lang.value === 'en' ? 'Phone must be 11 digits' : 'يجب أن يحتوي رقم الهاتف على 11 رقم'),
+];
+
+const emailRules = [
+  v => !!v || (lang.value === 'en' ? 'Email is required' : 'البريد الإلكتروني مطلوب'),
+  v => /.+@.+\..+/.test(v) || (lang.value === 'en' ? 'Email must be valid' : 'يجب أن يكون البريد الإلكتروني صالحًا'),
+];
+
+const subjectRules = [v => !!v || (lang.value === 'en' ? 'Subject is required' : 'الموضوع مطلوب')];
+
+const messageRules = [v => !!v || (lang.value === 'en' ? 'Message is required' : 'الرسالة مطلوبة')];
+
+function sendItems() {
+  const form = ref(null);
+  if (valid.value) {
+    item.value.name = JSON.stringify(name.value);
+    item.value.subject = JSON.stringify(subject.value);
+    item.value.message = JSON.stringify(message.value);
+    item.value.user_id = userStore.userAll.user.id;
+    console.log(userStore.loadengApi);
+    loading.value = true;
+    console.log(userStore.loadengApi);
+    axios
+      .post(`contacts`, item.value)
+      .then(() => {
+        loading.value = false;
+        item.value = '';
+      })
+      .catch(() => {
+        loading.value = false;
+        notifyError('هناك خطا ما حاول مره اخري');
+      });
+  }
+}
 </script>
