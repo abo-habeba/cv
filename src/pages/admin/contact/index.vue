@@ -56,7 +56,7 @@
       </tbody>
     </v-table>
 
-    <p class="text-alert mt-10" v-if="!showUnread && items.length < 0">لا توجد اي رسائل</p>
+    <p class="text-alert mt-10" v-if="!showUnread && items.length <= 0">لا توجد اي رسائل</p>
     <p class="text-alert mt-10" v-if="showUnread && items.length <= 0">لا توجد أي رسائل غير مقروءة</p>
   </v-container>
 </template>
