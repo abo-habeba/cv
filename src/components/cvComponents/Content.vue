@@ -1,5 +1,12 @@
 <template>
   <V-card class="w-100 pa-4 my-4">
+    <v-dialog v-model="sendDialog">
+      <v-card class="ma-4 pa-4">
+        <v-card-title> تم ارسال الرسالة </v-card-title>
+        <br class="ma-4 w-75" />
+        <v-btn @click="sendDialog = false"> موافق </v-btn>
+      </v-card>
+    </v-dialog>
     <div class="title-section">
       <h2 v-if="userStore.userAll.user.theme?.hero?.sectionTitle.enabled" :style="userStore.userAll.user.theme?.hero?.sectionTitle.style">
         {{ lang == 'en' ? 'Content' : ' اتصل بنا ' }}
@@ -113,8 +120,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 const loading = ref(false);
-// import { useDisplay } from 'vuetify';
-// const { xs } = useDisplay();
+
 import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
 const route = useRoute();
@@ -124,21 +130,18 @@ const name = ref({});
 const subject = ref({});
 const message = ref({});
 const valid = ref(false);
+const sendDialog = ref(false);
 // قواعد التحقق لكل حقل
 const nameRules = [v => !!v || (lang.value === 'en' ? 'Name is required' : 'الاسم مطلوب')];
-
 const phoneRules = [
   v => !!v || (lang.value === 'en' ? 'Phone is required' : 'رقم الهاتف مطلوب'),
   v => (v && v.length === 11) || (lang.value === 'en' ? 'Phone must be 11 digits' : 'يجب أن يحتوي رقم الهاتف على 11 رقم'),
 ];
-
 const emailRules = [
   v => !!v || (lang.value === 'en' ? 'Email is required' : 'البريد الإلكتروني مطلوب'),
   v => /.+@.+\..+/.test(v) || (lang.value === 'en' ? 'Email must be valid' : 'يجب أن يكون البريد الإلكتروني صالحًا'),
 ];
-
 const subjectRules = [v => !!v || (lang.value === 'en' ? 'Subject is required' : 'الموضوع مطلوب')];
-
 const messageRules = [v => !!v || (lang.value === 'en' ? 'Message is required' : 'الرسالة مطلوبة')];
 
 function sendItems() {
@@ -156,6 +159,10 @@ function sendItems() {
       .then(() => {
         loading.value = false;
         item.value = '';
+        name.value = '';
+        subject.value = '';
+        message.value = '';
+        sendDialog.value = true;
       })
       .catch(() => {
         loading.value = false;
