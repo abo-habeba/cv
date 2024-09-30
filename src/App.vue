@@ -43,6 +43,11 @@ onMounted(() => {
   border-radius: 7px;
   text-decoration: none;
 }
+table{
+  *{
+    border-radius: 0px;
+  }
+}
 pre {
   white-space: pre-wrap;
   word-wrap: break-word;

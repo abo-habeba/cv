@@ -31,7 +31,7 @@
             <v-card-text>
               <v-icon size="25" icon="mdi-phone"></v-icon>
               <p>
-                <a :href="'mailto:' + userStore.userAll.user.phone">{{ userStore.userAll.user.phone }}</a>
+                <a :href="'tel:' + userStore.userAll.user.phone">{{ userStore.userAll.user.phone }}</a>
               </p>
             </v-card-text>
           </div>

@@ -1,6 +1,24 @@
 <template>
   <v-container>
     <Breadcrumbs />
+    <v-dialog class="text-center" v-model="openDialogRead" max-width="600" persistent>
+      <v-card class="pa-5">
+        <v-card-item class="pa-1">
+          <v-card-title v-if="item.name.ar">{{ item.name.ar }}</v-card-title>
+          <v-card-title v-if="item.name.en">{{ item.name.en }}</v-card-title>
+          <v-card-subtitle v-if="item.subject.ar">{{ item.subject.ar }}</v-card-subtitle>
+          <v-card-subtitle v-if="item.subject.en">{{ item.subject.en }}</v-card-subtitle>
+          <a :href="'mailto:' + item.email">{{ item.email }}</a>
+          <br />
+          <a :href="'tel:' + item.phone">{{ item.phone }}</a>
+        </v-card-item>
+        <v-card-text class="pa-2" v-if="item.message.ar">{{ item.message.ar }}</v-card-text>
+        <v-card-text class="pa-2" v-if="item.message.en">{{ item.message.en }}</v-card-text>
+        <v-card-subtitle>{{ item.created_at }}</v-card-subtitle>
+        <hr class="ma-2" />
+        <v-btn class="ma-1" @click="openDialogRead = false"> موافق </v-btn>
+      </v-card>
+    </v-dialog>
     <v-dialog class="text-center" v-model="openDialogDeleted" max-width="400" persistent>
       <v-card class="pa-5">
         <h2 class="ma-5">هل تريد حذف العنصر بالفعل</h2>
@@ -26,28 +44,23 @@
         <tr>
           <th class="text-center">#</th>
           <th class="text-center">الاسم</th>
-          <th class="text-center">Name</th>
-          <th class="text-center">البريد الإلكتروني</th>
-          <th class="text-center">الهاتف</th>
-          <th class="text-center">الرسالة</th>
-          <th class="text-center">Message</th>
           <th class="text-center">الموضوع</th>
-          <th class="text-center">Subject</th>
           <th class="text-center">تاريخ الإنشاء</th>
           <th class="text-center"></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in items" :key="item.id" :style="{ color: item.read === '0' ? '#2196F3' : '' }">
+        <tr
+          v-for="(item, index) in items"
+          :key="item.id"
+          @click="updateItems(item)"
+          :style="{ color: item.read === '0' ? '#2196F3' : '', cursor: 'pointer' }"
+        >
           <td>{{ index + 1 }}</td>
-          <td>{{ item.name.ar }}</td>
-          <td>{{ item.name.en }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.phone }}</td>
-          <td>{{ item.message.ar }}</td>
-          <td>{{ item.message.en }}</td>
-          <td>{{ item.subject.ar }}</td>
-          <td>{{ item.subject.en }}</td>
+          <td v-if="item.name.ar">{{ item.name.ar }}</td>
+          <td v-if="item.name.en">{{ item.name.en }}</td>
+          <td v-if="item.subject.ar">{{ item.subject.ar }}</td>
+          <td v-if="item.subject.en">{{ item.subject.en }}</td>
           <td>{{ item.created_at }}</td>
           <td>
             <v-btn @click="deleteItem(item)" class="ml-3" icon="mdi-delete" color="red" size="small"></v-btn>
@@ -67,6 +80,7 @@ import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 const userStore = useUserStore();
 import { toast } from 'vue3-toastify';
+import { id } from 'vuetify/locale';
 const notifySuccess = message => {
   toast.success(message, {
     theme: 'colored',
@@ -81,6 +95,7 @@ const notifyError = message => {
 };
 // const itemForm = ref(null);
 const openDialogDeleted = ref(false);
+const openDialogRead = ref(false);
 const items = ref([]);
 const itemsAll = ref([]);
 const itemsUnread = computed(() => {
@@ -116,6 +131,25 @@ function showUnreadItems() {
   items.value = itemsUnread.value;
 }
 
+function updateItems(i) {
+  item.value = i;
+  console.log(item.value);
+  console.log(typeof i.read);
+
+  if (i.read === '0') {
+    console.log('run updateItems');
+    axios
+      .put(`contacts/${i.id}`, { read: '1' })
+      .then(res => {
+        openDialogRead.value = true;
+      })
+      .catch(() => {
+        notifyError('هناك خطا ما حاول مره اخري');
+      });
+    return;
+  }
+  openDialogRead.value = true;
+}
 function getItems() {
   userStore.loadengApi = true;
   axios

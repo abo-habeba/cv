@@ -35,7 +35,7 @@
         </div>
       </div>
       <div v-if="userStore.userAll.user.theme?.about.button?.enabled" :style="userStore.userAll.user.theme.about.button.style" class="ma-5">
-        <a href="#contact">
+        <a href="#h-contact">
           <v-btn color="primary"> {{ lang == 'en' ? 'Contact Me' : 'تواصل معي ' }} </v-btn>
         </a>
       </div>
