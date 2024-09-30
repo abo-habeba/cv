@@ -96,7 +96,7 @@ const notifyError = message => {
 // const itemForm = ref(null);
 const openDialogDeleted = ref(false);
 const openDialogRead = ref(false);
-const items = ref([]);
+const items = ref({});
 const itemsAll = ref([]);
 const itemsUnread = computed(() => {
   return itemsAll.value.filter(contact => contact.read === '0');
@@ -140,7 +140,13 @@ function updateItems(i) {
     console.log('run updateItems');
     axios
       .put(`contacts/${i.id}`, { read: '1' })
-      .then(res => {
+      .then(() => {
+        items.value = items.value.map(item => {
+          if (item.id === i.id) {
+            return { ...item, read: '1' };
+          }
+          return item;
+        });
         openDialogRead.value = true;
       })
       .catch(() => {
