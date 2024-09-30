@@ -9,10 +9,10 @@
         <v-form>
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field v-model="title.ar" label="العنوان"></v-text-field>
+              <v-text-field v-model="title.ar" label="عنوان الوظيفة"></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
-              <v-text-field v-model="title.en" label="Title"></v-text-field>
+              <v-text-field v-model="title.en" label="  Job Title"></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field v-model="company.ar" label="الشركة"></v-text-field>

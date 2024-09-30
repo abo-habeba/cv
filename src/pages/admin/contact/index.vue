@@ -141,12 +141,14 @@ function updateItems(i) {
     axios
       .put(`contacts/${i.id}`, { read: '1' })
       .then(() => {
-        items.value = items.value.map(item => {
+        itemsAll.value = itemsAll.value.map(item => {
           if (item.id === i.id) {
             return { ...item, read: '1' };
           }
           return item;
         });
+        items.value = itemsUnread.value;
+        userStore.user.unread_contacts_count -= 1;
         openDialogRead.value = true;
       })
       .catch(() => {
