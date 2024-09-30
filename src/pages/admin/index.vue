@@ -59,7 +59,7 @@
       <v-card class="ma-1" v-if="userStore.user">
         <div class="box-link">
           <div class="copy-link">
-            <v-btn icon @click="copyLink(`${locationHostname()}/ar/${userStore.user.username}`)">
+            <v-btn icon @click="copyLink(`${locationHostname()}/en/${userStore.user.username}`)">
               <v-icon>mdi-content-copy</v-icon>
             </v-btn>
           </div>
