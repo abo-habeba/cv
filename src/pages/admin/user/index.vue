@@ -8,12 +8,15 @@
             <ThemeSettings
               v-if="userStore.user"
               ref="dialogThemeFormHero"
-              :detTheme="{ nameEn: 'hero', nameAr: 'الرئيسية', h2: true, h4: true, p: true, cv: true, work: true, sectionTitle: true, imag: true }"
+              :detTheme="{ nameEn: 'hero', nameAr: 'الرئيسية', hero: true }"
               @click="openDialogThemeFormHero"
             />
           </template>
           <template v-slot:prepend>
-            <HeroForm ref="dialogHeroForm" @click="openFormHero" />
+            <div>
+              <HeroForm ref="dialogHeroForm" @click="openFormHero" />
+              <p>الصور</p>
+            </div>
           </template>
         </v-card>
       </v-col>
@@ -23,12 +26,15 @@
             <ThemeSettings
               v-if="userStore.user"
               ref="dialogThemeFormAbout"
-              :detTheme="{ nameEn: 'about', nameAr: 'عني', h2: true, h4: true, p: true, btn: true }"
+              :detTheme="{ nameEn: 'about', nameAr: 'من نحن', about: true }"
               @click="openDialogThemeFormAbout"
             />
           </template>
           <template v-slot:prepend>
-            <UserForm ref="dialogItemForm" @click="openForm" />
+            <div>
+              <UserForm ref="dialogItemForm" @click="openForm" />
+              <p>تعديل البيانات</p>
+            </div>
           </template>
         </v-card>
       </v-col>
@@ -41,7 +47,7 @@
       @click="openDialogThemeFormAbout"
     /> -->
 
-    <v-card
+    <!-- <v-card
       :title="(userStore.user.first_name.en || 'N D') + ' - ' + (userStore.user.first_name.ar || 'N D')"
       :subtitle="userStore.user.email || 'N D'"
       class="mt-1"
@@ -62,7 +68,7 @@
         <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.position.ar || 'N D'" title="الوظيفة (AR)"> </v-list-item>
         <v-list-item class="ma-2 pa-2" :subtitle="userStore.user.username || 'N D'" title="User Name"> </v-list-item>
       </v-list>
-    </v-card>
+    </v-card> -->
   </v-container>
 </template>
 

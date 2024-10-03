@@ -50,20 +50,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(item, index) in items"
-          :key="item.id"
-          @click="updateItems(item)"
-          :style="{ color: item.read === '0' ? '#2196F3' : '', cursor: 'pointer' }"
-        >
-          <td>{{ index + 1 }}</td>
-          <td v-if="item.name.ar">{{ item.name.ar }}</td>
-          <td v-if="item.name.en">{{ item.name.en }}</td>
-          <td v-if="item.subject.ar">{{ item.subject.ar }}</td>
-          <td v-if="item.subject.en">{{ item.subject.en }}</td>
+        <tr v-for="(item, index) in items" :key="item.id" :style="{ color: item.read === '0' ? '#2196F3' : '', cursor: 'pointer' }">
+          <td @click="updateItems(item)">{{ index + 1 }}</td>
+          <td @click="updateItems(item)" v-if="item.name.ar">{{ item.name.ar }}</td>
+          <td @click="updateItems(item)" v-if="item.name.en">{{ item.name.en }}</td>
+          <td @click="updateItems(item)" v-if="item.subject.ar">{{ item.subject.ar }}</td>
+          <td @click="updateItems(item)" v-if="item.subject.en">{{ item.subject.en }}</td>
           <td>{{ item.created_at }}</td>
           <td>
-            <v-btn @click="deleteItem(item)" class="ml-3" icon="mdi-delete" color="red" size="small"></v-btn>
+            <v-btn style="z-index: 100" @click="deleteItem(item)" class="ml-3" icon="mdi-delete" color="red" size="small"></v-btn>
           </td>
         </tr>
       </tbody>

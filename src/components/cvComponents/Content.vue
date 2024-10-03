@@ -2,7 +2,7 @@
   <V-card class="w-100 pa-4 my-4">
     <v-dialog v-model="sendDialog">
       <v-card class="ma-4 pa-4">
-        <v-card-title> تم ارسال الرسالة </v-card-title>
+        <v-card-title class="text-center"> تم ارسال الرسالة </v-card-title>
         <br class="ma-4 w-75" />
         <v-btn @click="sendDialog = false"> موافق </v-btn>
       </v-card>
@@ -118,6 +118,7 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { notifyError } from '@/Service/notifyService';
 import { useRoute } from 'vue-router';
 const loading = ref(false);
 
@@ -132,17 +133,17 @@ const message = ref({});
 const valid = ref(false);
 const sendDialog = ref(false);
 // قواعد التحقق لكل حقل
-const nameRules = [v => !!v || (lang.value === 'en' ? 'Name is required' : 'الاسم مطلوب')];
+const nameRules = [v => !!v || (lang === 'en' ? 'Name is required' : 'الاسم مطلوب')];
 const phoneRules = [
-  v => !!v || (lang.value === 'en' ? 'Phone is required' : 'رقم الهاتف مطلوب'),
-  v => (v && v.length === 11) || (lang.value === 'en' ? 'Phone must be 11 digits' : 'يجب أن يحتوي رقم الهاتف على 11 رقم'),
+  v => !!v || (lang === 'en' ? 'Phone is required' : 'رقم الهاتف مطلوب'),
+  v => (v && v.length === 11) || (lang === 'en' ? 'Phone must be 11 digits' : 'يجب أن يحتوي رقم الهاتف على 11 رقم'),
 ];
 const emailRules = [
-  v => !!v || (lang.value === 'en' ? 'Email is required' : 'البريد الإلكتروني مطلوب'),
-  v => /.+@.+\..+/.test(v) || (lang.value === 'en' ? 'Email must be valid' : 'يجب أن يكون البريد الإلكتروني صالحًا'),
+  v => !!v || (lang === 'en' ? 'Email is required' : 'البريد الإلكتروني مطلوب'),
+  v => /.+@.+\..+/.test(v) || (lang === 'en' ? 'Email must be valid' : 'يجب أن يكون البريد الإلكتروني صالحًا'),
 ];
-const subjectRules = [v => !!v || (lang.value === 'en' ? 'Subject is required' : 'الموضوع مطلوب')];
-const messageRules = [v => !!v || (lang.value === 'en' ? 'Message is required' : 'الرسالة مطلوبة')];
+const subjectRules = [v => !!v || (lang === 'en' ? 'Subject is required' : 'الموضوع مطلوب')];
+const messageRules = [v => !!v || (lang === 'en' ? 'Message is required' : 'الرسالة مطلوبة')];
 
 function sendItems() {
   const form = ref(null);

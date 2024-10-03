@@ -1,6 +1,9 @@
 <template>
   <div v-if="userStore.user.theme">
-    <v-icon color="info" size="35" icon="mdi-palette-outline"></v-icon>
+    <div style="cursor: pointer">
+      <v-icon color="info" size="35" icon="mdi-palette-outline"></v-icon>
+      <p>تنسيق {{ detTheme.nameAr }}</p>
+    </div>
     <v-dialog class="text-center" :fullscreen="xs" v-model="dialogresetAll" max-width="900">
       <v-card>
         <p style="color: red" class="ma-1 pa-10">هل تريد حقا ارجاع كل التنسيقات الخاصه بالقسم الي الاصل</p>
@@ -33,7 +36,7 @@
             <h4>{{ dialogColorValue }}</h4>
           </div>
           <div>
-            <v-text-field style="min-width: 250px" variant="outlined" v-model="dialogColorValue" label=" ادخل اللون يدوي  "></v-text-field>
+            <v-text-field variant="outlined" style="min-width: 250px" v-model="dialogColorValue" label=" ادخل اللون يدوي  "></v-text-field>
           </div>
         </div>
         <v-color-picker class="ma-auto" v-model="dialogColorValue" show-swatches></v-color-picker>
@@ -45,14 +48,21 @@
       <v-card class="pa-5">
         <v-form>
           <v-row>
+            <!-- General Sections Settings -->
             <v-col cols="12" class="elevation-5 ma-2">
               <h2 class="ma-5">تنسيق قسم {{ detTheme.nameAr }}</h2>
               <v-row>
                 <v-col cols="6">
-                  <v-switch color="info" v-model="newTheme.enabled" label="تفعيل القسم"></v-switch>
+                  <v-switch color="info" v-model="newTheme.enabled" :label="'تفعيل قسم ' + detTheme.nameAr"></v-switch>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field variant="underlined" v-model="newTheme.order" label="ترتيب القسم" type="number" append-icon="mdi-sort"></v-text-field>
+                  <v-text-field
+                    variant="outlined"
+                    v-model="newTheme.order"
+                    :label="'ترتيب قسم ' + detTheme.nameAr"
+                    type="number"
+                    append-icon="mdi-sort"
+                  ></v-text-field>
                 </v-col>
               </v-row>
               <v-col cols="12">
@@ -60,44 +70,434 @@
               </v-col>
             </v-col>
 
-            <!-- imag Group -->
+            <!-- Hero Section Settings -->
+            <div v-if="detTheme.hero">
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيقات عناوين الاقسام</h2>
+                <h2 class="sticky-header" :style="sectionTitleStyle">معاينة عناوين الاقسام</h2>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetSectionTitle" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.sectionTitle.fontSize"
+                      label="حجم خط عناوين الاقسام"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('sectionTitle', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص عناوين الاقسام</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('sectionTitle', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية عناوين الاقسام</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <!-- Main Title  -->
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق اسمك وجملة الترحيب</h2>
+                <h2 class="sticky-header" :style="mainTitleStyle">معاينة اسمك وجملة الترحيب</h2>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetMainTitle" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch color="info" v-model="newTheme.mainTitle.enabled" label="تفعيل اسمك وجملة الترحيب"></v-switch>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.mainTitle.fontSize"
+                      label="حجم خط اسمك وجملة الترحيب"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('mainTitle', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص اسمك وجملة الترحيب</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('mainTitle', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية اسمك وجملة الترحيب</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <!-- Sub Title Group -->
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق الوظيفه</h2>
+                <h4 class="sticky-header" :style="subTitleStyle">معاينة الوظيفة</h4>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetSubTitle" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch color="info" v-model="newTheme.subTitle.enabled" label="تفعيل الوظيفة"></v-switch>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.subTitle.fontSize"
+                      label="حجم خط الوظيفة"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('subTitle', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص الوظيفة</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('subTitle', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية الوظيفة</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <!-- Paragraph Group -->
+              <v-col v-if="detTheme.p" cols="12" class="group elevation-5">
+                <h2>تنسيق نبذة عني</h2>
+                <p class="sticky-header" :style="paragraphStyle">معاينة نبذة عني</p>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetParagraph" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch color="info" v-model="newTheme.paragraph.enabled" label="تفعيل نبذة عني "></v-switch>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.paragraph.fontSize"
+                      label="حجم خط نبذة عني "
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('paragraph', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص نبذة عني</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('paragraph', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية نبذة عني</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <!-- Button Group -->
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق ازرار الرئيسية</h2>
+                <p class="sticky-header" :style="buttonStyleHero">معاينة ازرار الرئيسية</p>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetButtonHero" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.buttonHero.fontSize"
+                      label="حجم خط  الازرار"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.buttonHero.borderWidth"
+                      label="عرض ايطار  الازرار"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.buttonHero.borderRadius"
+                      label=" استدارة ايطار الازرار"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <!-- Button Group CV -->
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق زرار السيره الذاتية</h2>
+                <p class="sticky-header" :style="buttonStyleCv">معاينة زرار السيره الذاتية</p>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetButtonsCv" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch color="info" v-model="newTheme.buttonCv.enabled" label="تفعيل الزر"></v-switch>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('buttonCv', 'borderColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون ايطار الزر</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('buttonCv', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص الزر</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('buttonCv', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية الزر</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <!-- Button Group Work -->
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق زر الاعمال</h2>
+                <p class="sticky-header" :style="buttonStyleWork">معاينة زر الاعمال</p>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetButtonsWork" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch color="info" v-model="newTheme.buttonWork.enabled" label="تفعيل الزر"></v-switch>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('buttonWork', 'borderColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون ايطار الزر</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('buttonWork', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص الزر</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('buttonWork', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية الزر</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </div>
+
+            <!-- About Section Settings -->
+            <div v-if="detTheme.about">
+              <!-- Main Title  -->
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق من انا ؟</h2>
+                <h2 class="sticky-header" :style="mainTitleStyle">معاينة من انا ؟</h2>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetMainTitle" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch color="info" v-model="newTheme.mainTitle.enabled" label="تفعيل من انا ؟"></v-switch>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.mainTitle.fontSize"
+                      label="حجم خط من انا ؟"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('mainTitle', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص من انا ؟</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('mainTitle', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية من انا ؟</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <!-- Sub Title  -->
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق اسمك وجملة الترحيب</h2>
+                <h2 class="sticky-header" :style="subTitleStyle">معاينة اسمك وجملة الترحيب</h2>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetSubTitle" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch color="info" v-model="newTheme.subTitle.enabled" label="تفعيل اسمك وجملة الترحيب"></v-switch>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.subTitle.fontSize"
+                      label="حجم خط اسمك وجملة الترحيب"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('subTitle', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص اسمك وجملة الترحيب</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('subTitle', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية اسمك وجملة الترحيب</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <!-- Paragraph Group -->
+              <v-col v-if="detTheme.p" cols="12" class="group elevation-5">
+                <h2>تنسيق نبذة عني</h2>
+                <p class="sticky-header" :style="paragraphStyle">معاينة نبذة عني</p>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetParagraph" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch color="info" v-model="newTheme.paragraph.enabled" label="تفعيل نبذة عني "></v-switch>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.paragraph.fontSize"
+                      label="حجم خط نبذة عني "
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('paragraph', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص نبذة عني</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('paragraph', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية نبذة عني</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <!-- Button Group -->
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق زر تواصل معنا</h2>
+                <p class="sticky-header" :style="buttonStyle">معاينة زر تواصل معنا</p>
+                <div style="display: flex">
+                  <v-col cols="6">
+                    <v-btn class="mt-3" @click="resetButton" color="primary">إرجاع إلى الأصل</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-switch color="info" v-model="newTheme.button.enabled" label="تفعيل زر تواصل معنا"></v-switch>
+                  </v-col>
+                </div>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.button.fontSize"
+                      label="حجم خط زر تواصل"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.button.borderWidth"
+                      label="عرض ايطار زر تواصل"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      variant="outlined"
+                      v-model="newTheme.button.borderRadius"
+                      label=" استدارة ايطار زر تواصل"
+                      type="number"
+                      append-icon="mdi-format-size"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('button', 'borderColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون ايطار زر تواصل معنا</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('button', 'textColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون نص زر تواصل معنا</h3>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-btn @click="opendialogColor('button', 'backgroundColor')" color="#B3E5FC">
+                      <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
+                      <h3>اختر لون خلفية زر تواصل معنا</h3>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </div>
+
+            <!-- imag Settings -->
             <v-col v-if="detTheme.imag" cols="12" class="group elevation-5">
               <v-col cols="12">
                 <v-switch style="width: fit-content" class="ma-auto" color="info" v-model="newTheme.imag.enabled" label="تفعيل صورة  "></v-switch>
               </v-col>
-            </v-col>
-            <!-- Section Title Group -->
-            <v-col v-if="detTheme.sectionTitle" cols="12" class="group elevation-5">
-              <h2>تنسيقات عناوين الاقسام</h2>
-              <h2 class="sticky-header" :style="sectionTitleStyle">معاينة عناوين الاقسام</h2>
-              <div style="display: flex">
-                <v-col cols="6">
-                  <v-btn class="mt-3" @click="resetSectionTitle" color="primary">إرجاع إلى الأصل</v-btn>
-                </v-col>
-              </div>
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field
-                    variant="underlined"
-                    v-model="newTheme.sectionTitle.fontSize"
-                    label="حجم خط عناوين الاقسام"
-                    type="number"
-                    append-icon="mdi-format-size"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-btn @click="opendialogColor('sectionTitle', 'textColor')" color="#B3E5FC">
-                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون نص عناوين الاقسام</h3>
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-btn @click="opendialogColor('sectionTitle', 'backgroundColor')" color="#B3E5FC">
-                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون خلفية عناوين الاقسام</h3>
-                  </v-btn>
-                </v-col>
-              </v-row>
             </v-col>
 
             <!-- Main Title Group -->
@@ -115,7 +515,7 @@
                 </v-col>
               </v-row>
             </v-col>
-            <!-- Main Title Group -->
+            <!-- Main Title  -->
             <v-col v-if="detTheme.h2" cols="12" class="group elevation-5">
               <h2>تنسيقات العنوان الرئيسي</h2>
               <h2 class="sticky-header" :style="mainTitleStyle">معاينة العنوان الرئيسي</h2>
@@ -130,7 +530,7 @@
               <v-row>
                 <v-col cols="12">
                   <v-text-field
-                    variant="underlined"
+                    variant="outlined"
                     v-model="newTheme.mainTitle.fontSize"
                     label="حجم خط العنوان الرئيسي"
                     type="number"
@@ -167,7 +567,7 @@
               <v-row>
                 <v-col cols="12">
                   <v-text-field
-                    variant="underlined"
+                    variant="outlined"
                     v-model="newTheme.subTitle.fontSize"
                     label="حجم خط العنوان الفرعي"
                     type="number"
@@ -204,7 +604,7 @@
               <v-row>
                 <v-col cols="12">
                   <v-text-field
-                    variant="underlined"
+                    variant="outlined"
                     v-model="newTheme.paragraph.fontSize"
                     label="حجم خط الفقرة"
                     type="number"
@@ -226,126 +626,6 @@
               </v-row>
             </v-col>
 
-            <!-- Button Group CV -->
-            <v-col v-if="detTheme.cv" cols="12" class="group elevation-5">
-              <h2>تنسيق زرار السيره الذاتية</h2>
-              <p class="sticky-header" :style="buttonStyleCv">معاينة زرار السيره الذاتية</p>
-              <div style="display: flex">
-                <v-col cols="6">
-                  <v-btn class="mt-3" @click="resetButtonsCv" color="primary">إرجاع إلى الأصل</v-btn>
-                </v-col>
-                <v-col cols="6">
-                  <v-switch color="info" v-model="newTheme.buttonCv.enabled" label="تفعيل الزر"></v-switch>
-                </v-col>
-              </div>
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field
-                    variant="underlined"
-                    v-model="newTheme.buttonCv.fontSize"
-                    label="حجم خط الزر"
-                    type="number"
-                    append-icon="mdi-format-size"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field
-                    variant="underlined"
-                    v-model="newTheme.buttonCv.borderWidth"
-                    label="عرض ايطار الزر"
-                    type="number"
-                    append-icon="mdi-format-size"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field
-                    variant="underlined"
-                    v-model="newTheme.buttonCv.borderRadius"
-                    label=" استدارة ايطارالزر"
-                    type="number"
-                    append-icon="mdi-format-size"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-btn @click="opendialogColor('buttonCv', 'borderColor')" color="#B3E5FC">
-                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون ايطار الزر</h3>
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-btn @click="opendialogColor('buttonCv', 'textColor')" color="#B3E5FC">
-                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون نص الزر</h3>
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-btn @click="opendialogColor('buttonCv', 'backgroundColor')" color="#B3E5FC">
-                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون خلفية الزر</h3>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-col>
-            <!-- Button Group Work -->
-            <v-col v-if="detTheme.work" cols="12" class="group elevation-5">
-              <h2>تنسيق زر الاعمال</h2>
-              <p class="sticky-header" :style="buttonStyleWork">معاينة زر الاعمال</p>
-              <div style="display: flex">
-                <v-col cols="6">
-                  <v-btn class="mt-3" @click="resetButtonsWork" color="primary">إرجاع إلى الأصل</v-btn>
-                </v-col>
-                <v-col cols="6">
-                  <v-switch color="info" v-model="newTheme.buttonWork.enabled" label="تفعيل الزر"></v-switch>
-                </v-col>
-              </div>
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field
-                    variant="underlined"
-                    v-model="newTheme.buttonWork.fontSize"
-                    label="حجم خط الزر"
-                    type="number"
-                    append-icon="mdi-format-size"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field
-                    variant="underlined"
-                    v-model="newTheme.buttonWork.borderWidth"
-                    label="عرض ايطار الزر"
-                    type="number"
-                    append-icon="mdi-format-size"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field
-                    variant="underlined"
-                    v-model="newTheme.buttonWork.borderRadius"
-                    label=" استدارة ايطارالزر"
-                    type="number"
-                    append-icon="mdi-format-size"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-btn @click="opendialogColor('buttonWork', 'borderColor')" color="#B3E5FC">
-                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون ايطار الزر</h3>
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-btn @click="opendialogColor('buttonWork', 'textColor')" color="#B3E5FC">
-                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون نص الزر</h3>
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-btn @click="opendialogColor('buttonWork', 'backgroundColor')" color="#B3E5FC">
-                    <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                    <h3>اختر لون خلفية الزر</h3>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-col>
             <!-- Button Group -->
             <v-col v-if="detTheme.btn" cols="12" class="group elevation-5">
               <h2>تنسيق الزر</h2>
@@ -361,7 +641,7 @@
               <v-row>
                 <v-col cols="12">
                   <v-text-field
-                    variant="underlined"
+                    variant="outlined"
                     v-model="newTheme.button.fontSize"
                     label="حجم خط الزر"
                     type="number"
@@ -482,6 +762,12 @@ const defaultThem = ref({
     borderWidth: '',
     borderRadius: '',
   },
+  buttonHero: {
+    enabled: true,
+    fontSize: '',
+    borderWidth: '',
+    borderRadius: '',
+  },
 });
 function copyColor(color) {
   if (color === null || color === ' ' || color === '') {
@@ -580,8 +866,8 @@ const paragraphStyle = computed(() => ({
 const buttonStyle = computed(() => ({
   backgroundColor: newTheme.value.button.backgroundColor,
   color: newTheme.value.button.textColor,
-  fontSize: `${newTheme.value.button.fontSize}px`,
   borderColor: newTheme.value.button.borderColor,
+  fontSize: `${newTheme.value.button.fontSize}px`,
   borderWidth: `${newTheme.value.button.borderWidth}px`,
   borderRadius: `${newTheme.value.button.borderRadius}px`,
 }));
@@ -589,18 +875,23 @@ const buttonStyle = computed(() => ({
 const buttonStyleCv = computed(() => ({
   backgroundColor: newTheme.value.buttonCv.backgroundColor,
   color: newTheme.value.buttonCv.textColor,
-  fontSize: `${newTheme.value.buttonCv.fontSize}px`,
   borderColor: newTheme.value.buttonCv.borderColor,
-  borderWidth: `${newTheme.value.buttonCv.borderWidth}px`,
-  borderRadius: `${newTheme.value.buttonCv.borderRadius}px`,
+  fontSize: `${newTheme.value.buttonHero.fontSize}px`,
+  borderWidth: `${newTheme.value.buttonHero.borderWidth}px`,
+  borderRadius: `${newTheme.value.buttonHero.borderRadius}px`,
 }));
 const buttonStyleWork = computed(() => ({
   backgroundColor: newTheme.value.buttonWork.backgroundColor,
   color: newTheme.value.buttonWork.textColor,
-  fontSize: `${newTheme.value.buttonWork.fontSize}px`,
   borderColor: newTheme.value.buttonWork.borderColor,
-  borderWidth: `${newTheme.value.buttonWork.borderWidth}px`,
-  borderRadius: `${newTheme.value.buttonWork.borderRadius}px`,
+  fontSize: `${newTheme.value.buttonHero.fontSize}px`,
+  borderWidth: `${newTheme.value.buttonHero.borderWidth}px`,
+  borderRadius: `${newTheme.value.buttonHero.borderRadius}px`,
+}));
+const buttonStyleHero = computed(() => ({
+  fontSize: `${newTheme.value.buttonHero.fontSize}px`,
+  borderWidth: `${newTheme.value.buttonHero.borderWidth}px`,
+  borderRadius: `${newTheme.value.buttonHero.borderRadius}px`,
 }));
 
 const allStyle = computed(() => ({
@@ -624,6 +915,9 @@ const allStyle = computed(() => ({
   },
   buttonWork: {
     style: buttonStyleWork.value,
+  },
+  buttonHero: {
+    style: buttonStyleHero.value,
   },
 }));
 
@@ -651,7 +945,7 @@ function resetAll() {
 }
 
 function resetSectionTitle(notifySucces = true) {
-  newTheme.value.mainTitle = defaultThem.value.mainTitle;
+  newTheme.value.sectionTitle = defaultThem.value.sectionTitle;
   if (notifySucces) {
     save();
     notifySuccess('تم ارجاع التنسيقات بنجاح');
@@ -681,7 +975,7 @@ function resetParagraph(notifySucces = true) {
   }
 }
 
-function resetButtons(notifySucces = true) {
+function resetButton(notifySucces = true) {
   newTheme.value.button = defaultThem.value.button;
   if (notifySucces) {
     save();
@@ -697,6 +991,13 @@ function resetButtonsCv(notifySucces = true) {
 }
 function resetButtonsWork(notifySucces = true) {
   newTheme.value.buttonWork = defaultThem.value.buttonWork;
+  if (notifySucces) {
+    save();
+    notifySuccess('تم ارجاع التنسيقات بنجاح');
+  }
+}
+function resetButtonHero(notifySucces = true) {
+  newTheme.value.buttonHero = defaultThem.value.buttonHero;
   if (notifySucces) {
     save();
     notifySuccess('تم ارجاع التنسيقات بنجاح');

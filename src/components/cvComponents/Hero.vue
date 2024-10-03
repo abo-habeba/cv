@@ -38,7 +38,6 @@
         <a
           v-if="userStore.userAll.user.theme?.hero.buttonCv?.enabled"
           :style="userStore.userAll.user.theme?.hero.buttonCv.style"
-          href="#"
           class="cta-secondary"
           >{{ lang === 'en' ? 'Download Resume' : ' تحميل السيرة الذاتية ' }}</a
         >
@@ -144,6 +143,7 @@ $transition-speed: 0.3s;
     gap: 1rem;
 
     a {
+      width: fit-content;
       padding: 0.8rem 15px;
       border-radius: 20px;
       text-decoration: none;
