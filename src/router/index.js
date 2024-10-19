@@ -54,19 +54,19 @@ router.beforeEach((to, from, next) => {
   if (!to.params.lang) {
     if (to.params) {
       if (token) {
-        if (to.path === '/login' || to.path === '/register') {
+        if (to.path === '/login' || to.path === '/register' || to.path === '/') {
           next({ path: 'admin/' });
         } else {
           next();
         }
       } else {
-        if (to.path === '/') {
+        if (to.path === '/login' || to.path === '/register') {
           next();
         } else {
-          if (to.path != '/login' && to.path != '/register') {
-            next({ path: '/login' });
+          if (to.path !== '/') {
+            next({ path: '/' }); // توجيه المستخدم إلى /
           } else {
-            next();
+            next(); // متابعة التوجيه إذا كان المستخدم بالفعل في /
           }
         }
       }

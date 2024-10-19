@@ -65,9 +65,11 @@
               <v-btn type="submit" @click="register" class="mb-8" color="blue" size="large" variant="tonal" block> انشاء حساب </v-btn>
             </v-form>
 
-            <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+            <div class="text-subtitle-1 ma-5 text-medium-emphasis d-flex align-center justify-space-between">
               <a class="text-caption text-decoration-none text-blue" href="/login" rel="noopener noreferrer"> اذا كان لديك حساب ادخل من هنا</a>
             </div>
+
+            <a class="ma-1 text-blue text-decoration-none" href="/" rel="noopener noreferrer"> الرئيسية <v-icon icon="mdi-home"> </v-icon> </a>
           </v-card>
         </v-col>
       </v-row>
@@ -155,6 +157,10 @@ function register() {
     });
 }
 </script>
+<route lang="yaml">
+meta:
+  layout: pure
+</route>
 <style>
 #register {
   display: flex;

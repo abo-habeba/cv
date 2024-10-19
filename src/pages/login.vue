@@ -54,7 +54,9 @@
               <a class="text-blue text-decoration-none" href="/register" rel="noopener noreferrer">
                 انشأ حساب الان <v-icon icon="mdi-account-plus"> </v-icon>
               </a>
+              <br />
             </v-card-text>
+            <a class="text-blue text-decoration-none" href="/" rel="noopener noreferrer"> الرئيسية <v-icon icon="mdi-home"> </v-icon> </a>
           </v-card>
         </v-col>
       </v-row>
@@ -117,6 +119,10 @@ function login() {
     });
 }
 </script>
+<route lang="yaml">
+meta:
+  layout: pure
+</route>
 <style>
 #login {
   display: flex;

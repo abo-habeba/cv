@@ -185,7 +185,7 @@
   <div class="mt-9">
     <div class="Copy-right text-center">
       <div>&copy;Made with Heart ❤️</div>
-      <i class="icon-heart" aria-hidden="true"> by <a href="https://h.com" target="_blank"> Hesham Mohamed </a> </i>
+      <i class="icon-heart" aria-hidden="true"> by <a href="https://cv.hwnix.com/ar/hesham" target="_blank"> Hesham Mohamed </a> </i>
     </div>
   </div>
 </template>
