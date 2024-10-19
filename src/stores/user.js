@@ -7,7 +7,7 @@ export const useUserStore = defineStore('user', {
     user: null,
     userAll: null,
     isAuth: false,
-    isLoader: true,
+    isLoader: false,
     popupError: false,
     loadengApi: false,
     errorMessag: null,

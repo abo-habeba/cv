@@ -45,7 +45,7 @@
       </v-card>
     </v-dialog>
     <v-dialog class="text-center" :fullscreen="xs" v-model="dialogItemForm" max-width="1200">
-      <v-card class="pa-5">
+      <v-card class="pa-5 ma-auto">
         <v-form>
           <v-row>
             <!-- General Sections Settings -->
@@ -177,8 +177,8 @@
                 </v-row>
               </v-col>
               <!-- Paragraph Group -->
-              <v-col v-if="detTheme.p" cols="12" class="group elevation-5">
-                <h2>تنسيق نبذة عني</h2>
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق عني</h2>
                 <p class="sticky-header" :style="paragraphStyle">معاينة نبذة عني</p>
                 <div style="display: flex">
                   <v-col cols="6">
@@ -394,15 +394,15 @@
                 </v-row>
               </v-col>
               <!-- Paragraph Group -->
-              <v-col v-if="detTheme.p" cols="12" class="group elevation-5">
-                <h2>تنسيق نبذة عني</h2>
-                <p class="sticky-header" :style="paragraphStyle">معاينة نبذة عني</p>
+              <v-col cols="12" class="group elevation-5">
+                <h2>تنسيق عني</h2>
+                <p class="sticky-header" :style="paragraphStyle">معاينة عني</p>
                 <div style="display: flex">
                   <v-col cols="6">
                     <v-btn class="mt-3" @click="resetParagraph" color="primary">إرجاع إلى الأصل</v-btn>
                   </v-col>
                   <v-col cols="6">
-                    <v-switch color="info" v-model="newTheme.paragraph.enabled" label="تفعيل نبذة عني "></v-switch>
+                    <v-switch color="info" v-model="newTheme.paragraph.enabled" label="تفعيل عني "></v-switch>
                   </v-col>
                 </div>
                 <v-row>
@@ -410,7 +410,7 @@
                     <v-text-field
                       variant="outlined"
                       v-model="newTheme.paragraph.fontSize"
-                      label="حجم خط نبذة عني "
+                      label="حجم خط عني "
                       type="number"
                       append-icon="mdi-format-size"
                     ></v-text-field>
@@ -418,13 +418,13 @@
                   <v-col cols="12" sm="6">
                     <v-btn @click="opendialogColor('paragraph', 'textColor')" color="#B3E5FC">
                       <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                      <h3>اختر لون نص نبذة عني</h3>
+                      <h3>اختر لون نص عني</h3>
                     </v-btn>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <v-btn @click="opendialogColor('paragraph', 'backgroundColor')" color="#B3E5FC">
                       <v-icon class="ma-1" color="#000" size="35" icon="mdi-format-color-fill" end></v-icon>
-                      <h3>اختر لون خلفية نبذة عني</h3>
+                      <h3>اختر لون خلفية عني</h3>
                     </v-btn>
                   </v-col>
                 </v-row>

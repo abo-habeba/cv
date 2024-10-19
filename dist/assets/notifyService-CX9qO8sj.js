@@ -1,1 +1,0 @@
-import{ak as o}from"./index-C8Eiwxo8.js";const e=s=>{o.success(s,{theme:"colored",position:o.POSITION.TOP_LEFT})},t=s=>{o.error(s,{theme:"colored",position:o.POSITION.TOP_LEFT})};export{e as a,t as n};

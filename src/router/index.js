@@ -60,10 +60,14 @@ router.beforeEach((to, from, next) => {
           next();
         }
       } else {
-        if (to.path != '/login' && to.path != '/register') {
-          next({ path: '/login' });
-        } else {
+        if (to.path === '/') {
           next();
+        } else {
+          if (to.path != '/login' && to.path != '/register') {
+            next({ path: '/login' });
+          } else {
+            next();
+          }
         }
       }
     } else {

@@ -20,25 +20,46 @@
             </v-row>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
-            <v-row justify="space-around" no-gutters>
-              <v-col cols="12">
+            <v-row justify="center">
+              <!-- Field of Study -->
+              <v-col cols="12" xs="12">
                 <p class="pa-2" v-if="item.field_of_study">
-                  {{ lang === 'en' ? 'Field of study' : 'تخصص الدراسة' }} : {{ item.field_of_study[lang] }}
-                </p>
-                <p class="pa-2" v-if="item.degree">{{ lang === 'en' ? 'Degree' : 'الدرجة' }} : {{ item.degree[lang] }}</p>
-                <p class="pa-2" v-if="item.grade">{{ lang === 'en' ? 'Grade' : 'التقدير' }} : {{ item.grade[lang] }}</p>
-                <p class="pa-2" v-if="item.start_date">
-                  {{ lang === 'en' ? 'Start Date' : 'تاريخ البدء' }}: {{ item.start_date || (lang === 'en' ? 'Not Set' : 'غير محدد') }}
-                </p>
-                <p class="pa-2" v-if="item.end_date">
-                  {{ lang === 'en' ? 'End Date' : 'تاريخ النهاية' }}: {{ item.end_date || (lang === 'en' ? 'Not Set' : 'غير محدد') }}
+                  {{ lang === 'en' ? 'Field of study' : 'تخصص الدراسة' }}: {{ item.field_of_study[lang] }}
                 </p>
               </v-col>
+
+              <!-- Degree -->
+
+              <v-col cols="12" xs="12">
+                
+                <p class="pa-2" v-if="item.degree">{{ lang === 'en' ? 'Degree' : 'الدرجة' }}: {{ item.degree[lang] }}</p>
+              </v-col>
+
+              <!-- Grade -->
+              <v-col cols="12" xs="12">
+                <p class="pa-2" v-if="item.grade">{{ lang === 'en' ? 'Grade' : 'التقدير' }}: {{ item.grade[lang] }}</p>
+              </v-col>
+
+              <!-- Start Date -->
+              <v-col cols="12" xs="12">
+                <p class="pa-2" v-if="item.start_date">
+                  {{ lang === 'en' ? 'Start Date' : 'تاريخ البدء' }}<br />
+                  {{ item.start_date || (lang === 'en' ? 'Not Set' : 'غير محدد') }}
+                </p>
+              </v-col>
+
+              <!-- End Date -->
+              <v-col cols="12" xs="12">
+                <p class="pa-2" v-if="item.end_date">
+                  {{ lang === 'en' ? 'End Date' : 'تاريخ النهاية' }}<br />
+                  {{ item.end_date || (lang === 'en' ? 'Not Set' : 'غير محدد') }}
+                </p>
+              </v-col>
+
+              <!-- Image -->
               <v-col cols="12">
                 <v-img
-                  v-if="userStore.userAll.user.theme?.academics?.imag.enabled"
-                  min-width="100px"
-                  max-width="150px"
+                  v-if="userStore.userAll.user.theme?.academics?.imag.enabled && item.photos?.length"
                   :src="item.photos[0].path"
                   aspect-ratio="1"
                   class="bg-grey-lighten-2"

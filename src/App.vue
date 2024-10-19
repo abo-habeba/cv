@@ -36,6 +36,9 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
+body {
+  background-color: #f5f5f5;
+}
 .v-card-subtitle {
   white-space: normal !important;
 }
@@ -43,8 +46,8 @@ onMounted(() => {
   border-radius: 7px;
   text-decoration: none;
 }
-table{
-  *{
+table {
+  * {
     border-radius: 0px;
   }
 }
@@ -72,9 +75,7 @@ pre {
   width: 23px !important;
   height: 23px !important;
 }
-.main-app {
-  position: relative;
-}
+
 .v-messages__message {
   font-size: 16px;
   font-weight: bold;

@@ -330,11 +330,11 @@ meta:
   height: 100vh;
   z-index: 100;
 }
-.container-wrap {
-  @media screen and (min-width: 768px) {
-    margin: 0px 10%;
-  }
-}
+// .container-wrap {
+//   @media screen and (min-width: 768px) {
+//     margin: 0px 10%;
+//   }
+// }
 #h-aside {
   position: absolute;
   top: 0;

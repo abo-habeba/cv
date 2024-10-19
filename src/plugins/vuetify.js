@@ -8,7 +8,7 @@ import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 
 // Default theme configuration
-const defaultTheme = localStorage.defaultTheme === 'true' ? 'dark' : 'light';
+const defaultTheme = localStorage.defaultTheme ? localStorage.defaultTheme : 'light';
 
 export default createVuetify({
   theme: {

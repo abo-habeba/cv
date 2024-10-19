@@ -4,23 +4,36 @@
     {{ snackbarText }}
   </v-snackbar>
   <v-app-bar color="info" prominent>
-    <router-link exact to="/admin">
-      <v-icon color="#fff" icon="mdi-home" size="35"></v-icon>
-    </router-link>
+    <h1 class="ma-2">Civehk</h1>
     <div class="ms-6 mt-7">
-      <router-link exact to="/admin/contact">
-        <v-badge v-if="userStore.user.unread_contacts_count > 0" :content="userStore.user.unread_contacts_count" color="red" overlap>
-          <v-icon large>mdi-bell</v-icon>
+      <v-icon style="cursor: pointer" @click="dialogHelp = true" class="pa-4 mdi mdi-help"></v-icon>
+      <router-link class="pa-4" to="/admin/contact">
+        <v-badge v-if="userStore.user.unread_contacts_count > 0" :content="userStore.user.unread_contacts_count" overlap>
+          <v-icon color="white" class="mdi mdi-bell"></v-icon>
         </v-badge>
-        <v-icon v-else large>mdi-bell</v-icon>
+        <v-icon color="white" class="mdi mdi-bell" v-else></v-icon>
         <!-- <v-icon color="#f0f000" icon="mdi-message-reply-text-outline" size="20"></v-icon> -->
       </router-link>
     </div>
     <v-spacer></v-spacer>
-    <v-switch class="pe-5" append-icon="mdi-theme-light-dark" @change="toggleTheme" v-model="switchd" color="#000" hide-details></v-switch>
-    <v-icon @click.stop="drawer = !drawer" :icon="!drawer ? 'mdi-menu' : 'mdi-close'" size="35"></v-icon>
+    <v-menu>
+      <template v-slot:activator="{ props }">
+        <v-icon dark v-bind="props" class="mx-4 mdi mdi-cog-outline"></v-icon>
+      </template>
+      <v-card class="px-5 elevation-10">
+        <v-card-title class="pt-2">ثيم التطبيق</v-card-title>
+        <v-radio-group density="compact" class="pa-2" @change="toggleTheme" v-model="defaultTheme" column>
+          <v-radio label="داكن" value="dark"></v-radio>
+          <hr class="my-2" />
+          <v-radio label="فاتح" value="light"></v-radio>
+        </v-radio-group>
+      </v-card>
+    </v-menu>
+
+    <!-- <v-switch class="pe-5" v-model="switchd" color="#000" hide-details></v-switch> -->
   </v-app-bar>
   <v-navigation-drawer :temporary="!isLargeScreen" :permanent="isLargeScreen" v-model="drawer" location="right">
+    <v-icon class="menu-close" @click.stop="drawer = !drawer" :icon="!drawer ? 'mdi-menu' : 'mdi-close'" size="35"></v-icon>
     <v-list style="text-align: right">
       <v-list-group justify="center">
         <template v-slot:activator="{ props }">
@@ -80,6 +93,36 @@
       <v-list-item density="compact" class="elevation-2 my-1" @click="logout" append-icon="mdi-logout" title="خروج"> </v-list-item>
     </v-list>
   </v-navigation-drawer>
+  <v-dialog v-model="dialogHelp" max-width="700">
+    <v-card class="elevation-5 text-center card-size">
+      <div class="card-content">
+        <v-card-title justify="center" color="primary" variant="outlined" class="my-1 mx-1"> <span class="mdi mdi-help"></span> تلميح </v-card-title>
+        <v-card-text class="mb-4">
+          ابدا باضافة بياناتك
+          <br />
+          عن طريق الضغط على زر
+          <v-icon color="info" size="35" icon="mdi-plus-outline"></v-icon>
+          داخل كل قسم.
+          <br />
+          <br />
+          باستخدام هذا الزر
+          <v-icon color="info" size="35" icon="mdi-palette-outline"></v-icon>
+          ، يمكنك التحكم في ترتيب الأقسام، وكذلك إظهارها أو إخفاءها حسب رغبتك.
+          <br />
+          بالإضافة إلى ذلك، يمكنك تخصيص أحجام وألوان النصوص والأزرار بسهولة.
+        </v-card-text>
+        <v-checkbox-btn
+          style="width: fit-content"
+          class="text-center ma-auto"
+          color="info"
+          v-model="checkboxHent"
+          label=" لا تظهر التلميح مره اخري  "
+        ></v-checkbox-btn>
+        <v-divider class="my-3"></v-divider>
+        <v-btn class="my-3" text="شكرا" @click="closeDialog"></v-btn>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
 <script setup>
 import { useTheme } from 'vuetify';
@@ -97,10 +140,22 @@ const { smAndUp } = useDisplay();
 const isLargeScreen = computed(() => smAndUp.value);
 console.log('isLargeScreen', smAndUp.value);
 const drawer = ref(smAndUp.value ? true : false);
+const column = ref(null);
 console.log('drawer', drawer.value);
+const dialogHelp = ref(false);
+const checkboxHent = ref(false);
+function closeDialog() {
+  if (checkboxHent.value) {
+    localStorage.hentHome = checkboxHent.value;
+  }
+  dialogHelp.value = false;
+}
 
+onMounted(() => {
+  dialogHelp.value = !localStorage.hentHome;
+});
 const userStore = useUserStore();
-const switchd = ref(localStorage.defaultTheme ? JSON.parse(localStorage.defaultTheme) : false);
+const defaultTheme = ref(localStorage.defaultTheme);
 const snackbar = ref(false);
 const snackbarText = ref('');
 
@@ -123,12 +178,15 @@ function locationOrigin() {
 }
 
 function toggleTheme() {
-  if (switchd.value) {
+  if (defaultTheme.value === 'dark') {
+    console.log('if', defaultTheme.value);
+
     theme.global.name.value = 'dark';
-    localStorage.setItem('defaultTheme', true);
+    localStorage.setItem('defaultTheme', 'dark');
   } else {
+    console.log('else', defaultTheme.value);
     theme.global.name.value = 'light';
-    localStorage.setItem('defaultTheme', false);
+    localStorage.setItem('defaultTheme', 'light');
   }
 }
 
@@ -150,6 +208,11 @@ function logout() {
 }
 </script>
 <style lang="scss">
+.menu-close {
+  position: absolute;
+  top: 0px;
+  left: -35px;
+}
 .active-list-item .v-list-item {
   background-color: #e3f2fd;
   color: #e30a0a;

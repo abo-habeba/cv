@@ -193,7 +193,9 @@ function deleted() {
   axios
     .post(`contacts/delete`, { id: [item.value.id] })
     .then(() => {
-      getItems();
+      // getItems();
+      itemsAll.value = itemsAll.value.filter(contact => contact.id !== item.value.id);
+      items.value = itemsAll.value;
       openDialogDeleted.value = false;
       userStore.loadengApi = false;
       notifySuccess(` تم الحذف`);
